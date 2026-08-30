@@ -46,24 +46,69 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LoginForm.cs">
+    <Compile Include="GiaoDien\Admin\frmCapTaiKhoan.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LoginForm.Designer.cs">
+    <Compile Include="GiaoDien\Admin\frmCapTaiKhoan.Designer.cs">
+      <DependentUpon>frmCapTaiKhoan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GiaoDien\Admin\frmThemNhanVien.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GiaoDien\Admin\frmThemNhanVien.Designer.cs">
+      <DependentUpon>frmThemNhanVien.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GiaoDien\HeThong\LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GiaoDien\HeThong\LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="GiaoDien\Admin\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="GiaoDien\Admin\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="LoginForm.resx">
+    <Compile Include="GiaoDien\Admin\UC_BaoCao.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GiaoDien\Admin\UC_BaoCao.Designer.cs">
+      <DependentUpon>UC_BaoCao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GiaoDien\Admin\UC_Dashboard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GiaoDien\Admin\UC_Dashboard.Designer.cs">
+      <DependentUpon>UC_Dashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GiaoDien\Admin\UC_NhanVien.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GiaoDien\Admin\UC_NhanVien.Designer.cs">
+      <DependentUpon>UC_NhanVien.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GiaoDien\Admin\UC_SanPham.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GiaoDien\Admin\UC_SanPham.Designer.cs">
+      <DependentUpon>UC_SanPham.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="GiaoDien\Admin\frmCapTaiKhoan.resx">
+      <DependentUpon>frmCapTaiKhoan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GiaoDien\Admin\frmThemNhanVien.resx">
+      <DependentUpon>frmThemNhanVien.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GiaoDien\Admin\UC_NhanVien.resx">
+      <DependentUpon>UC_NhanVien.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GiaoDien\HeThong\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="GiaoDien\Admin\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -74,7 +119,17 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="GiaoDien\Admin\UC_BaoCao.resx">
+      <DependentUpon>UC_BaoCao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GiaoDien\Admin\UC_Dashboard.resx">
+      <DependentUpon>UC_Dashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GiaoDien\Admin\UC_SanPham.resx">
+      <DependentUpon>UC_SanPham.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -87,6 +142,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\butbixanh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GiaoDien\NhanVien\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
