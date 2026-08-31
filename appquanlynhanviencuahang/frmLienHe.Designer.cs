@@ -126,10 +126,9 @@
             this.lblHotlineVal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             this.lblHotlineVal.Location = new System.Drawing.Point(30, 175);
             this.lblHotlineVal.Name = "lblHotlineVal";
-            this.lblHotlineVal.Size = new System.Drawing.Size(724, 23);
+            this.lblHotlineVal.Size = new System.Drawing.Size(248, 46);
             this.lblHotlineVal.TabIndex = 5;
-            this.lblHotlineVal.Text = "1234567890 (Quản lý trực tra đzai nhất thế giới số 1 vip pro đzai hơn Đăng Khôi d" +
-    "a đen)";
+            this.lblHotlineVal.Text = "1234567890 (Quản lý trực ca)\r\n\r\n";
             // 
             // lblHotlineTieuDe
             // 
