@@ -30,9 +30,9 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnXoa = new System.Windows.Forms.Button();
-            this.btnCapNhat = new System.Windows.Forms.Button();
-            this.btnThem = new System.Windows.Forms.Button();
+            this.btnXoaSP = new System.Windows.Forms.Button();
+            this.btnCapNhatSP = new System.Windows.Forms.Button();
+            this.btnThemSP = new System.Windows.Forms.Button();
             this.cboDanhMuc = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtTimKiem = new System.Windows.Forms.TextBox();
@@ -61,10 +61,12 @@
             // 
             // panel1
             // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.panel1.Controls.Add(this.btnXoa);
-            this.panel1.Controls.Add(this.btnCapNhat);
-            this.panel1.Controls.Add(this.btnThem);
+            this.panel1.Controls.Add(this.btnXoaSP);
+            this.panel1.Controls.Add(this.btnCapNhatSP);
+            this.panel1.Controls.Add(this.btnThemSP);
             this.panel1.Controls.Add(this.cboDanhMuc);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.txtTimKiem);
@@ -73,41 +75,47 @@
             this.panel1.Size = new System.Drawing.Size(1186, 40);
             this.panel1.TabIndex = 1;
             // 
-            // btnXoa
+            // btnXoaSP
             // 
-            this.btnXoa.BackColor = System.Drawing.Color.Firebrick;
-            this.btnXoa.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnXoa.ForeColor = System.Drawing.Color.White;
-            this.btnXoa.Location = new System.Drawing.Point(1061, 2);
-            this.btnXoa.Name = "btnXoa";
-            this.btnXoa.Size = new System.Drawing.Size(111, 36);
-            this.btnXoa.TabIndex = 5;
-            this.btnXoa.Text = "🗑  Xóa";
-            this.btnXoa.UseVisualStyleBackColor = false;
+            this.btnXoaSP.BackColor = System.Drawing.Color.Firebrick;
+            this.btnXoaSP.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnXoaSP.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnXoaSP.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnXoaSP.ForeColor = System.Drawing.Color.White;
+            this.btnXoaSP.Location = new System.Drawing.Point(1061, 2);
+            this.btnXoaSP.Name = "btnXoaSP";
+            this.btnXoaSP.Size = new System.Drawing.Size(111, 36);
+            this.btnXoaSP.TabIndex = 5;
+            this.btnXoaSP.Text = "🗑  Xóa";
+            this.btnXoaSP.UseVisualStyleBackColor = false;
             // 
-            // btnCapNhat
+            // btnCapNhatSP
             // 
-            this.btnCapNhat.BackColor = System.Drawing.Color.Orange;
-            this.btnCapNhat.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCapNhat.ForeColor = System.Drawing.Color.White;
-            this.btnCapNhat.Location = new System.Drawing.Point(920, 2);
-            this.btnCapNhat.Name = "btnCapNhat";
-            this.btnCapNhat.Size = new System.Drawing.Size(133, 36);
-            this.btnCapNhat.TabIndex = 4;
-            this.btnCapNhat.Text = "✎  Cập nhật";
-            this.btnCapNhat.UseVisualStyleBackColor = false;
+            this.btnCapNhatSP.BackColor = System.Drawing.Color.Orange;
+            this.btnCapNhatSP.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCapNhatSP.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCapNhatSP.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCapNhatSP.ForeColor = System.Drawing.Color.White;
+            this.btnCapNhatSP.Location = new System.Drawing.Point(920, 2);
+            this.btnCapNhatSP.Name = "btnCapNhatSP";
+            this.btnCapNhatSP.Size = new System.Drawing.Size(133, 36);
+            this.btnCapNhatSP.TabIndex = 4;
+            this.btnCapNhatSP.Text = "✎  Cập nhật";
+            this.btnCapNhatSP.UseVisualStyleBackColor = false;
             // 
-            // btnThem
+            // btnThemSP
             // 
-            this.btnThem.BackColor = System.Drawing.Color.Green;
-            this.btnThem.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnThem.ForeColor = System.Drawing.Color.White;
-            this.btnThem.Location = new System.Drawing.Point(779, 2);
-            this.btnThem.Name = "btnThem";
-            this.btnThem.Size = new System.Drawing.Size(132, 36);
-            this.btnThem.TabIndex = 3;
-            this.btnThem.Text = "+ Thêm mới";
-            this.btnThem.UseVisualStyleBackColor = false;
+            this.btnThemSP.BackColor = System.Drawing.Color.Green;
+            this.btnThemSP.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnThemSP.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnThemSP.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnThemSP.ForeColor = System.Drawing.Color.White;
+            this.btnThemSP.Location = new System.Drawing.Point(779, 2);
+            this.btnThemSP.Name = "btnThemSP";
+            this.btnThemSP.Size = new System.Drawing.Size(132, 36);
+            this.btnThemSP.TabIndex = 3;
+            this.btnThemSP.Text = "+ Thêm mới";
+            this.btnThemSP.UseVisualStyleBackColor = false;
             // 
             // cboDanhMuc
             // 
@@ -142,6 +150,9 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -201,6 +212,9 @@
             // 
             // panel2
             // 
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.Color.White;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.dataGridView1);
@@ -235,9 +249,9 @@
         private System.Windows.Forms.TextBox txtTimKiem;
         private System.Windows.Forms.ComboBox cboDanhMuc;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button btnXoa;
-        private System.Windows.Forms.Button btnCapNhat;
-        private System.Windows.Forms.Button btnThem;
+        private System.Windows.Forms.Button btnXoaSP;
+        private System.Windows.Forms.Button btnCapNhatSP;
+        private System.Windows.Forms.Button btnThemSP;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.DataGridViewTextBoxColumn MaSanPham;
