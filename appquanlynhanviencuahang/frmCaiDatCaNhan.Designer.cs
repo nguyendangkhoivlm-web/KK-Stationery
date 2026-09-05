@@ -275,6 +275,7 @@
             this.Controls.Add(this.lblTieuDeForm);
             this.Name = "frmCaiDatCaNhan";
             this.Text = "frmCaiDatCaNhan";
+            this.Load += new System.EventHandler(this.frmCaiDatCaNhan_Load);
             this.tblLayoutChinh.ResumeLayout(false);
             this.pnlGiaoDien.ResumeLayout(false);
             this.pnlGiaoDien.PerformLayout();

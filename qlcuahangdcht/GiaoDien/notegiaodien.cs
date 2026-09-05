@@ -8,15 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace qlcuahangdcht
+namespace qlcuahangdcht.GiaoDien
 {
-    public partial class UC_NhanVien : UserControl
+    public partial class notegiaodien : Form
     {
-        public UC_NhanVien()
+        public notegiaodien()
         {
             InitializeComponent();
         }
-
-
     }
 }

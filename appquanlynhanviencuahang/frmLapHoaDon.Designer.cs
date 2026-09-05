@@ -303,6 +303,7 @@
             this.Controls.Add(this.pnlThongTinTren);
             this.Name = "frmLapHoaDon";
             this.Text = "frmLapHoaDon";
+            this.Load += new System.EventHandler(this.frmLapHoaDon_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvDanhSachSanPham)).EndInit();
             this.pnlThanhToanDuoi.ResumeLayout(false);
             this.pnlThaoTacSP.ResumeLayout(false);

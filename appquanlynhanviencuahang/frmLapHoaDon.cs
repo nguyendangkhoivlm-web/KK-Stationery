@@ -101,5 +101,10 @@ namespace appquanlynhanviencuahang
         {
             MessageBox.Show("Đã lưu hóa đơn vào danh sách nháp thành công!", "Lưu nháp", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+        private void frmLapHoaDon_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

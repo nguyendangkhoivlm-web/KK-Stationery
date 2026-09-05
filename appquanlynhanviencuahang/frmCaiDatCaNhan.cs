@@ -116,5 +116,10 @@ namespace appquanlynhanviencuahang
             txtMatKhauMoi.Clear();
             txtXacNhanMatKhau.Clear();
         }
+
+        private void frmCaiDatCaNhan_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

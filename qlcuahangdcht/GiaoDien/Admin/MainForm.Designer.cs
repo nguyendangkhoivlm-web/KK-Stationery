@@ -137,6 +137,7 @@
             // 
             // pnlContainer
             // 
+            this.pnlContainer.AutoScroll = true;
             this.pnlContainer.BackColor = System.Drawing.SystemColors.ControlLight;
             this.pnlContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlContainer.Location = new System.Drawing.Point(0, 75);
@@ -159,6 +160,7 @@
             this.ClientSize = new System.Drawing.Size(1442, 810);
             this.Controls.Add(this.pnlRightContent);
             this.Controls.Add(this.pnlSidebar);
+            this.MinimumSize = new System.Drawing.Size(1460, 857);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Hệ Thống Quản Lý Cửa Hàng Dụng Cụ Học Tập";
