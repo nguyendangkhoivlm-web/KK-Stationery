@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.VaiTro = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnCapTaiKhoan = new System.Windows.Forms.Button();
-            this.btnThemNV = new System.Windows.Forms.Button();
-            this.btnXoaNV = new System.Windows.Forms.Button();
+            this.btnThemNv = new System.Windows.Forms.Button();
+            this.btnXoaNv = new System.Windows.Forms.Button();
             this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SDT = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NgaySinh = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -41,16 +41,16 @@
             this.HoTen = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MaNhanVien = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvDanhSachNv = new System.Windows.Forms.DataGridView();
             this.DiaChi = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.cboLocChucVu = new System.Windows.Forms.ComboBox();
+            this.txtTimKiemNv = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDanhSachNv)).BeginInit();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -65,8 +65,8 @@
             // panel2
             // 
             this.panel2.Controls.Add(this.btnCapTaiKhoan);
-            this.panel2.Controls.Add(this.btnThemNV);
-            this.panel2.Controls.Add(this.btnXoaNV);
+            this.panel2.Controls.Add(this.btnThemNv);
+            this.panel2.Controls.Add(this.btnXoaNv);
             this.panel2.Location = new System.Drawing.Point(608, 10);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
@@ -88,38 +88,40 @@
             this.btnCapTaiKhoan.TabIndex = 10;
             this.btnCapTaiKhoan.Text = "🔑 Cấp tài khoản";
             this.btnCapTaiKhoan.UseVisualStyleBackColor = false;
+            this.btnCapTaiKhoan.Click += new System.EventHandler(this.btnCapTaiKhoan_Click);
             // 
-            // btnThemNV
+            // btnThemNv
             // 
-            this.btnThemNV.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnThemNV.AutoSize = true;
-            this.btnThemNV.BackColor = System.Drawing.Color.Green;
-            this.btnThemNV.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnThemNV.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnThemNV.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnThemNV.ForeColor = System.Drawing.Color.White;
-            this.btnThemNV.Location = new System.Drawing.Point(16, 79);
-            this.btnThemNV.Name = "btnThemNV";
-            this.btnThemNV.Size = new System.Drawing.Size(187, 34);
-            this.btnThemNV.TabIndex = 9;
-            this.btnThemNV.Text = "+ Thêm nhân viên";
-            this.btnThemNV.UseVisualStyleBackColor = false;
+            this.btnThemNv.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnThemNv.AutoSize = true;
+            this.btnThemNv.BackColor = System.Drawing.Color.Green;
+            this.btnThemNv.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnThemNv.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnThemNv.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnThemNv.ForeColor = System.Drawing.Color.White;
+            this.btnThemNv.Location = new System.Drawing.Point(16, 79);
+            this.btnThemNv.Name = "btnThemNv";
+            this.btnThemNv.Size = new System.Drawing.Size(187, 34);
+            this.btnThemNv.TabIndex = 9;
+            this.btnThemNv.Text = "+ Thêm nhân viên";
+            this.btnThemNv.UseVisualStyleBackColor = false;
+            this.btnThemNv.Click += new System.EventHandler(this.btnThemNv_Click);
             // 
-            // btnXoaNV
+            // btnXoaNv
             // 
-            this.btnXoaNV.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnXoaNV.AutoSize = true;
-            this.btnXoaNV.BackColor = System.Drawing.Color.Firebrick;
-            this.btnXoaNV.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnXoaNV.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnXoaNV.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnXoaNV.ForeColor = System.Drawing.Color.White;
-            this.btnXoaNV.Location = new System.Drawing.Point(401, 79);
-            this.btnXoaNV.Name = "btnXoaNV";
-            this.btnXoaNV.Size = new System.Drawing.Size(170, 34);
-            this.btnXoaNV.TabIndex = 11;
-            this.btnXoaNV.Text = "🗑 Xóa nhân viên";
-            this.btnXoaNV.UseVisualStyleBackColor = false;
+            this.btnXoaNv.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnXoaNv.AutoSize = true;
+            this.btnXoaNv.BackColor = System.Drawing.Color.Firebrick;
+            this.btnXoaNv.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnXoaNv.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnXoaNv.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnXoaNv.ForeColor = System.Drawing.Color.White;
+            this.btnXoaNv.Location = new System.Drawing.Point(401, 79);
+            this.btnXoaNv.Name = "btnXoaNv";
+            this.btnXoaNv.Size = new System.Drawing.Size(170, 34);
+            this.btnXoaNv.TabIndex = 11;
+            this.btnXoaNv.Text = "🗑 Xóa nhân viên";
+            this.btnXoaNv.UseVisualStyleBackColor = false;
             // 
             // Email
             // 
@@ -135,8 +137,8 @@
             // 
             // NgaySinh
             // 
-            dataGridViewCellStyle10.Format = "dd/MM/yyyy";
-            this.NgaySinh.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle3.Format = "dd/MM/yyyy";
+            this.NgaySinh.DefaultCellStyle = dataGridViewCellStyle3;
             this.NgaySinh.HeaderText = "Ngày sinh";
             this.NgaySinh.MinimumWidth = 6;
             this.NgaySinh.Name = "NgaySinh";
@@ -165,7 +167,7 @@
             // 
             this.panel3.BackColor = System.Drawing.Color.White;
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel3.Controls.Add(this.dataGridView1);
+            this.panel3.Controls.Add(this.dgvDanhSachNv);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 135);
             this.panel3.Name = "panel3";
@@ -173,11 +175,14 @@
             this.panel3.Size = new System.Drawing.Size(1192, 600);
             this.panel3.TabIndex = 11;
             // 
-            // dataGridView1
+            // dgvDanhSachNv
             // 
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvDanhSachNv.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvDanhSachNv.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvDanhSachNv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvDanhSachNv.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.MaNhanVien,
             this.HoTen,
             this.GioiTinh,
@@ -186,13 +191,13 @@
             this.Email,
             this.DiaChi,
             this.VaiTro});
-            this.dataGridView1.Location = new System.Drawing.Point(9, 10);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(1172, 527);
-            this.dataGridView1.TabIndex = 3;
+            this.dgvDanhSachNv.Location = new System.Drawing.Point(9, 10);
+            this.dgvDanhSachNv.Name = "dgvDanhSachNv";
+            this.dgvDanhSachNv.RowHeadersVisible = false;
+            this.dgvDanhSachNv.RowHeadersWidth = 51;
+            this.dgvDanhSachNv.RowTemplate.Height = 24;
+            this.dgvDanhSachNv.Size = new System.Drawing.Size(1172, 527);
+            this.dgvDanhSachNv.TabIndex = 3;
             // 
             // DiaChi
             // 
@@ -203,12 +208,12 @@
             // panel1
             // 
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.comboBox1);
-            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.cboLocChucVu);
+            this.panel1.Controls.Add(this.txtTimKiemNv);
             this.panel1.Location = new System.Drawing.Point(10, 10);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(575, 115);
+            this.panel1.Size = new System.Drawing.Size(598, 115);
             this.panel1.TabIndex = 0;
             // 
             // label1
@@ -221,26 +226,26 @@
             this.label1.TabIndex = 10;
             this.label1.Text = "Chức vụ: ";
             // 
-            // comboBox1
+            // cboLocChucVu
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(105, 82);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(195, 30);
-            this.comboBox1.TabIndex = 9;
+            this.cboLocChucVu.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboLocChucVu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cboLocChucVu.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboLocChucVu.FormattingEnabled = true;
+            this.cboLocChucVu.Location = new System.Drawing.Point(105, 82);
+            this.cboLocChucVu.Name = "cboLocChucVu";
+            this.cboLocChucVu.Size = new System.Drawing.Size(195, 30);
+            this.cboLocChucVu.TabIndex = 9;
             // 
-            // textBox1
+            // txtTimKiemNv
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.ForeColor = System.Drawing.Color.Silver;
-            this.textBox1.Location = new System.Drawing.Point(15, 3);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(285, 28);
-            this.textBox1.TabIndex = 8;
-            this.textBox1.Text = "Tìm kiếm nhân viên...";
+            this.txtTimKiemNv.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTimKiemNv.ForeColor = System.Drawing.Color.Silver;
+            this.txtTimKiemNv.Location = new System.Drawing.Point(15, 3);
+            this.txtTimKiemNv.Name = "txtTimKiemNv";
+            this.txtTimKiemNv.Size = new System.Drawing.Size(285, 28);
+            this.txtTimKiemNv.TabIndex = 8;
+            this.txtTimKiemNv.Text = "Tìm kiếm nhân viên...";
             // 
             // tableLayoutPanel1
             // 
@@ -270,7 +275,7 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDanhSachNv)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -283,8 +288,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn VaiTro;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnCapTaiKhoan;
-        private System.Windows.Forms.Button btnThemNV;
-        private System.Windows.Forms.Button btnXoaNV;
+        private System.Windows.Forms.Button btnThemNv;
+        private System.Windows.Forms.Button btnXoaNv;
         private System.Windows.Forms.DataGridViewTextBoxColumn Email;
         private System.Windows.Forms.DataGridViewTextBoxColumn SDT;
         private System.Windows.Forms.DataGridViewTextBoxColumn NgaySinh;
@@ -292,12 +297,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn HoTen;
         private System.Windows.Forms.DataGridViewTextBoxColumn MaNhanVien;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvDanhSachNv;
         private System.Windows.Forms.DataGridViewTextBoxColumn DiaChi;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ComboBox cboLocChucVu;
+        private System.Windows.Forms.TextBox txtTimKiemNv;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }

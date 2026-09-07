@@ -1,4 +1,5 @@
-﻿using System;
+﻿using qlcuahangdcht.GiaoDien.Admin;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -49,7 +50,14 @@ namespace qlcuahangdcht
 
         private void btnThemSP_Click(object sender, EventArgs e)
         {
+            // Khởi tạo form Thêm sản phẩm
+            frmThemSanPham frm = new frmThemSanPham();
 
+            // Hiển thị form
+            frm.ShowDialog();
+
+            // Gọi hàm load lại bảng sản phẩm ở đây sau khi đóng form
+            // Ví dụ: LoadDuLieuSanPham();
         }
 
         private void panel3_Paint(object sender, PaintEventArgs e)

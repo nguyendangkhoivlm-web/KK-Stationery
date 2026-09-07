@@ -1,4 +1,5 @@
-﻿using System;
+﻿using qlcuahangdcht.GiaoDien.HeThong;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -39,6 +40,19 @@ namespace qlcuahangdcht
             }
         }
 
+        private void lnkDangKy_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            // Khởi tạo form Đăng ký mới
+            frmDangKy frm = new frmDangKy();
 
+            // Giấu form Đăng nhập hiện tại đi cho gọn màn hình
+            this.Hide();
+
+            // Mở form Đăng ký lên và khóa màn hình dưới (bắt buộc thao tác xong mới được quay lại)
+            frm.ShowDialog();
+
+            // Sau khi người dùng tắt form Đăng ký, form Đăng nhập tự động hiện lên lại
+            this.Show();
+        }
     }
 }
