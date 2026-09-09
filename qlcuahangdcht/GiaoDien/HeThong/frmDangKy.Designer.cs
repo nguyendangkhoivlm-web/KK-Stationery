@@ -131,6 +131,7 @@
             this.btnDangKy.TabIndex = 10;
             this.btnDangKy.Text = "Đăng ký";
             this.btnDangKy.UseVisualStyleBackColor = false;
+            this.btnDangKy.Click += new System.EventHandler(this.btnDangKy_Click);
             // 
             // txtXacNhanMatKhau
             // 
@@ -188,6 +189,7 @@
             this.ClientSize = new System.Drawing.Size(507, 568);
             this.Controls.Add(this.panel2);
             this.Name = "frmDangKy";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmDangKy";
             this.pnlDangKy.ResumeLayout(false);
             this.pnlDangKy.PerformLayout();
