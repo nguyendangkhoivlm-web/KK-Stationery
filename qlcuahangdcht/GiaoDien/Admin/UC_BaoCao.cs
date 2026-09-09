@@ -16,5 +16,10 @@ namespace qlcuahangdcht
         {
             InitializeComponent();
         }
+
+        private void UC_BaoCao_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

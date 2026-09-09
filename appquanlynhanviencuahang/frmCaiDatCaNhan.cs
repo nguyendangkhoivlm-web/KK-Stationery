@@ -7,114 +7,155 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
 
 namespace appquanlynhanviencuahang
 {
     public partial class frmCaiDatCaNhan : Form
     {
+        // Biến trạng thái: ẩn/hiện mật khẩu và bật/tắt chế độ tối
+        private bool đangHienMatKhau = false;
+        private static bool đangBatCheDoToi = false; // Dùng static để lưu trạng thái xuyên suốt các tab
+
         public frmCaiDatCaNhan()
         {
             InitializeComponent();
         }
 
-        // 1. CHỨC NĂNG ĐỔI HÌNH NỀN ỨNG DỤNG
-        private void btnDoiHinhNen_Click(object sender, EventArgs e)
+        private void frmCaiDatCaNhan_Load(object sender, EventArgs e)
         {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            // 1. Tự động đổ thông tin nhân viên đăng nhập lên form
+            HienThiThongTinNhanVienDangNhap();
+
+            // 2. Phân quyền: Kiểm tra tài khoản đăng nhập
+            string quyenTruyCap = "NhanVien"; // Mặc định nhân viên thường
+
+            if (quyenTruyCap != "Admin")
             {
-                openFileDialog.Title = "Chọn hình nền cho ứng dụng";
-                openFileDialog.Filter = "File hình ảnh (*.jpg; *.jpeg; *.png; *.bmp)|*.jpg; *.jpeg; *.png; *.bmp|Tất cả file (*.*)|*.*";
+                // Nhân viên thường: Khóa cứng hoàn toàn thông tin
+                txtHoTen.ReadOnly = true;
+                txtMaNV.ReadOnly = true;
+                txtChucVu.ReadOnly = true;
+                txtBoPhan.ReadOnly = true;
 
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    try
-                    {
-                        string filePath = openFileDialog.FileName;
+                // Đổi màu nền xám nhẹ nhận diện vùng chỉ đọc
+                txtHoTen.BackColor = Color.FromArgb(240, 240, 240);
+                txtMaNV.BackColor = Color.FromArgb(240, 240, 240);
+                txtChucVu.BackColor = Color.FromArgb(240, 240, 240);
+                txtBoPhan.BackColor = Color.FromArgb(240, 240, 240);
+            }
+            else
+            {
+                // Admin: Cho phép chỉnh sửa thông tin
+                txtHoTen.ReadOnly = false;
+                txtChucVu.ReadOnly = false;
+                txtBoPhan.ReadOnly = false;
+                txtMaNV.ReadOnly = true;
 
-                        frmMain mainForm = this.TopLevelControl as frmMain;
-                        if (mainForm != null)
-                        {
-                            mainForm.BackgroundImage = Image.FromFile(filePath);
-                            mainForm.BackgroundImageLayout = ImageLayout.Stretch;
-                            MessageBox.Show("Đổi hình nền ứng dụng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else
-                        {
-                            this.BackgroundImage = Image.FromFile(filePath);
-                            this.BackgroundImageLayout = ImageLayout.Stretch;
-                            MessageBox.Show("Đổi hình nền thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Không thể tải hình ảnh này: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
+                txtHoTen.BackColor = Color.White;
+                txtChucVu.BackColor = Color.White;
+                txtBoPhan.BackColor = Color.White;
             }
         }
 
-        // 2. CHỨC NĂNG BẬT CHẾ ĐỘ TỐI (CHỐNG MỎI MẮT)
+        // Hàm gán thông tin nhân viên lên giao diện
+        private void HienThiThongTinNhanVienDangNhap()
+        {
+            txtHoTen.Text = "Trần Vũ Tuấn Kiệt";
+            txtMaNV.Text = "NV01";
+            txtChucVu.Text = "Nhân viên Bán hàng / Thu ngân";
+            txtBoPhan.Text = "Cửa Hàng Bán Lẻ & Dụng Cụ Học Tập";
+        }
+
+        // 3. Chức năng ẩn / hiện mật khẩu mới
+        private void btnHienMatKhauMoi_Click(object sender, EventArgs e)
+        {
+            đangHienMatKhau = !đangHienMatKhau;
+            if (đangHienMatKhau)
+            {
+                txtMatKhauMoi.UseSystemPasswordChar = false;
+                txtXacNhanMatKhau.UseSystemPasswordChar = false;
+                btnHienMatKhauMoi.Text = "🙈 Ẩn";
+            }
+            else
+            {
+                txtMatKhauMoi.UseSystemPasswordChar = true;
+                txtXacNhanMatKhau.UseSystemPasswordChar = true;
+                btnHienMatKhauMoi.Text = "👁 Hiện";
+            }
+        }
+
+        // 4. Chức năng chuyển đổi qua lại chế độ Sáng / Tối linh hoạt
         private void btnChuyenCheDo_Click(object sender, EventArgs e)
         {
-            frmMain mainForm = this.TopLevelControl as frmMain;
+            // Đảo ngược trạng thái mỗi lần bấm nút
+            đangBatCheDoToi = !đangBatCheDoToi;
+
+            foreach (Form frm in Application.OpenForms)
+            {
+                QuanLyGiaoDien.ApDungGiaoDien(frm, đangBatCheDoToi);
+            }
+
+            frmMain mainForm = Application.OpenForms.OfType<frmMain>().FirstOrDefault();
             if (mainForm != null)
             {
-                mainForm.BackColor = Color.FromArgb(30, 35, 45);
+                QuanLyGiaoDien.ApDungGiaoDien(mainForm, đangBatCheDoToi);
+            }
+
+            if (đangBatCheDoToi)
+            {
                 MessageBox.Show("Đã chuyển sang chế độ tối bảo vệ mắt!", "Giao diện", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                this.BackColor = Color.FromArgb(30, 35, 45);
-                MessageBox.Show("Đã chuyển sang chế độ tối bảo vệ mắt!", "Giao diện", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Đã chuyển về chế độ sáng dịu nhẹ!", "Giao diện", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
-        // 3. CHỨC NĂNG BẬT CHẾ ĐỘ SÁNG DỊU NHẸ
-        private void btnCheDoSang_Click(object sender, EventArgs e)
+        // 5. Chức năng xác nhận đổi mật khẩu cá nhân
+        private void btnDoiMatKhau_Click_1(object sender, EventArgs e)
         {
-            frmMain mainForm = this.TopLevelControl as frmMain;
-            if (mainForm != null)
-            {
-                mainForm.BackColor = Color.FromArgb(240, 243, 246);
-                MessageBox.Show("Đã chuyển sang chế độ sáng dịu nhẹ!", "Giao diện", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                this.BackColor = Color.FromArgb(240, 243, 246);
-                MessageBox.Show("Đã chuyển sang chế độ sáng dịu nhẹ!", "Giao diện", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        // 4. CHỨC NĂNG XÁC NHẬN ĐỔI MẬT KHẨU CÁ NHÂN
-        private void btnDoiMatKhau_Click(object sender, EventArgs e)
-        {
-            // Để code này hoạt động chuẩn, bạn hãy kiểm tra xem 3 ô TextBox trên giao diện 
-            // đã được đặt tên (Name) trong bảng Properties lần lượt là: 
-            // txtMatKhauCu, txtMatKhauMoi, txtXacNhanMatKhau chưa nhé!
-
             string matKhauCu = txtMatKhauCu.Text.Trim();
             string matKhauMoi = txtMatKhauMoi.Text.Trim();
             string xacNhanMK = txtXacNhanMatKhau.Text.Trim();
 
-            if (string.IsNullOrEmpty(matKhauCu) || string.IsNullOrEmpty(matKhauMoi) || string.IsNullOrEmpty(xacNhanMK))
+            // Kiểm tra bỏ trống
+            if (matKhauCu == "" || matKhauMoi == "" || xacNhanMK == "")
             {
-                MessageBox.Show("Vui lòng điền đầy đủ thông tin mật khẩu!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin mật khẩu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
+            // Kiểm tra quy tắc độ dài mật khẩu mới (tối thiểu 8 ký tự)
+            if (matKhauMoi.Length < 8)
+            {
+                MessageBox.Show("Mật khẩu mới phải có ít nhất từ 8 ký tự trở lên!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtMatKhauMoi.Focus();
+                return;
+            }
+
+            // Kiểm tra mật khẩu xác nhận có khớp không
             if (matKhauMoi != xacNhanMK)
             {
-                MessageBox.Show("Mật khẩu mới và xác nhận mật khẩu không khớp nhau!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Mật khẩu mới và xác nhận mật khẩu không khớp!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            MessageBox.Show("Đổi mật khẩu cá nhân thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Đổi mật khẩu thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             // Xóa sạch các ô nhập sau khi đổi thành công
             txtMatKhauCu.Clear();
             txtMatKhauMoi.Clear();
             txtXacNhanMatKhau.Clear();
+        }
+
+        // 6. Chức năng đăng xuất toàn bộ thiết bị
+        private void btnDangXuatTatCa_Click(object sender, EventArgs e)
+        {
+            DialogResult ketQua = MessageBox.Show("Bạn có chắc chắn muốn đăng xuất khỏi tất cả các thiết bị khác không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (ketQua == DialogResult.Yes)
+            {
+                MessageBox.Show("Đã đăng xuất thành công khỏi các thiết bị khác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }
