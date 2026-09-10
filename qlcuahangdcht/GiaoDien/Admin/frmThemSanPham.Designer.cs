@@ -29,26 +29,26 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.txtMaSP = new System.Windows.Forms.TextBox();
-            this.txtTenSP = new System.Windows.Forms.TextBox();
-            this.txtDonGia = new System.Windows.Forms.TextBox();
-            this.txtSoLuongTon = new System.Windows.Forms.TextBox();
             this.cboDanhMuc = new System.Windows.Forms.ComboBox();
+            this.txtSoLuongTon = new System.Windows.Forms.TextBox();
+            this.txtDonGia = new System.Windows.Forms.TextBox();
+            this.txtTenSp = new System.Windows.Forms.TextBox();
+            this.txtMaSp = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnChonAnh = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.chkTrangThai = new System.Windows.Forms.CheckBox();
+            this.btnChonAnh = new System.Windows.Forms.Button();
+            this.picHinhAnh = new System.Windows.Forms.PictureBox();
             this.btnLuu = new System.Windows.Forms.Button();
             this.btnHuy = new System.Windows.Forms.Button();
-            this.picSanPham = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picSanPham)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picHinhAnh)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -56,8 +56,8 @@
             this.groupBox1.Controls.Add(this.cboDanhMuc);
             this.groupBox1.Controls.Add(this.txtSoLuongTon);
             this.groupBox1.Controls.Add(this.txtDonGia);
-            this.groupBox1.Controls.Add(this.txtTenSP);
-            this.groupBox1.Controls.Add(this.txtMaSP);
+            this.groupBox1.Controls.Add(this.txtTenSp);
+            this.groupBox1.Controls.Add(this.txtMaSp);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
@@ -71,45 +71,41 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Thông tin chung";
             // 
-            // label1
+            // cboDanhMuc
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(22, 50);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(115, 20);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Mã sản phẩm:";
+            this.cboDanhMuc.FormattingEnabled = true;
+            this.cboDanhMuc.Location = new System.Drawing.Point(209, 157);
+            this.cboDanhMuc.Name = "cboDanhMuc";
+            this.cboDanhMuc.Size = new System.Drawing.Size(251, 33);
+            this.cboDanhMuc.TabIndex = 9;
             // 
-            // label2
+            // txtSoLuongTon
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(22, 106);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(120, 20);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Tên sản phẩm:";
+            this.txtSoLuongTon.Location = new System.Drawing.Point(209, 277);
+            this.txtSoLuongTon.Name = "txtSoLuongTon";
+            this.txtSoLuongTon.Size = new System.Drawing.Size(251, 30);
+            this.txtSoLuongTon.TabIndex = 8;
             // 
-            // label3
+            // txtDonGia
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(22, 164);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(91, 20);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Danh mục:";
+            this.txtDonGia.Location = new System.Drawing.Point(209, 216);
+            this.txtDonGia.Name = "txtDonGia";
+            this.txtDonGia.Size = new System.Drawing.Size(251, 30);
+            this.txtDonGia.TabIndex = 7;
             // 
-            // label4
+            // txtTenSp
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(22, 223);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(123, 20);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Đơn giá (VNĐ):";
+            this.txtTenSp.Location = new System.Drawing.Point(209, 99);
+            this.txtTenSp.Name = "txtTenSp";
+            this.txtTenSp.Size = new System.Drawing.Size(251, 30);
+            this.txtTenSp.TabIndex = 6;
+            // 
+            // txtMaSp
+            // 
+            this.txtMaSp.Location = new System.Drawing.Point(209, 43);
+            this.txtMaSp.Name = "txtMaSp";
+            this.txtMaSp.Size = new System.Drawing.Size(251, 30);
+            this.txtMaSp.TabIndex = 5;
             // 
             // label5
             // 
@@ -121,48 +117,52 @@
             this.label5.TabIndex = 4;
             this.label5.Text = "Số lượng tồn kho:";
             // 
-            // txtMaSP
+            // label4
             // 
-            this.txtMaSP.Location = new System.Drawing.Point(209, 43);
-            this.txtMaSP.Name = "txtMaSP";
-            this.txtMaSP.Size = new System.Drawing.Size(251, 30);
-            this.txtMaSP.TabIndex = 5;
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(22, 223);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(123, 20);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "Đơn giá (VNĐ):";
             // 
-            // txtTenSP
+            // label3
             // 
-            this.txtTenSP.Location = new System.Drawing.Point(209, 99);
-            this.txtTenSP.Name = "txtTenSP";
-            this.txtTenSP.Size = new System.Drawing.Size(251, 30);
-            this.txtTenSP.TabIndex = 6;
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(22, 164);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(91, 20);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Danh mục:";
             // 
-            // txtDonGia
+            // label2
             // 
-            this.txtDonGia.Location = new System.Drawing.Point(209, 216);
-            this.txtDonGia.Name = "txtDonGia";
-            this.txtDonGia.Size = new System.Drawing.Size(251, 30);
-            this.txtDonGia.TabIndex = 7;
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(22, 106);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(120, 20);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Tên sản phẩm:";
             // 
-            // txtSoLuongTon
+            // label1
             // 
-            this.txtSoLuongTon.Location = new System.Drawing.Point(209, 277);
-            this.txtSoLuongTon.Name = "txtSoLuongTon";
-            this.txtSoLuongTon.Size = new System.Drawing.Size(251, 30);
-            this.txtSoLuongTon.TabIndex = 8;
-            // 
-            // cboDanhMuc
-            // 
-            this.cboDanhMuc.FormattingEnabled = true;
-            this.cboDanhMuc.Location = new System.Drawing.Point(209, 157);
-            this.cboDanhMuc.Name = "cboDanhMuc";
-            this.cboDanhMuc.Size = new System.Drawing.Size(251, 33);
-            this.cboDanhMuc.TabIndex = 9;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(22, 50);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(115, 20);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Mã sản phẩm:";
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Controls.Add(this.checkBox1);
+            this.groupBox2.Controls.Add(this.chkTrangThai);
             this.groupBox2.Controls.Add(this.btnChonAnh);
-            this.groupBox2.Controls.Add(this.picSanPham);
+            this.groupBox2.Controls.Add(this.picHinhAnh);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(517, 31);
             this.groupBox2.Name = "groupBox2";
@@ -170,6 +170,29 @@
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Hình ảnh minh họa";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(5, 304);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(89, 20);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "Trạng thái:";
+            // 
+            // chkTrangThai
+            // 
+            this.chkTrangThai.AutoSize = true;
+            this.chkTrangThai.Checked = true;
+            this.chkTrangThai.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkTrangThai.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkTrangThai.Location = new System.Drawing.Point(100, 303);
+            this.chkTrangThai.Name = "chkTrangThai";
+            this.chkTrangThai.Size = new System.Drawing.Size(155, 24);
+            this.chkTrangThai.TabIndex = 2;
+            this.chkTrangThai.Text = "Đang kinh doanh";
+            this.chkTrangThai.UseVisualStyleBackColor = true;
             // 
             // btnChonAnh
             // 
@@ -184,28 +207,16 @@
             this.btnChonAnh.Text = "Chọn ảnh...";
             this.btnChonAnh.UseVisualStyleBackColor = false;
             // 
-            // checkBox1
+            // picHinhAnh
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox1.Location = new System.Drawing.Point(100, 303);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(155, 24);
-            this.checkBox1.TabIndex = 2;
-            this.checkBox1.Text = "Đang kinh doanh";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(5, 304);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(89, 20);
-            this.label6.TabIndex = 3;
-            this.label6.Text = "Trạng thái:";
+            this.picHinhAnh.BackColor = System.Drawing.Color.White;
+            this.picHinhAnh.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picHinhAnh.Location = new System.Drawing.Point(45, 43);
+            this.picHinhAnh.Name = "picHinhAnh";
+            this.picHinhAnh.Size = new System.Drawing.Size(170, 180);
+            this.picHinhAnh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picHinhAnh.TabIndex = 0;
+            this.picHinhAnh.TabStop = false;
             // 
             // btnLuu
             // 
@@ -237,17 +248,6 @@
             this.btnHuy.Text = "Hủy bỏ";
             this.btnHuy.UseVisualStyleBackColor = false;
             // 
-            // picSanPham
-            // 
-            this.picSanPham.BackColor = System.Drawing.Color.White;
-            this.picSanPham.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picSanPham.Location = new System.Drawing.Point(45, 43);
-            this.picSanPham.Name = "picSanPham";
-            this.picSanPham.Size = new System.Drawing.Size(170, 180);
-            this.picSanPham.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picSanPham.TabIndex = 0;
-            this.picSanPham.TabStop = false;
-            // 
             // frmThemSanPham
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -265,7 +265,7 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picSanPham)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picHinhAnh)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -281,11 +281,11 @@
         private System.Windows.Forms.ComboBox cboDanhMuc;
         private System.Windows.Forms.TextBox txtSoLuongTon;
         private System.Windows.Forms.TextBox txtDonGia;
-        private System.Windows.Forms.TextBox txtTenSP;
-        private System.Windows.Forms.TextBox txtMaSP;
+        private System.Windows.Forms.TextBox txtTenSp;
+        private System.Windows.Forms.TextBox txtMaSp;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.PictureBox picSanPham;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.PictureBox picHinhAnh;
+        private System.Windows.Forms.CheckBox chkTrangThai;
         private System.Windows.Forms.Button btnChonAnh;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnLuu;

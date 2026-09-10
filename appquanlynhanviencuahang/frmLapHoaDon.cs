@@ -228,5 +228,10 @@ namespace appquanlynhanviencuahang
         private void txtTimKiemSanPham_TextChanged(object sender, EventArgs e)
         {
         }
+
+        private void frmLapHoaDon_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

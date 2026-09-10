@@ -30,16 +30,16 @@
         {
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cboVaiTro = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.txtXacNhanMatKhau = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtMatKhau = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtTenDangNhap = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnHuy = new System.Windows.Forms.Button();
+            this.btnLuu = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
@@ -60,13 +60,13 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.White;
-            this.groupBox1.Controls.Add(this.comboBox1);
+            this.groupBox1.Controls.Add(this.cboVaiTro);
             this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.textBox3);
+            this.groupBox1.Controls.Add(this.txtXacNhanMatKhau);
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.textBox2);
+            this.groupBox1.Controls.Add(this.txtMatKhau);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.txtTenDangNhap);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(15, 53);
             this.groupBox1.Name = "groupBox1";
@@ -74,14 +74,14 @@
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             // 
-            // comboBox1
+            // cboVaiTro
             // 
-            this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(203, 161);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(167, 30);
-            this.comboBox1.TabIndex = 7;
+            this.cboVaiTro.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboVaiTro.FormattingEnabled = true;
+            this.cboVaiTro.Location = new System.Drawing.Point(203, 161);
+            this.cboVaiTro.Name = "cboVaiTro";
+            this.cboVaiTro.Size = new System.Drawing.Size(167, 30);
+            this.cboVaiTro.TabIndex = 7;
             // 
             // label5
             // 
@@ -93,13 +93,13 @@
             this.label5.TabIndex = 6;
             this.label5.Text = "Vai trò:";
             // 
-            // textBox3
+            // txtXacNhanMatKhau
             // 
-            this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox3.Location = new System.Drawing.Point(203, 115);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(262, 28);
-            this.textBox3.TabIndex = 5;
+            this.txtXacNhanMatKhau.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtXacNhanMatKhau.Location = new System.Drawing.Point(203, 115);
+            this.txtXacNhanMatKhau.Name = "txtXacNhanMatKhau";
+            this.txtXacNhanMatKhau.Size = new System.Drawing.Size(262, 28);
+            this.txtXacNhanMatKhau.TabIndex = 5;
             // 
             // label4
             // 
@@ -111,13 +111,13 @@
             this.label4.TabIndex = 4;
             this.label4.Text = "Nhập lại mật khẩu:";
             // 
-            // textBox2
+            // txtMatKhau
             // 
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.Location = new System.Drawing.Point(203, 64);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(262, 28);
-            this.textBox2.TabIndex = 3;
+            this.txtMatKhau.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMatKhau.Location = new System.Drawing.Point(203, 64);
+            this.txtMatKhau.Name = "txtMatKhau";
+            this.txtMatKhau.Size = new System.Drawing.Size(262, 28);
+            this.txtMatKhau.TabIndex = 3;
             // 
             // label3
             // 
@@ -129,13 +129,13 @@
             this.label3.TabIndex = 2;
             this.label3.Text = "Mật khẩu:";
             // 
-            // textBox1
+            // txtTenDangNhap
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(203, 15);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(262, 28);
-            this.textBox1.TabIndex = 1;
+            this.txtTenDangNhap.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTenDangNhap.Location = new System.Drawing.Point(203, 15);
+            this.txtTenDangNhap.Name = "txtTenDangNhap";
+            this.txtTenDangNhap.Size = new System.Drawing.Size(262, 28);
+            this.txtTenDangNhap.TabIndex = 1;
             // 
             // label1
             // 
@@ -147,34 +147,40 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Tên đăng nhập:";
             // 
-            // button2
+            // btnHuy
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(379, 289);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(113, 33);
-            this.button2.TabIndex = 9;
-            this.button2.Text = "Hủy";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnHuy.BackColor = System.Drawing.Color.Gray;
+            this.btnHuy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHuy.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHuy.ForeColor = System.Drawing.Color.White;
+            this.btnHuy.Location = new System.Drawing.Point(379, 289);
+            this.btnHuy.Name = "btnHuy";
+            this.btnHuy.Size = new System.Drawing.Size(113, 33);
+            this.btnHuy.TabIndex = 9;
+            this.btnHuy.Text = "Hủy";
+            this.btnHuy.UseVisualStyleBackColor = false;
             // 
-            // button1
+            // btnLuu
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(254, 289);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(113, 33);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "Lưu";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnLuu.BackColor = System.Drawing.Color.DarkGreen;
+            this.btnLuu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLuu.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLuu.ForeColor = System.Drawing.Color.White;
+            this.btnLuu.Location = new System.Drawing.Point(254, 289);
+            this.btnLuu.Name = "btnLuu";
+            this.btnLuu.Size = new System.Drawing.Size(113, 33);
+            this.btnLuu.TabIndex = 8;
+            this.btnLuu.Text = "Lưu";
+            this.btnLuu.UseVisualStyleBackColor = false;
+            this.btnLuu.Click += new System.EventHandler(this.button1_Click);
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.groupBox1);
-            this.panel1.Controls.Add(this.button2);
-            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.btnHuy);
+            this.panel1.Controls.Add(this.btnLuu);
             this.panel1.Location = new System.Drawing.Point(5, 52);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(512, 339);
@@ -216,15 +222,15 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox txtXacNhanMatKhau;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtMatKhau;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtTenDangNhap;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox cboVaiTro;
+        private System.Windows.Forms.Button btnHuy;
+        private System.Windows.Forms.Button btnLuu;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label6;
     }
