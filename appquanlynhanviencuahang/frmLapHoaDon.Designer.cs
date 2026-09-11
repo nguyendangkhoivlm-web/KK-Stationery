@@ -34,6 +34,7 @@
             this.lblTamTinh = new System.Windows.Forms.Label();
             this.dgvDanhSachSanPham = new System.Windows.Forms.DataGridView();
             this.pnlThanhToanDuoi = new System.Windows.Forms.Panel();
+            this.btnTroLaiTrangTruoc = new System.Windows.Forms.Button();
             this.lblThueVAT = new System.Windows.Forms.Label();
             this.btnXoaSanPham = new System.Windows.Forms.Button();
             this.lblTieuDeChinh = new System.Windows.Forms.Label();
@@ -46,7 +47,6 @@
             this.lblMaHoaDon = new System.Windows.Forms.Label();
             this.pnlThaoTacSP = new System.Windows.Forms.Panel();
             this.pnlThongTinTren = new System.Windows.Forms.Panel();
-            this.btnTroLaiTrangTruoc = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDanhSachSanPham)).BeginInit();
             this.pnlThanhToanDuoi.SuspendLayout();
             this.pnlThaoTacSP.SuspendLayout();
@@ -61,7 +61,7 @@
             this.btnThanhToan1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnThanhToan1.Font = new System.Drawing.Font("Segoe UI", 10.5F, System.Drawing.FontStyle.Bold);
             this.btnThanhToan1.ForeColor = System.Drawing.Color.White;
-            this.btnThanhToan1.Location = new System.Drawing.Point(907, 76);
+            this.btnThanhToan1.Location = new System.Drawing.Point(886, 76);
             this.btnThanhToan1.Name = "btnThanhToan1";
             this.btnThanhToan1.Size = new System.Drawing.Size(140, 42);
             this.btnThanhToan1.TabIndex = 4;
@@ -77,7 +77,7 @@
             this.btnLuuNhap.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLuuNhap.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.btnLuuNhap.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
-            this.btnLuuNhap.Location = new System.Drawing.Point(783, 76);
+            this.btnLuuNhap.Location = new System.Drawing.Point(762, 76);
             this.btnLuuNhap.Name = "btnLuuNhap";
             this.btnLuuNhap.Size = new System.Drawing.Size(115, 42);
             this.btnLuuNhap.TabIndex = 3;
@@ -90,7 +90,7 @@
             this.lblTongCong.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTongCong.Font = new System.Drawing.Font("Segoe UI", 13.5F, System.Drawing.FontStyle.Bold);
             this.lblTongCong.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.lblTongCong.Location = new System.Drawing.Point(703, 40);
+            this.lblTongCong.Location = new System.Drawing.Point(682, 40);
             this.lblTongCong.Name = "lblTongCong";
             this.lblTongCong.Size = new System.Drawing.Size(344, 30);
             this.lblTongCong.TabIndex = 2;
@@ -101,7 +101,7 @@
             // 
             this.lblTamTinh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTamTinh.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
-            this.lblTamTinh.Location = new System.Drawing.Point(753, 1);
+            this.lblTamTinh.Location = new System.Drawing.Point(732, 1);
             this.lblTamTinh.Name = "lblTamTinh";
             this.lblTamTinh.Size = new System.Drawing.Size(294, 20);
             this.lblTamTinh.TabIndex = 0;
@@ -143,11 +143,27 @@
             this.pnlThanhToanDuoi.Size = new System.Drawing.Size(1047, 126);
             this.pnlThanhToanDuoi.TabIndex = 7;
             // 
+            // btnTroLaiTrangTruoc
+            // 
+            this.btnTroLaiTrangTruoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnTroLaiTrangTruoc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
+            this.btnTroLaiTrangTruoc.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(213)))), ((int)(((byte)(225)))));
+            this.btnTroLaiTrangTruoc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTroLaiTrangTruoc.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.btnTroLaiTrangTruoc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
+            this.btnTroLaiTrangTruoc.Location = new System.Drawing.Point(632, 76);
+            this.btnTroLaiTrangTruoc.Name = "btnTroLaiTrangTruoc";
+            this.btnTroLaiTrangTruoc.Size = new System.Drawing.Size(124, 42);
+            this.btnTroLaiTrangTruoc.TabIndex = 5;
+            this.btnTroLaiTrangTruoc.Text = "Quay Lại";
+            this.btnTroLaiTrangTruoc.UseVisualStyleBackColor = false;
+            this.btnTroLaiTrangTruoc.Click += new System.EventHandler(this.btnTroLaiTrangTruoc_Click);
+            // 
             // lblThueVAT
             // 
             this.lblThueVAT.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblThueVAT.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
-            this.lblThueVAT.Location = new System.Drawing.Point(753, 22);
+            this.lblThueVAT.Location = new System.Drawing.Point(732, 22);
             this.lblThueVAT.Name = "lblThueVAT";
             this.lblThueVAT.Size = new System.Drawing.Size(294, 20);
             this.lblThueVAT.TabIndex = 1;
@@ -293,22 +309,6 @@
             this.pnlThongTinTren.Name = "pnlThongTinTren";
             this.pnlThongTinTren.Size = new System.Drawing.Size(1047, 107);
             this.pnlThongTinTren.TabIndex = 4;
-            // 
-            // btnTroLaiTrangTruoc
-            // 
-            this.btnTroLaiTrangTruoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnTroLaiTrangTruoc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
-            this.btnTroLaiTrangTruoc.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(213)))), ((int)(((byte)(225)))));
-            this.btnTroLaiTrangTruoc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTroLaiTrangTruoc.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.btnTroLaiTrangTruoc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
-            this.btnTroLaiTrangTruoc.Location = new System.Drawing.Point(653, 76);
-            this.btnTroLaiTrangTruoc.Name = "btnTroLaiTrangTruoc";
-            this.btnTroLaiTrangTruoc.Size = new System.Drawing.Size(124, 42);
-            this.btnTroLaiTrangTruoc.TabIndex = 5;
-            this.btnTroLaiTrangTruoc.Text = "Quay Lại";
-            this.btnTroLaiTrangTruoc.UseVisualStyleBackColor = false;
-            this.btnTroLaiTrangTruoc.Click += new System.EventHandler(this.btnTroLaiTrangTruoc_Click);
             // 
             // frmLapHoaDon
             // 
