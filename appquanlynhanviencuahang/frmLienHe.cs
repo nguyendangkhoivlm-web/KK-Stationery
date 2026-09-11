@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace appquanlynhanviencuahang
@@ -15,6 +9,11 @@ namespace appquanlynhanviencuahang
         public frmLienHe()
         {
             InitializeComponent();
+        }
+
+        private void frmLienHe_Load(object sender, EventArgs e)
+        {
+            // Để trống hoàn toàn để form tự chạy đúng y nguyên theo giao diện thiết kế (Design) ban đầu của Kiệt
         }
     }
 }

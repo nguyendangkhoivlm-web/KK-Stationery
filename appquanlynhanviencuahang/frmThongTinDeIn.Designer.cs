@@ -73,6 +73,7 @@
             this.btnHuyBo.TabIndex = 12;
             this.btnHuyBo.Text = "✖  Hủy Bỏ";
             this.btnHuyBo.UseVisualStyleBackColor = false;
+            this.btnHuyBo.Click += new System.EventHandler(this.btnHuyBo_Click);
             // 
             // btnDangKyMoi
             // 
@@ -87,6 +88,7 @@
             this.btnDangKyMoi.TabIndex = 11;
             this.btnDangKyMoi.Text = "➕  Đăng Ký Mới";
             this.btnDangKyMoi.UseVisualStyleBackColor = false;
+            this.btnDangKyMoi.Click += new System.EventHandler(this.btnDangKyMoi_Click);
             // 
             // btnInHoaDon
             // 
@@ -101,6 +103,7 @@
             this.btnInHoaDon.TabIndex = 10;
             this.btnInHoaDon.Text = "🖨  In Hóa Đơn";
             this.btnInHoaDon.UseVisualStyleBackColor = false;
+            this.btnInHoaDon.Click += new System.EventHandler(this.btnInHoaDon_Click);
             // 
             // btnKhachLe
             // 
@@ -115,6 +118,7 @@
             this.btnKhachLe.TabIndex = 9;
             this.btnKhachLe.Text = "🛒  Khách Lẻ (In Ngay)";
             this.btnKhachLe.UseVisualStyleBackColor = false;
+            this.btnKhachLe.Click += new System.EventHandler(this.btnKhachLe_Click);
             // 
             // lblTongTienHoaDon
             // 
@@ -164,6 +168,7 @@
             this.lblSoDienThoai.Size = new System.Drawing.Size(227, 23);
             this.lblSoDienThoai.TabIndex = 4;
             this.lblSoDienThoai.Text = "Số điện thoại (* Tìm kiếm):";
+            this.lblSoDienThoai.Click += new System.EventHandler(this.lblSoDienThoai_Click);
             // 
             // txtTenKhachHang
             // 
@@ -274,6 +279,7 @@
             this.Controls.Add(this.pnlThanhTieuDe);
             this.Name = "frmThongTinDeIn";
             this.Text = "frmThongTinDeIn";
+            this.Load += new System.EventHandler(this.frmThongTinDeIn_Load);
             this.pnlKhungThongTin.ResumeLayout(false);
             this.pnlKhungThongTin.PerformLayout();
             this.pnlThanhTieuDe.ResumeLayout(false);

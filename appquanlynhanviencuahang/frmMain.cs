@@ -23,11 +23,14 @@ namespace appquanlynhanviencuahang
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            // Thiết lập màu nền mặc định sáng dịu nhẹ, chuyên nghiệp cho form chính
+            this.BackColor = Color.FromArgb(240, 243, 246);
+
             // Mở form Bán hàng khi vừa khởi động ứng dụng
             OpenChildForm(new frmBanHang(), btnBanHang);
         }
 
-        // Hàm nạp các Form con vào khu vực panel1
+        // Hàm nạp các Form con vào khu vực panel1 
         public void OpenChildForm(Form childForm, Button btnActive = null)
         {
             if (activeForm != null)
@@ -43,7 +46,15 @@ namespace appquanlynhanviencuahang
             activeForm = childForm;
             childForm.TopLevel = false;
             childForm.FormBorderStyle = FormBorderStyle.None;
-            childForm.Dock = DockStyle.Fill;
+            childForm.Dock = DockStyle.Fill; // Phủ kín toàn bộ panel chứa form con
+
+            // --- XỬ LÝ GIAO DIỆN SÁNG / TỐI ---
+            // Kiểm tra xem form chính (frmMain) hiện tại có đang ở chế độ tối hay không
+            bool laDangToi = (this.BackColor == Color.FromArgb(30, 35, 45));
+
+            // Gọi class QuanLyGiaoDien có sẵn của nhóm để áp dụng màu sắc cho form con
+            QuanLyGiaoDien.ApDungGiaoDien(childForm, laDangToi);
+            // ------------------------------------
 
             panel1.Controls.Clear();
             panel1.Controls.Add(childForm);
@@ -52,10 +63,26 @@ namespace appquanlynhanviencuahang
             childForm.Show();
         }
 
+        // Hàm phụ trợ quét toàn bộ khung chứa giữ nền trắng cho các trang khác (như Cài đặt)
+        private void DatMauTrangChoControls(Control container)
+        {
+            foreach (Control ctrl in container.Controls)
+            {
+                if (ctrl is Panel || ctrl is GroupBox || ctrl is TableLayoutPanel || ctrl is FlowLayoutPanel)
+                {
+                    ctrl.BackColor = Color.White;
+                }
+
+                if (ctrl.HasChildren)
+                {
+                    DatMauTrangChoControls(ctrl);
+                }
+            }
+        }
+
         // Đổi màu làm nổi bật nút menu đang được chọn
         private void DoiMauNutMenu(Button activeButton)
         {
-            // Đặt màu nền mặc định cho tất cả các nút menu
             Color defaultColor = Color.FromArgb(44, 90, 160);
 
             if (btnBanHang != null) btnBanHang.BackColor = defaultColor;
@@ -64,7 +91,6 @@ namespace appquanlynhanviencuahang
             if (btnCaiDatCaNhan != null) btnCaiDatCaNhan.BackColor = defaultColor;
             if (btnLienHe != null) btnLienHe.BackColor = defaultColor;
 
-            // Đổi màu nút đang được click cho đậm hơn
             activeButton.BackColor = Color.FromArgb(30, 70, 130);
         }
 
@@ -85,12 +111,12 @@ namespace appquanlynhanviencuahang
 
         private void btnCaiDatCaNhan_Click(object sender, EventArgs e)
         {
-            // Gọi form Cài đặt cá nhân nhúng vào panel chính của frmMain
             OpenChildForm(new frmCaiDatCaNhan(), btnCaiDatCaNhan);
         }
 
         private void btnLienHe_Click(object sender, EventArgs e)
         {
+            // Mở đúng trang Liên hệ
             OpenChildForm(new frmLienHe(), btnLienHe);
         }
     }

@@ -19,27 +19,25 @@ namespace qlcuahangdcht
         }
 
         // --- HÀM 1: XỬ LÝ NHÚNG USER CONTROL VÀO CONTAINER ---
-        // Hàm này tui viết sẵn dùng chung, nút nào gọi cũng được
         private void AddUserControl(UserControl uc)
         {
-            // 1. Phủ kín form con vào khung
+            // Phủ kín UserControl vào khung container nhờ Dock = Fill (chuẩn cô dạy)
             uc.Dock = DockStyle.Fill;
 
-            // 2. Xóa các form cũ đang hiển thị trong đó (nếu có) để tránh đè lên nhau
+            // Xóa các control cũ đang hiển thị để tránh đè lên nhau
             pnlContainer.Controls.Clear();
 
-            // 3. Nạp form mới vào
+            // Nạp UserControl mới vào và đưa lên hiển thị
             pnlContainer.Controls.Add(uc);
-
-            // 4. Đẩy nó lên mặt tiền
             uc.BringToFront();
         }
 
+        // --- HÀM 2: ĐỔI MÀU NÚT MENU KHI ĐƯỢC CHỌN ---
         private void HighlightButton(Button activeBtn)
         {
-            // Bước 1: Trả TẤT CẢ các nút về màu gốc của Panel Sidebar (màu xanh mặc định)
             Color normalColor = pnlSidebar.BackColor;
 
+            // Trả tất cả các nút về màu gốc
             btnTongQuan.BackColor = normalColor;
             btnTongQuan.ForeColor = Color.White;
 
@@ -52,26 +50,25 @@ namespace qlcuahangdcht
             btnBaoCao.BackColor = normalColor;
             btnBaoCao.ForeColor = Color.White;
 
-            // Bước 2: Chỉ riêng cái nút được nhấn mới chuyển sang màu trắng, chữ xanh để làm điểm nhấn
-            activeBtn.BackColor = Color.White;
-            activeBtn.ForeColor = normalColor;
+            // Nút đang được chọn chuyển sang nổi bật
+            if (activeBtn != null)
+            {
+                activeBtn.BackColor = Color.White;
+                activeBtn.ForeColor = normalColor;
+            }
         }
-
-
 
         // --- HÀM 3: SỰ KIỆN KHI BẤM CÁC NÚT TRÊN MENU ---
         private void btnTongQuan_Click(object sender, EventArgs e)
         {
             HighlightButton(btnTongQuan);
-            
-            UC_Dashboard uc = new UC_Dashboard(); // Khởi tạo trang Dashboard
-            AddUserControl(uc); // Nhúng vào lỗ Container
+            UC_Dashboard uc = new UC_Dashboard();
+            AddUserControl(uc);
         }
 
         private void btnSanPham_Click(object sender, EventArgs e)
         {
             HighlightButton(btnSanPham);
-
             UC_SanPham uc = new UC_SanPham();
             AddUserControl(uc);
         }
@@ -79,7 +76,6 @@ namespace qlcuahangdcht
         private void btnNhanVien_Click(object sender, EventArgs e)
         {
             HighlightButton(btnNhanVien);
-
             UC_NhanVien uc = new UC_NhanVien();
             AddUserControl(uc);
         }
@@ -87,17 +83,14 @@ namespace qlcuahangdcht
         private void btnBaoCao_Click(object sender, EventArgs e)
         {
             HighlightButton(btnBaoCao);
-
             UC_BaoCao uc = new UC_BaoCao();
             AddUserControl(uc);
         }
 
-
-
         // --- SỰ KIỆN FORM LOAD ---
         private void MainForm_Load(object sender, EventArgs e)
         {
-            // Vừa mở phần mềm lên là ép nó nhấp luôn vào nút Tổng quan để load trang chủ trước
+            // Vừa mở phần mềm lên là tự động load trang Tổng quan đầu tiên
             btnTongQuan.PerformClick();
         }
 
@@ -119,4 +112,4 @@ namespace qlcuahangdcht
             AddUserControl(uc);
         }
     }
-}
+}                                                                                          

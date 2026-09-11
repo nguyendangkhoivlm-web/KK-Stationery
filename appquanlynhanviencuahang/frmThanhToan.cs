@@ -13,7 +13,10 @@ namespace appquanlynhanviencuahang
     public partial class frmThanhToan : Form
     {
         string phuongThucThanhToan = "Tiền mặt";
-        decimal tongTien = 0;
+        decimal tongTien = 0; // Biến của bạn
+        double tamTinh = 0;
+        double thueVAT = 0;
+        DataTable dtSanPham = new DataTable();
 
         string phTienKhachDua = "Tiền khách đưa";
         string phSoThe = "Số thẻ";
@@ -21,10 +24,31 @@ namespace appquanlynhanviencuahang
         string phCVV = "CVV";
         string phTenChuThe = "Tên chủ thẻ";
 
+        // 1. Constructor mặc định (Giữ nguyên của bạn)
         public frmThanhToan()
         {
             InitializeComponent();
+            ThietLapGiaoDien();
+        }
 
+        // 2. CONSTRUCTOR 4 THAM SỐ: Đón dữ liệu từ form Lập Hóa Đơn truyền sang
+        public frmThanhToan(DataTable dt, double sub, double tax, double total)
+        {
+            InitializeComponent();
+
+            // Hứng dữ liệu
+            this.dtSanPham = dt;
+            this.tamTinh = sub;
+            this.thueVAT = tax;
+            this.tongTien = (decimal)total; // Ép kiểu double sang decimal cho khớp biến của bạn
+
+            ThietLapGiaoDien();
+            HienThiDuLieuTruyenSang();
+        }
+
+        // Hàm gom các thiết lập giao diện gốc của bạn lại cho gọn
+        private void ThietLapGiaoDien()
+        {
             // Gán sự kiện Click trực tiếp bằng code cho các nút bấm chính để tránh bị mất kết nối
             if (btnHoanTat != null)
             {
@@ -53,6 +77,29 @@ namespace appquanlynhanviencuahang
             ChonPhuongThucThanhToan(cardTienMat, "Tiền mặt");
         }
 
+        // Hàm đưa dữ liệu truyền sang lên các nhãn trên form (nếu có)
+        private void HienThiDuLieuTruyenSang()
+        {
+            // Gắn tên nhân viên
+            if (lblNhanVien != null) lblNhanVien.Text = "Nhân viên: Trần Vũ Tuấn Kiệt";
+
+            // Đổ bảng sản phẩm ra Grid (ép tự sinh cột)
+            if (dtSanPham != null && dtSanPham.Rows.Count > 0 && dgvDanhSachSP != null)
+            {
+                dgvDanhSachSP.AutoGenerateColumns = true;
+                dgvDanhSachSP.DataSource = dtSanPham;
+
+                if (dgvDanhSachSP.Columns.Contains("Đơn Giá")) dgvDanhSachSP.Columns["Đơn Giá"].DefaultCellStyle.Format = "N0";
+                if (dgvDanhSachSP.Columns.Contains("Thành Tiền")) dgvDanhSachSP.Columns["Thành Tiền"].DefaultCellStyle.Format = "N0";
+            }
+
+            // Gắn số tiền
+            if (lblTamTinh != null) lblTamTinh.Text = "Tạm tính: " + tamTinh.ToString("N0") + " VNĐ";
+            if (lblThueVAT != null) lblThueVAT.Text = "Thuế VAT (8%): " + thueVAT.ToString("N0") + " VNĐ";
+            if (lblTongTien != null) lblTongTien.Text = "Tổng Tiền: " + tongTien.ToString("N0") + " VNĐ";
+        }
+
+        // --- CÁC HÀM XỬ LÝ GIAO DIỆN (GIỮ NGUYÊN CỦA BẠN) ---
         private void ThietLapPlaceholder(TextBox txt, string placeholder)
         {
             if (txt != null)
@@ -84,7 +131,6 @@ namespace appquanlynhanviencuahang
         private void ChonPhuongThucThanhToan(Panel selectedCard, string tenPhuongThuc)
         {
             phuongThucThanhToan = tenPhuongThuc;
-
             Color normalBackColor = Color.White;
 
             if (cardTienMat != null) cardTienMat.BackColor = normalBackColor;
@@ -106,17 +152,19 @@ namespace appquanlynhanviencuahang
             frmMain mainForm = this.TopLevelControl as frmMain;
             if (mainForm != null)
             {
+                // Gọi form lịch sử bán hàng theo code của bạn
                 mainForm.OpenChildForm(new frmLichSuBanHang(), null);
             }
         }
 
-        // Nút In Hóa Đơn -> Chuyển sang form frmThongTinDeIn trong panel1 của frmMain
+        // Nút In Hóa Đơn -> Chuyển sang form frmThongTinDeIn
         private void btnInHoaDon_Click(object sender, EventArgs e)
         {
             frmMain mainForm = this.TopLevelControl as frmMain;
             if (mainForm != null)
             {
-                mainForm.OpenChildForm(new frmThongTinDeIn(), null);
+                // Ở đây mình truyền cả dtSanPham sang frmThongTinDeIn để sau này in hóa đơn có chi tiết luôn
+                mainForm.OpenChildForm(new frmThongTinDeIn(dtSanPham, tamTinh, thueVAT, (double)tongTien), null);
             }
         }
 
@@ -125,6 +173,7 @@ namespace appquanlynhanviencuahang
             this.Close();
         }
 
+        // Các sự kiện trống giữ nguyên
         private void cardTienMat_Paint(object sender, PaintEventArgs e) { }
         private void cardTheNganHang_Paint(object sender, PaintEventArgs e) { }
         private void cardQuetQR_Paint(object sender, PaintEventArgs e) { }

@@ -59,31 +59,31 @@
             this.pnlKhungChinh.Controls.Add(this.lblDiaChiVal);
             this.pnlKhungChinh.Controls.Add(this.lblDiaChiTieuDe);
             this.pnlKhungChinh.Controls.Add(this.lblTenCuaHang);
-            this.pnlKhungChinh.Location = new System.Drawing.Point(117, 67);
+            this.pnlKhungChinh.Location = new System.Drawing.Point(117, 89);
             this.pnlKhungChinh.Name = "pnlKhungChinh";
             this.pnlKhungChinh.Padding = new System.Windows.Forms.Padding(30);
-            this.pnlKhungChinh.Size = new System.Drawing.Size(795, 399);
+            this.pnlKhungChinh.Size = new System.Drawing.Size(856, 453);
             this.pnlKhungChinh.TabIndex = 3;
             // 
             // lblGioMoCuaVal
             // 
             this.lblGioMoCuaVal.AutoSize = true;
-            this.lblGioMoCuaVal.Font = new System.Drawing.Font("Segoe UI", 10.5F);
+            this.lblGioMoCuaVal.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGioMoCuaVal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.lblGioMoCuaVal.Location = new System.Drawing.Point(30, 315);
+            this.lblGioMoCuaVal.Location = new System.Drawing.Point(30, 382);
             this.lblGioMoCuaVal.Name = "lblGioMoCuaVal";
-            this.lblGioMoCuaVal.Size = new System.Drawing.Size(341, 25);
+            this.lblGioMoCuaVal.Size = new System.Drawing.Size(398, 26);
             this.lblGioMoCuaVal.TabIndex = 9;
             this.lblGioMoCuaVal.Text = "07:00 - 21:30 (Tất cả các ngày trong tuần)";
             // 
             // lblGioMoCuaTieuDe
             // 
             this.lblGioMoCuaTieuDe.AutoSize = true;
-            this.lblGioMoCuaTieuDe.Font = new System.Drawing.Font("Segoe UI", 10.5F, System.Drawing.FontStyle.Bold);
+            this.lblGioMoCuaTieuDe.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGioMoCuaTieuDe.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
-            this.lblGioMoCuaTieuDe.Location = new System.Drawing.Point(30, 290);
+            this.lblGioMoCuaTieuDe.Location = new System.Drawing.Point(30, 342);
             this.lblGioMoCuaTieuDe.Name = "lblGioMoCuaTieuDe";
-            this.lblGioMoCuaTieuDe.Size = new System.Drawing.Size(175, 25);
+            this.lblGioMoCuaTieuDe.Size = new System.Drawing.Size(220, 31);
             this.lblGioMoCuaTieuDe.TabIndex = 8;
             this.lblGioMoCuaTieuDe.Text = "⏰ Giờ Hoạt Động:";
             // 
@@ -94,83 +94,83 @@
             this.pnlDuongKe.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
             this.pnlDuongKe.Location = new System.Drawing.Point(30, 65);
             this.pnlDuongKe.Name = "pnlDuongKe";
-            this.pnlDuongKe.Size = new System.Drawing.Size(735, 1);
+            this.pnlDuongKe.Size = new System.Drawing.Size(796, 1);
             this.pnlDuongKe.TabIndex = 1;
             // 
             // lblITVal
             // 
             this.lblITVal.AutoSize = true;
-            this.lblITVal.Font = new System.Drawing.Font("Segoe UI", 10.5F);
+            this.lblITVal.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblITVal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.lblITVal.Location = new System.Drawing.Point(30, 245);
+            this.lblITVal.Location = new System.Drawing.Point(30, 287);
             this.lblITVal.Name = "lblITVal";
-            this.lblITVal.Size = new System.Drawing.Size(343, 25);
+            this.lblITVal.Size = new System.Drawing.Size(409, 26);
             this.lblITVal.TabIndex = 7;
             this.lblITVal.Text = "Phòng IT Nội Bộ (support@cuahang.com)";
             // 
             // lblITTieuDe
             // 
             this.lblITTieuDe.AutoSize = true;
-            this.lblITTieuDe.Font = new System.Drawing.Font("Segoe UI", 10.5F, System.Drawing.FontStyle.Bold);
+            this.lblITTieuDe.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblITTieuDe.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
-            this.lblITTieuDe.Location = new System.Drawing.Point(30, 220);
+            this.lblITTieuDe.Location = new System.Drawing.Point(30, 247);
             this.lblITTieuDe.Name = "lblITTieuDe";
-            this.lblITTieuDe.Size = new System.Drawing.Size(188, 25);
+            this.lblITTieuDe.Size = new System.Drawing.Size(232, 31);
             this.lblITTieuDe.TabIndex = 6;
             this.lblITTieuDe.Text = "💻 Hỗ Trợ Kỹ Thuật:";
             // 
             // lblHotlineVal
             // 
             this.lblHotlineVal.AutoSize = true;
-            this.lblHotlineVal.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHotlineVal.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHotlineVal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.lblHotlineVal.Location = new System.Drawing.Point(30, 175);
+            this.lblHotlineVal.Location = new System.Drawing.Point(30, 202);
             this.lblHotlineVal.Name = "lblHotlineVal";
-            this.lblHotlineVal.Size = new System.Drawing.Size(248, 46);
+            this.lblHotlineVal.Size = new System.Drawing.Size(287, 52);
             this.lblHotlineVal.TabIndex = 5;
             this.lblHotlineVal.Text = "1234567890 (Quản lý trực ca)\r\n\r\n";
             // 
             // lblHotlineTieuDe
             // 
             this.lblHotlineTieuDe.AutoSize = true;
-            this.lblHotlineTieuDe.Font = new System.Drawing.Font("Segoe UI", 10.5F, System.Drawing.FontStyle.Bold);
+            this.lblHotlineTieuDe.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHotlineTieuDe.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
-            this.lblHotlineTieuDe.Location = new System.Drawing.Point(30, 150);
+            this.lblHotlineTieuDe.Location = new System.Drawing.Point(30, 162);
             this.lblHotlineTieuDe.Name = "lblHotlineTieuDe";
-            this.lblHotlineTieuDe.Size = new System.Drawing.Size(185, 25);
+            this.lblHotlineTieuDe.Size = new System.Drawing.Size(232, 31);
             this.lblHotlineTieuDe.TabIndex = 4;
             this.lblHotlineTieuDe.Text = "📞 Hotline Quản Lý:";
             // 
             // lblDiaChiVal
             // 
             this.lblDiaChiVal.AutoSize = true;
-            this.lblDiaChiVal.Font = new System.Drawing.Font("Segoe UI", 10.5F);
+            this.lblDiaChiVal.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDiaChiVal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.lblDiaChiVal.Location = new System.Drawing.Point(30, 105);
+            this.lblDiaChiVal.Location = new System.Drawing.Point(30, 120);
             this.lblDiaChiVal.Name = "lblDiaChiVal";
-            this.lblDiaChiVal.Size = new System.Drawing.Size(249, 25);
+            this.lblDiaChiVal.Size = new System.Drawing.Size(306, 26);
             this.lblDiaChiVal.TabIndex = 3;
             this.lblDiaChiVal.Text = "TP. Cao Lãnh, Tỉnh Đồng Tháp";
             // 
             // lblDiaChiTieuDe
             // 
             this.lblDiaChiTieuDe.AutoSize = true;
-            this.lblDiaChiTieuDe.Font = new System.Drawing.Font("Segoe UI", 10.5F, System.Drawing.FontStyle.Bold);
+            this.lblDiaChiTieuDe.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDiaChiTieuDe.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
             this.lblDiaChiTieuDe.Location = new System.Drawing.Point(30, 80);
             this.lblDiaChiTieuDe.Name = "lblDiaChiTieuDe";
-            this.lblDiaChiTieuDe.Size = new System.Drawing.Size(197, 25);
+            this.lblDiaChiTieuDe.Size = new System.Drawing.Size(247, 31);
             this.lblDiaChiTieuDe.TabIndex = 2;
             this.lblDiaChiTieuDe.Text = "📍 Địa Chỉ Cửa Hàng:";
             // 
             // lblTenCuaHang
             // 
             this.lblTenCuaHang.AutoSize = true;
-            this.lblTenCuaHang.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            this.lblTenCuaHang.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTenCuaHang.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(90)))), ((int)(((byte)(160)))));
             this.lblTenCuaHang.Location = new System.Drawing.Point(28, 25);
             this.lblTenCuaHang.Name = "lblTenCuaHang";
-            this.lblTenCuaHang.Size = new System.Drawing.Size(671, 32);
+            this.lblTenCuaHang.Size = new System.Drawing.Size(780, 38);
             this.lblTenCuaHang.TabIndex = 0;
             this.lblTenCuaHang.Text = "🏫 CỬA HÀNG DỤNG CỤ HỌC TẬP && VĂN PHÒNG PHẨM";
             // 
@@ -179,7 +179,7 @@
             this.lblTieuDeForm.AutoSize = true;
             this.lblTieuDeForm.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
             this.lblTieuDeForm.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.lblTieuDeForm.Location = new System.Drawing.Point(117, 22);
+            this.lblTieuDeForm.Location = new System.Drawing.Point(117, 44);
             this.lblTieuDeForm.Name = "lblTieuDeForm";
             this.lblTieuDeForm.Size = new System.Drawing.Size(249, 37);
             this.lblTieuDeForm.TabIndex = 2;
@@ -189,7 +189,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1029, 536);
+            this.ClientSize = new System.Drawing.Size(1092, 645);
             this.Controls.Add(this.pnlKhungChinh);
             this.Controls.Add(this.lblTieuDeForm);
             this.Name = "frmLienHe";
