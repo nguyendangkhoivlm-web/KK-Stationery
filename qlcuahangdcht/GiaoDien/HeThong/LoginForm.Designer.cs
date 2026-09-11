@@ -147,9 +147,9 @@
             this.label7.Font = new System.Drawing.Font("Times New Roman", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.Location = new System.Drawing.Point(90, 92);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(167, 37);
+            this.label7.Size = new System.Drawing.Size(159, 37);
             this.label7.TabIndex = 0;
-            this.label7.Text = "Đăng nhập.";
+            this.label7.Text = "Đăng nhập";
             // 
             // LoginForm
             // 

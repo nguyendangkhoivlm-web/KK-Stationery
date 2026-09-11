@@ -1,4 +1,5 @@
-﻿using System;
+﻿using qlcuahangdcht.GiaoDien.Admin;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -98,6 +99,24 @@ namespace qlcuahangdcht
         {
             // Vừa mở phần mềm lên là ép nó nhấp luôn vào nút Tổng quan để load trang chủ trước
             btnTongQuan.PerformClick();
+        }
+
+        private void btnNhaCungCap_Click(object sender, EventArgs e)
+        {
+            // 1. Làm sáng cái nút lên (nếu form ông có dùng hàm này)
+            HighlightButton(btnNhaCungCap);
+
+            // 2. Gọi giao diện ra và nhét vào cái hàm ông đã tạo sẵn
+            UC_NhaCungCap uc = new UC_NhaCungCap();
+            AddUserControl(uc);
+        }
+
+        private void btnPhieuNhap_Click(object sender, EventArgs e)
+        {
+            HighlightButton(btnPhieuNhap);
+
+            UC_PhieuNhap uc = new UC_PhieuNhap();
+            AddUserControl(uc);
         }
     }
 }

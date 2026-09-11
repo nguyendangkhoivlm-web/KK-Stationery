@@ -75,6 +75,18 @@
     <Compile Include="GiaoDien\Admin\frmThemSanPham.Designer.cs">
       <DependentUpon>frmThemSanPham.cs</DependentUpon>
     </Compile>
+    <Compile Include="GiaoDien\Admin\UC_NhaCungCap.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GiaoDien\Admin\UC_NhaCungCap.Designer.cs">
+      <DependentUpon>UC_NhaCungCap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GiaoDien\Admin\UC_PhieuNhap.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GiaoDien\Admin\UC_PhieuNhap.Designer.cs">
+      <DependentUpon>UC_PhieuNhap.cs</DependentUpon>
+    </Compile>
     <Compile Include="GiaoDien\HeThong\frmDangKy.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -143,8 +155,14 @@
     <EmbeddedResource Include="GiaoDien\Admin\frmThemSanPham.resx">
       <DependentUpon>frmThemSanPham.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GiaoDien\Admin\UC_NhaCungCap.resx">
+      <DependentUpon>UC_NhaCungCap.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GiaoDien\Admin\UC_NhanVien.resx">
       <DependentUpon>UC_NhanVien.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GiaoDien\Admin\UC_PhieuNhap.resx">
+      <DependentUpon>UC_PhieuNhap.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GiaoDien\HeThong\frmDangKy.resx">
       <DependentUpon>frmDangKy.cs</DependentUpon>
