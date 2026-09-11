@@ -229,9 +229,6 @@ namespace appquanlynhanviencuahang
         {
         }
 
-        private void frmLapHoaDon_Load(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 }

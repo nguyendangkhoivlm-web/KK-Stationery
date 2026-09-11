@@ -148,6 +148,7 @@
             this.txtTimKiem.Size = new System.Drawing.Size(230, 30);
             this.txtTimKiem.TabIndex = 1;
             this.txtTimKiem.Text = "Tìm theo Mã HĐ hoặc SĐT...";
+            this.txtTimKiem.TextChanged += new System.EventHandler(this.txtTimKiem_TextChanged);
             // 
             // lblTieuDe
             // 

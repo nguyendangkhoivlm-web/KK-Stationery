@@ -1,4 +1,5 @@
-﻿using System;
+﻿using qlnhanvien;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,7 +14,7 @@ namespace appquanlynhanviencuahang
     public partial class frmThanhToan : Form
     {
         string phuongThucThanhToan = "Tiền mặt";
-        decimal tongTien = 0; // Biến của bạn
+        decimal tongTien = 0;
         double tamTinh = 0;
         double thueVAT = 0;
         DataTable dtSanPham = new DataTable();
@@ -24,66 +25,90 @@ namespace appquanlynhanviencuahang
         string phCVV = "CVV";
         string phTenChuThe = "Tên chủ thẻ";
 
-        // 1. Constructor mặc định (Giữ nguyên của bạn)
+        // 1. Constructor mặc định
         public frmThanhToan()
         {
             InitializeComponent();
             ThietLapGiaoDien();
         }
 
-        // 2. CONSTRUCTOR 4 THAM SỐ: Đón dữ liệu từ form Lập Hóa Đơn truyền sang
+        // 2. CONSTRUCTOR đón dữ liệu
         public frmThanhToan(DataTable dt, double sub, double tax, double total)
         {
             InitializeComponent();
 
-            // Hứng dữ liệu
             this.dtSanPham = dt;
             this.tamTinh = sub;
             this.thueVAT = tax;
-            this.tongTien = (decimal)total; // Ép kiểu double sang decimal cho khớp biến của bạn
+            this.tongTien = (decimal)total;
 
             ThietLapGiaoDien();
             HienThiDuLieuTruyenSang();
         }
 
-        // Hàm gom các thiết lập giao diện gốc của bạn lại cho gọn
         private void ThietLapGiaoDien()
         {
-            // Gán sự kiện Click trực tiếp bằng code cho các nút bấm chính để tránh bị mất kết nối
+            // Đăng ký sự kiện cho nút Hoàn Tất
             if (btnHoanTat != null)
             {
                 btnHoanTat.Click -= btnHoanTat_Click;
                 btnHoanTat.Click += btnHoanTat_Click;
             }
 
+            // Đăng ký sự kiện cho nút In Hóa Đơn
             if (btnInHoaDon != null)
             {
                 btnInHoaDon.Click -= btnInHoaDon_Click;
                 btnInHoaDon.Click += btnInHoaDon_Click;
             }
 
-            // Gán sự kiện ẩn/hiện chữ mờ cho các ô TextBox
+            // ĐĂNG KÝ SỰ KIỆN VÀ ÉP MÀU CHO NÚT QUAY LẠI (Chống tàng hình)
+            if (btnquaylaitrangtruoc != null)
+            {
+                btnquaylaitrangtruoc.Click -= btnquaylaitrangtruoc_Click;
+                btnquaylaitrangtruoc.Click += btnquaylaitrangtruoc_Click;
+
+                // Ép màu để nút luôn hiện rõ trên nền trắng
+                btnquaylaitrangtruoc.BackColor = Color.DimGray; // Nền xám đậm
+                btnquaylaitrangtruoc.ForeColor = Color.White;   // Chữ màu trắng
+                btnquaylaitrangtruoc.FlatStyle = FlatStyle.Flat; // Bỏ viền 3D cũ kỹ
+            }
+
             ThietLapPlaceholder(txtTienKhachDua, phTienKhachDua);
             ThietLapPlaceholder(txtSoThe, phSoThe);
             ThietLapPlaceholder(txtNgayHetHan, phMMYY);
             ThietLapPlaceholder(txtMaCVV, phCVV);
             ThietLapPlaceholder(txtTenChuThe, phTenChuThe);
 
-            // Gán sự kiện chọn phương thức thanh toán
             if (cardTienMat != null) cardTienMat.Click += (s, e) => ChonPhuongThucThanhToan(cardTienMat, "Tiền mặt");
             if (cardTheNganHang != null) cardTheNganHang.Click += (s, e) => ChonPhuongThucThanhToan(cardTheNganHang, "Thẻ ngân hàng");
-            if (cardQuetQR != null) cardQuetQR.Click += (s, e) => ChonPhuongThucThanhToan(cardQuetQR, "Quét mã QR");
+
+            // =========================================================================
+            // BẤM VÀO KHUNG QR LÀ BAY QUA TRANG QUÉT MÃ LUÔN
+            // =========================================================================
+            if (cardQuetQR != null)
+            {
+                cardQuetQR.Click += (s, e) =>
+                {
+                    ChonPhuongThucThanhToan(cardQuetQR, "Quét mã QR");
+
+                    // Tạo mã đơn và mở form Quét QR ngay lập tức
+                    string maDonHang = "HD_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
+                    frmMain mainForm = this.TopLevelControl as frmMain;
+                    if (mainForm != null)
+                    {
+                        mainForm.OpenChildForm(new frmThanhToanQuaQR(dtSanPham, tamTinh, thueVAT, (double)tongTien, maDonHang), null);
+                    }
+                };
+            }
 
             ChonPhuongThucThanhToan(cardTienMat, "Tiền mặt");
         }
 
-        // Hàm đưa dữ liệu truyền sang lên các nhãn trên form (nếu có)
         private void HienThiDuLieuTruyenSang()
         {
-            // Gắn tên nhân viên
-            if (lblNhanVien != null) lblNhanVien.Text = "Nhân viên: Trần Vũ Tuấn Kiệt";
+            if (lblNhanVien != null) lblNhanVien.Text = "Nhân viên: " + PhienDangNhap.HoVaTen;
 
-            // Đổ bảng sản phẩm ra Grid (ép tự sinh cột)
             if (dtSanPham != null && dtSanPham.Rows.Count > 0 && dgvDanhSachSP != null)
             {
                 dgvDanhSachSP.AutoGenerateColumns = true;
@@ -93,13 +118,11 @@ namespace appquanlynhanviencuahang
                 if (dgvDanhSachSP.Columns.Contains("Thành Tiền")) dgvDanhSachSP.Columns["Thành Tiền"].DefaultCellStyle.Format = "N0";
             }
 
-            // Gắn số tiền
             if (lblTamTinh != null) lblTamTinh.Text = "Tạm tính: " + tamTinh.ToString("N0") + " VNĐ";
             if (lblThueVAT != null) lblThueVAT.Text = "Thuế VAT (8%): " + thueVAT.ToString("N0") + " VNĐ";
             if (lblTongTien != null) lblTongTien.Text = "Tổng Tiền: " + tongTien.ToString("N0") + " VNĐ";
         }
 
-        // --- CÁC HÀM XỬ LÝ GIAO DIỆN (GIỮ NGUYÊN CỦA BẠN) ---
         private void ThietLapPlaceholder(TextBox txt, string placeholder)
         {
             if (txt != null)
@@ -143,28 +166,61 @@ namespace appquanlynhanviencuahang
             }
         }
 
-        // Nút Hoàn Tất Giao Dịch
+        // ======================================================================
+        // XỬ LÝ NÚT HOÀN TẤT THANH TOÁN (Dành cho Tiền mặt / Thẻ)
+        // ======================================================================
         private void btnHoanTat_Click(object sender, EventArgs e)
         {
-            string thongBao = string.Format("Thanh toán thành công!\nPhương thức: {0}\nTổng thanh toán: {1:N0} VNĐ", phuongThucThanhToan, tongTien);
-            MessageBox.Show(thongBao, "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            string maDonHang = "HD_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
 
-            frmMain mainForm = this.TopLevelControl as frmMain;
-            if (mainForm != null)
+            // KIỂM TRA: Lỡ người dùng bấm nhầm nút Hoàn tất khi đang ở chế độ QR
+            if (phuongThucThanhToan == "Quét mã QR")
             {
-                // Gọi form lịch sử bán hàng theo code của bạn
-                mainForm.OpenChildForm(new frmLichSuBanHang(), null);
+                frmMain mainForm = this.TopLevelControl as frmMain;
+                if (mainForm != null)
+                {
+                    mainForm.OpenChildForm(new frmThanhToanQuaQR(dtSanPham, tamTinh, thueVAT, (double)tongTien, maDonHang), null);
+                }
+                return;
+            }
+
+            // ==========================================================
+            // PHẦN BÊN DƯỚI DÀNH CHO TIỀN MẶT / THẺ NGÂN HÀNG
+            // ==========================================================
+            string tenNhanVien = !string.IsNullOrEmpty(PhienDangNhap.HoVaTen) ? PhienDangNhap.HoVaTen : "Trần Vũ Tuấn Kiệt";
+            string thoiGian = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+
+            KhoLichSu.DanhSachDonHang.Rows.Add(maDonHang, tenNhanVien, phuongThucThanhToan, tongTien, thoiGian);
+            KhoLichSu.VuaThanhToanXong = true;
+
+            MessageBox.Show("Thanh toán thành công!\nMã Đơn Hàng: " + maDonHang, "Hóa Đơn & Lịch Sử Giao Dịch", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            frmMain main = this.TopLevelControl as frmMain;
+            if (main != null)
+            {
+                main.OpenChildForm(new frmLichSuBanHang(), null);
             }
         }
 
-        // Nút In Hóa Đơn -> Chuyển sang form frmThongTinDeIn
         private void btnInHoaDon_Click(object sender, EventArgs e)
         {
             frmMain mainForm = this.TopLevelControl as frmMain;
             if (mainForm != null)
             {
-                // Ở đây mình truyền cả dtSanPham sang frmThongTinDeIn để sau này in hóa đơn có chi tiết luôn
                 mainForm.OpenChildForm(new frmThongTinDeIn(dtSanPham, tamTinh, thueVAT, (double)tongTien), null);
+            }
+        }
+
+        // ======================================================================
+        // XỬ LÝ NÚT QUAY LẠI TRANG TRƯỚC
+        // ======================================================================
+        private void btnquaylaitrangtruoc_Click(object sender, EventArgs e)
+        {
+            frmMain mainForm = this.TopLevelControl as frmMain;
+            if (mainForm != null)
+            {
+                // Gọi form Lập Hóa Đơn và truyền lại giỏ hàng hiện tại để không bị mất
+                mainForm.OpenChildForm(new frmLapHoaDon(dtSanPham), null);
             }
         }
 
@@ -173,7 +229,7 @@ namespace appquanlynhanviencuahang
             this.Close();
         }
 
-        // Các sự kiện trống giữ nguyên
+        // Các sự kiện mặc định để không bị lỗi giao diện Designer
         private void cardTienMat_Paint(object sender, PaintEventArgs e) { }
         private void cardTheNganHang_Paint(object sender, PaintEventArgs e) { }
         private void cardQuetQR_Paint(object sender, PaintEventArgs e) { }

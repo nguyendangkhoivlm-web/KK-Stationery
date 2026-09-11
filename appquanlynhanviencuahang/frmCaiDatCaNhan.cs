@@ -26,18 +26,18 @@ namespace appquanlynhanviencuahang
             // 1. Tự động đổ thông tin nhân viên đăng nhập lên form
             HienThiThongTinNhanVienDangNhap();
 
-            // 2. Phân quyền: Kiểm tra tài khoản đăng nhập
-            string quyenTruyCap = "NhanVien"; // Mặc định nhân viên thường
+            // 2. Phân quyền động dựa vào vai trò thực tế từ phiên đăng nhập
+            string quyenTruyCap = PhienDangNhap.VaiTro;
 
             if (quyenTruyCap != "Admin")
             {
-                // Nhân viên thường: Khóa cứng hoàn toàn thông tin
+                // Nhân viên thường: Khóa cứng hoàn toàn thông tin, chỉ cho xem
                 txtHoTen.ReadOnly = true;
                 txtMaNV.ReadOnly = true;
                 txtChucVu.ReadOnly = true;
                 txtBoPhan.ReadOnly = true;
 
-                // Đổi màu nền xám nhẹ nhận diện vùng chỉ đọc
+                // Đổi màu nền xám nhẹ để phân biệt vùng chỉ đọc
                 txtHoTen.BackColor = Color.FromArgb(240, 240, 240);
                 txtMaNV.BackColor = Color.FromArgb(240, 240, 240);
                 txtChucVu.BackColor = Color.FromArgb(240, 240, 240);
@@ -45,11 +45,11 @@ namespace appquanlynhanviencuahang
             }
             else
             {
-                // Admin: Cho phép chỉnh sửa thông tin
+                // Admin: Cho phép chỉnh sửa thông tin hồ sơ
                 txtHoTen.ReadOnly = false;
                 txtChucVu.ReadOnly = false;
                 txtBoPhan.ReadOnly = false;
-                txtMaNV.ReadOnly = true;
+                txtMaNV.ReadOnly = true; // Mã nhân viên giữ cố định không cho đổi
 
                 txtHoTen.BackColor = Color.White;
                 txtChucVu.BackColor = Color.White;
@@ -57,13 +57,14 @@ namespace appquanlynhanviencuahang
             }
         }
 
-        // Hàm gán thông tin nhân viên lên giao diện
+        // Hàm gán thông tin nhân viên lên giao diện từ lớp quản lý phiên làm việc
         private void HienThiThongTinNhanVienDangNhap()
         {
-            txtHoTen.Text = "Trần Vũ Tuấn Kiệt";
-            txtMaNV.Text = "NV01";
-            txtChucVu.Text = "Nhân viên Bán hàng / Thu ngân";
-            txtBoPhan.Text = "Cửa Hàng Bán Lẻ & Dụng Cụ Học Tập";
+            // Nếu phiên làm việc đã có dữ liệu thì điền vào, nếu chưa có thì lấy dữ liệu mẫu
+            txtHoTen.Text = string.IsNullOrEmpty(PhienDangNhap.HoVaTen) ? "Trần Vũ Tuấn Kiệt" : PhienDangNhap.HoVaTen;
+            txtMaNV.Text = string.IsNullOrEmpty(PhienDangNhap.MaNhanVien) ? "NV01" : PhienDangNhap.MaNhanVien;
+            txtChucVu.Text = string.IsNullOrEmpty(PhienDangNhap.ChucVu) ? "Nhân viên Bán hàng / Thu ngân" : PhienDangNhap.ChucVu;
+            txtBoPhan.Text = string.IsNullOrEmpty(PhienDangNhap.BoPhan) ? "Cửa Hàng Bán Lẻ & Dụng Cụ Học Tập" : PhienDangNhap.BoPhan;
         }
 
         // 3. Chức năng ẩn / hiện mật khẩu mới
@@ -87,7 +88,6 @@ namespace appquanlynhanviencuahang
         // 4. Chức năng chuyển đổi qua lại chế độ Sáng / Tối linh hoạt
         private void btnChuyenCheDo_Click(object sender, EventArgs e)
         {
-            // Đảo ngược trạng thái mỗi lần bấm nút
             đangBatCheDoToi = !đangBatCheDoToi;
 
             foreach (Form frm in Application.OpenForms)
