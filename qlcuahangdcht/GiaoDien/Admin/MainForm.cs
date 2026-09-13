@@ -50,6 +50,12 @@ namespace qlcuahangdcht
             btnBaoCao.BackColor = normalColor;
             btnBaoCao.ForeColor = Color.White;
 
+            btnNhaCungCap.BackColor = normalColor;
+            btnNhaCungCap.ForeColor = Color.White;
+
+            btnPhieuNhap.BackColor = normalColor;
+            btnPhieuNhap.ForeColor = Color.White;
+
             // Nút đang được chọn chuyển sang nổi bật
             if (activeBtn != null)
             {

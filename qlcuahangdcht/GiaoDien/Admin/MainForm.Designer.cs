@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.pnlSidebar = new System.Windows.Forms.Panel();
+            this.btnPhieuNhap = new System.Windows.Forms.Button();
+            this.btnNhaCungCap = new System.Windows.Forms.Button();
             this.btnBaoCao = new System.Windows.Forms.Button();
             this.btnNhanVien = new System.Windows.Forms.Button();
             this.btnSanPham = new System.Windows.Forms.Button();
@@ -36,8 +38,7 @@
             this.pnlRightContent = new System.Windows.Forms.Panel();
             this.pnlContainer = new System.Windows.Forms.Panel();
             this.pnlHeader = new System.Windows.Forms.Panel();
-            this.btnPhieuNhap = new System.Windows.Forms.Button();
-            this.btnNhaCungCap = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.pnlSidebar.SuspendLayout();
             this.pnlRightContent.SuspendLayout();
             this.SuspendLayout();
@@ -45,6 +46,7 @@
             // pnlSidebar
             // 
             this.pnlSidebar.BackColor = System.Drawing.Color.SteelBlue;
+            this.pnlSidebar.Controls.Add(this.label1);
             this.pnlSidebar.Controls.Add(this.btnPhieuNhap);
             this.pnlSidebar.Controls.Add(this.btnNhaCungCap);
             this.pnlSidebar.Controls.Add(this.btnBaoCao);
@@ -56,6 +58,42 @@
             this.pnlSidebar.Name = "pnlSidebar";
             this.pnlSidebar.Size = new System.Drawing.Size(250, 810);
             this.pnlSidebar.TabIndex = 0;
+            // 
+            // btnPhieuNhap
+            // 
+            this.btnPhieuNhap.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnPhieuNhap.FlatAppearance.BorderSize = 0;
+            this.btnPhieuNhap.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnPhieuNhap.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnPhieuNhap.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPhieuNhap.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPhieuNhap.ForeColor = System.Drawing.Color.White;
+            this.btnPhieuNhap.Location = new System.Drawing.Point(15, 378);
+            this.btnPhieuNhap.Name = "btnPhieuNhap";
+            this.btnPhieuNhap.Size = new System.Drawing.Size(223, 41);
+            this.btnPhieuNhap.TabIndex = 6;
+            this.btnPhieuNhap.Text = "📋 Quản lý Phiếu nhập";
+            this.btnPhieuNhap.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnPhieuNhap.UseVisualStyleBackColor = true;
+            this.btnPhieuNhap.Click += new System.EventHandler(this.btnPhieuNhap_Click);
+            // 
+            // btnNhaCungCap
+            // 
+            this.btnNhaCungCap.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnNhaCungCap.FlatAppearance.BorderSize = 0;
+            this.btnNhaCungCap.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnNhaCungCap.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnNhaCungCap.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNhaCungCap.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNhaCungCap.ForeColor = System.Drawing.Color.White;
+            this.btnNhaCungCap.Location = new System.Drawing.Point(15, 306);
+            this.btnNhaCungCap.Name = "btnNhaCungCap";
+            this.btnNhaCungCap.Size = new System.Drawing.Size(223, 41);
+            this.btnNhaCungCap.TabIndex = 5;
+            this.btnNhaCungCap.Text = "🚚 Quản lý Nhà cung cấp";
+            this.btnNhaCungCap.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnNhaCungCap.UseVisualStyleBackColor = true;
+            this.btnNhaCungCap.Click += new System.EventHandler(this.btnNhaCungCap_Click);
             // 
             // btnBaoCao
             // 
@@ -148,7 +186,6 @@
             this.pnlContainer.Name = "pnlContainer";
             this.pnlContainer.Size = new System.Drawing.Size(1192, 735);
             this.pnlContainer.TabIndex = 1;
-
             // 
             // pnlHeader
             // 
@@ -158,41 +195,16 @@
             this.pnlHeader.Size = new System.Drawing.Size(1192, 75);
             this.pnlHeader.TabIndex = 0;
             // 
-            // btnPhieuNhap
+            // label1
             // 
-            this.btnPhieuNhap.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnPhieuNhap.FlatAppearance.BorderSize = 0;
-            this.btnPhieuNhap.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-            this.btnPhieuNhap.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnPhieuNhap.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPhieuNhap.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPhieuNhap.ForeColor = System.Drawing.Color.White;
-            this.btnPhieuNhap.Location = new System.Drawing.Point(15, 378);
-            this.btnPhieuNhap.Name = "btnPhieuNhap";
-            this.btnPhieuNhap.Size = new System.Drawing.Size(223, 41);
-            this.btnPhieuNhap.TabIndex = 6;
-            this.btnPhieuNhap.Text = "📋 Quản lý Phiếu nhập";
-            this.btnPhieuNhap.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnPhieuNhap.UseVisualStyleBackColor = true;
-            this.btnPhieuNhap.Click += new System.EventHandler(this.btnPhieuNhap_Click);
-            // 
-            // btnNhaCungCap
-            // 
-            this.btnNhaCungCap.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnNhaCungCap.FlatAppearance.BorderSize = 0;
-            this.btnNhaCungCap.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-            this.btnNhaCungCap.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnNhaCungCap.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNhaCungCap.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNhaCungCap.ForeColor = System.Drawing.Color.White;
-            this.btnNhaCungCap.Location = new System.Drawing.Point(15, 306);
-            this.btnNhaCungCap.Name = "btnNhaCungCap";
-            this.btnNhaCungCap.Size = new System.Drawing.Size(223, 41);
-            this.btnNhaCungCap.TabIndex = 5;
-            this.btnNhaCungCap.Text = "🚚 Quản lý Nhà cung cấp";
-            this.btnNhaCungCap.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnNhaCungCap.UseVisualStyleBackColor = true;
-            this.btnNhaCungCap.Click += new System.EventHandler(this.btnNhaCungCap_Click);
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(12, 23);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(220, 29);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "📝 KK-Stationery";
             // 
             // MainForm
             // 
@@ -208,6 +220,7 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.pnlSidebar.ResumeLayout(false);
+            this.pnlSidebar.PerformLayout();
             this.pnlRightContent.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -225,5 +238,6 @@
         private System.Windows.Forms.Button btnSanPham;
         private System.Windows.Forms.Button btnPhieuNhap;
         private System.Windows.Forms.Button btnNhaCungCap;
+        private System.Windows.Forms.Label label1;
     }
 }
