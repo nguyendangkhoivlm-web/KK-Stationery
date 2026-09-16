@@ -28,7 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.panel5 = new System.Windows.Forms.Panel();
@@ -49,7 +52,6 @@
             this.panel8 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.panel7 = new System.Windows.Forms.Panel();
-            this.listView1 = new System.Windows.Forms.ListView();
             this.label15 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
             this.dgvChiTietKpi = new System.Windows.Forms.DataGridView();
@@ -68,6 +70,7 @@
             this.dtpDenNgay = new System.Windows.Forms.DateTimePicker();
             this.dtpTuNgay = new System.Windows.Forms.DateTimePicker();
             this.panel12 = new System.Windows.Forms.Panel();
+            this.chartDanhMuc = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -79,6 +82,7 @@
             this.panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvChiTietKpi)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartDanhMuc)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -312,8 +316,8 @@
             // tableLayoutPanel4
             // 
             this.tableLayoutPanel4.ColumnCount = 2;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 75F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 69.72076F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.27923F));
             this.tableLayoutPanel4.Controls.Add(this.panel7, 1, 0);
             this.tableLayoutPanel4.Controls.Add(this.panel6, 0, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -329,25 +333,13 @@
             // panel7
             // 
             this.panel7.BackColor = System.Drawing.Color.White;
-            this.panel7.Controls.Add(this.listView1);
+            this.panel7.Controls.Add(this.chartDanhMuc);
             this.panel7.Controls.Add(this.label15);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(872, 13);
+            this.panel7.Location = new System.Drawing.Point(811, 13);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(281, 391);
+            this.panel7.Size = new System.Drawing.Size(342, 391);
             this.panel7.TabIndex = 30;
-            // 
-            // listView1
-            // 
-            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(13, 53);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(251, 312);
-            this.listView1.TabIndex = 1;
-            this.listView1.UseCompatibleStateImageBehavior = false;
             // 
             // label15
             // 
@@ -367,7 +359,7 @@
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel6.Location = new System.Drawing.Point(13, 13);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(853, 391);
+            this.panel6.Size = new System.Drawing.Size(792, 391);
             this.panel6.TabIndex = 29;
             // 
             // dgvChiTietKpi
@@ -377,14 +369,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvChiTietKpi.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvChiTietKpi.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.WhiteSmoke;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvChiTietKpi.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvChiTietKpi.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvChiTietKpi.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvChiTietKpi.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colNgayBan,
@@ -397,7 +389,7 @@
             this.dgvChiTietKpi.RowHeadersVisible = false;
             this.dgvChiTietKpi.RowHeadersWidth = 51;
             this.dgvChiTietKpi.RowTemplate.Height = 24;
-            this.dgvChiTietKpi.Size = new System.Drawing.Size(849, 312);
+            this.dgvChiTietKpi.Size = new System.Drawing.Size(781, 312);
             this.dgvChiTietKpi.TabIndex = 1;
             // 
             // colNgayBan
@@ -543,6 +535,23 @@
             this.panel12.Size = new System.Drawing.Size(299, 126);
             this.panel12.TabIndex = 32;
             // 
+            // chartDanhMuc
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.chartDanhMuc.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chartDanhMuc.Legends.Add(legend1);
+            this.chartDanhMuc.Location = new System.Drawing.Point(4, 53);
+            this.chartDanhMuc.Name = "chartDanhMuc";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chartDanhMuc.Series.Add(series1);
+            this.chartDanhMuc.Size = new System.Drawing.Size(329, 325);
+            this.chartDanhMuc.TabIndex = 1;
+            this.chartDanhMuc.Text = "chart1";
+            // 
             // UC_BaoCao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -569,6 +578,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvChiTietKpi)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartDanhMuc)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -607,12 +617,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colTienLoi;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.Panel panel12;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartDanhMuc;
     }
 }
