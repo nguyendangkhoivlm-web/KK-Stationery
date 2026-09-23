@@ -76,6 +76,12 @@
     <Compile Include="GiaoDien\Admin\frmThemSanPham.Designer.cs">
       <DependentUpon>frmThemSanPham.cs</DependentUpon>
     </Compile>
+    <Compile Include="GiaoDien\Admin\UC_CaiDat.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GiaoDien\Admin\UC_CaiDat.Designer.cs">
+      <DependentUpon>UC_CaiDat.cs</DependentUpon>
+    </Compile>
     <Compile Include="GiaoDien\Admin\UC_NhaCungCap.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -87,12 +93,6 @@
     </Compile>
     <Compile Include="GiaoDien\Admin\UC_PhieuNhap.Designer.cs">
       <DependentUpon>UC_PhieuNhap.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GiaoDien\HeThong\frmDangKy.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GiaoDien\HeThong\frmDangKy.Designer.cs">
-      <DependentUpon>frmDangKy.cs</DependentUpon>
     </Compile>
     <Compile Include="GiaoDien\HeThong\LoginForm.cs">
       <SubType>Form</SubType>
@@ -162,6 +162,9 @@
     <EmbeddedResource Include="GiaoDien\Admin\frmThemSanPham.resx">
       <DependentUpon>frmThemSanPham.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GiaoDien\Admin\UC_CaiDat.resx">
+      <DependentUpon>UC_CaiDat.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GiaoDien\Admin\UC_NhaCungCap.resx">
       <DependentUpon>UC_NhaCungCap.cs</DependentUpon>
     </EmbeddedResource>
@@ -170,9 +173,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GiaoDien\Admin\UC_PhieuNhap.resx">
       <DependentUpon>UC_PhieuNhap.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GiaoDien\HeThong\frmDangKy.resx">
-      <DependentUpon>frmDangKy.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GiaoDien\HeThong\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>

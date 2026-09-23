@@ -1,5 +1,4 @@
-﻿using qlcuahangdcht.GiaoDien.HeThong;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,42 +17,6 @@ namespace qlcuahangdcht
             InitializeComponent();
         }
 
-        private void txtLoginUser_Enter(object sender, EventArgs e)
-        {
-            TextBox txt = sender as TextBox;
-            if (txt != null)
-            {
-                // Đổi màu nền nhẹ đi (ví dụ: vàng nhạt hoặc xanh nhạt) để báo hiệu đang chọn
-                txt.BackColor = Color.FromArgb(240, 248, 255); // Xanh Alice Blue rất dịu mắt
-
-                // Nếu ông có dùng Panel bọc bên ngoài TextBox, có thể đổi màu viền Panel ở đây
-            }
-        }
-
-        private void txtLoginUser_Leave(object sender, EventArgs e)
-        {
-            TextBox txt = sender as TextBox;
-            if (txt != null)
-            {
-                // Trả lại màu nền trắng bình thường
-                txt.BackColor = Color.White;
-            }
-        }
-
-        private void lnkDangKy_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            // Khởi tạo form Đăng ký
-            frmDangKy frm = new frmDangKy();
-
-            // Giấu form Đăng nhập hiện tại đi cho đỡ vướng víu
-            this.Hide();
-
-            // Mở form Đăng ký lên và khóa màn hình chờ người dùng nhập
-            frm.ShowDialog();
-
-            // Sau khi người dùng tắt form Đăng ký (đăng ký xong hoặc bấm hủy), form Đăng nhập tự động hiện lên lại
-            this.Show();
-        }
 
         private void btnDangNhap_Click(object sender, EventArgs e)
         {
@@ -91,6 +54,38 @@ namespace qlcuahangdcht
                     MessageBox.Show("Tên đăng nhập hoặc mật khẩu không chính xác!", "Từ chối", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lnkQuenMK_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            // Đổi màu link sau khi người dùng đã click vào (tùy chọn để tăng trải nghiệm UX)
+            lnkQuenMK.LinkVisited = true;
+
+            // Khởi tạo bảng thông báo chứa thông tin Admin
+            string thongBao = "Vui lòng liên hệ Quản trị viên hệ thống để được cấp lại mật khẩu.\n\n" +
+                              "📞 Hotline: 0909 123 456\n" +
+                              "📧 Email: admin@kk-stationery.com\n" +
+                              "🏢 Phòng IT: Tầng 2, Tòa nhà Điều hành";
+
+            string tieuDe = "Hỗ trợ khôi phục mật khẩu";
+
+            // Hiển thị bảng thông báo với nút OK và icon Chú ý (Information)
+            MessageBox.Show(thongBao, tieuDe, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void txtTenDangNhap_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtTenDangNhap_Leave(object sender, EventArgs e)
+        {
+
         }
     }
 }

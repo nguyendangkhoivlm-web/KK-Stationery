@@ -32,8 +32,8 @@
             this.cboDanhMuc = new System.Windows.Forms.ComboBox();
             this.txtSoLuongTon = new System.Windows.Forms.TextBox();
             this.txtDonGia = new System.Windows.Forms.TextBox();
-            this.txtTenSp = new System.Windows.Forms.TextBox();
-            this.txtMaSp = new System.Windows.Forms.TextBox();
+            this.txtTenSP = new System.Windows.Forms.TextBox();
+            this.txtMaSP = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -56,8 +56,8 @@
             this.groupBox1.Controls.Add(this.cboDanhMuc);
             this.groupBox1.Controls.Add(this.txtSoLuongTon);
             this.groupBox1.Controls.Add(this.txtDonGia);
-            this.groupBox1.Controls.Add(this.txtTenSp);
-            this.groupBox1.Controls.Add(this.txtMaSp);
+            this.groupBox1.Controls.Add(this.txtTenSP);
+            this.groupBox1.Controls.Add(this.txtMaSP);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
@@ -93,19 +93,19 @@
             this.txtDonGia.Size = new System.Drawing.Size(251, 30);
             this.txtDonGia.TabIndex = 7;
             // 
-            // txtTenSp
+            // txtTenSP
             // 
-            this.txtTenSp.Location = new System.Drawing.Point(209, 99);
-            this.txtTenSp.Name = "txtTenSp";
-            this.txtTenSp.Size = new System.Drawing.Size(251, 30);
-            this.txtTenSp.TabIndex = 6;
+            this.txtTenSP.Location = new System.Drawing.Point(209, 99);
+            this.txtTenSP.Name = "txtTenSP";
+            this.txtTenSP.Size = new System.Drawing.Size(251, 30);
+            this.txtTenSP.TabIndex = 6;
             // 
-            // txtMaSp
+            // txtMaSP
             // 
-            this.txtMaSp.Location = new System.Drawing.Point(209, 43);
-            this.txtMaSp.Name = "txtMaSp";
-            this.txtMaSp.Size = new System.Drawing.Size(251, 30);
-            this.txtMaSp.TabIndex = 5;
+            this.txtMaSP.Location = new System.Drawing.Point(209, 43);
+            this.txtMaSP.Name = "txtMaSP";
+            this.txtMaSP.Size = new System.Drawing.Size(251, 30);
+            this.txtMaSP.TabIndex = 5;
             // 
             // label5
             // 
@@ -232,6 +232,7 @@
             this.btnLuu.TabIndex = 2;
             this.btnLuu.Text = "Lưu";
             this.btnLuu.UseVisualStyleBackColor = false;
+            this.btnLuu.Click += new System.EventHandler(this.btnLuu_Click);
             // 
             // btnHuy
             // 
@@ -261,6 +262,7 @@
             this.Name = "frmThemSanPham";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "     ";
+            this.Load += new System.EventHandler(this.frmThemSanPham_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -281,8 +283,8 @@
         private System.Windows.Forms.ComboBox cboDanhMuc;
         private System.Windows.Forms.TextBox txtSoLuongTon;
         private System.Windows.Forms.TextBox txtDonGia;
-        private System.Windows.Forms.TextBox txtTenSp;
-        private System.Windows.Forms.TextBox txtMaSp;
+        private System.Windows.Forms.TextBox txtTenSP;
+        private System.Windows.Forms.TextBox txtMaSP;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.PictureBox picHinhAnh;
         private System.Windows.Forms.CheckBox chkTrangThai;
