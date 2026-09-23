@@ -1,12 +1,9 @@
 ﻿using qlnhanvien;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient; // BẮT BUỘC THÊM ĐỂ KẾT NỐI SQL
 using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace appquanlynhanviencuahang
@@ -25,18 +22,15 @@ namespace appquanlynhanviencuahang
         string phCVV = "CVV";
         string phTenChuThe = "Tên chủ thẻ";
 
-        // 1. Constructor mặc định
         public frmThanhToan()
         {
             InitializeComponent();
             ThietLapGiaoDien();
         }
 
-        // 2. CONSTRUCTOR đón dữ liệu
         public frmThanhToan(DataTable dt, double sub, double tax, double total)
         {
             InitializeComponent();
-
             this.dtSanPham = dt;
             this.tamTinh = sub;
             this.thueVAT = tax;
@@ -48,30 +42,25 @@ namespace appquanlynhanviencuahang
 
         private void ThietLapGiaoDien()
         {
-            // Đăng ký sự kiện cho nút Hoàn Tất
             if (btnHoanTat != null)
             {
                 btnHoanTat.Click -= btnHoanTat_Click;
                 btnHoanTat.Click += btnHoanTat_Click;
             }
 
-            // Đăng ký sự kiện cho nút In Hóa Đơn
             if (btnInHoaDon != null)
             {
                 btnInHoaDon.Click -= btnInHoaDon_Click;
                 btnInHoaDon.Click += btnInHoaDon_Click;
             }
 
-            // ĐĂNG KÝ SỰ KIỆN VÀ ÉP MÀU CHO NÚT QUAY LẠI (Chống tàng hình)
             if (btnquaylaitrangtruoc != null)
             {
                 btnquaylaitrangtruoc.Click -= btnquaylaitrangtruoc_Click;
                 btnquaylaitrangtruoc.Click += btnquaylaitrangtruoc_Click;
-
-                // Ép màu để nút luôn hiện rõ trên nền trắng
-                btnquaylaitrangtruoc.BackColor = Color.DimGray; // Nền xám đậm
-                btnquaylaitrangtruoc.ForeColor = Color.White;   // Chữ màu trắng
-                btnquaylaitrangtruoc.FlatStyle = FlatStyle.Flat; // Bỏ viền 3D cũ kỹ
+                btnquaylaitrangtruoc.BackColor = Color.DimGray;
+                btnquaylaitrangtruoc.ForeColor = Color.White;
+                btnquaylaitrangtruoc.FlatStyle = FlatStyle.Flat;
             }
 
             ThietLapPlaceholder(txtTienKhachDua, phTienKhachDua);
@@ -83,16 +72,11 @@ namespace appquanlynhanviencuahang
             if (cardTienMat != null) cardTienMat.Click += (s, e) => ChonPhuongThucThanhToan(cardTienMat, "Tiền mặt");
             if (cardTheNganHang != null) cardTheNganHang.Click += (s, e) => ChonPhuongThucThanhToan(cardTheNganHang, "Thẻ ngân hàng");
 
-            // =========================================================================
-            // BẤM VÀO KHUNG QR LÀ BAY QUA TRANG QUÉT MÃ LUÔN
-            // =========================================================================
             if (cardQuetQR != null)
             {
                 cardQuetQR.Click += (s, e) =>
                 {
                     ChonPhuongThucThanhToan(cardQuetQR, "Quét mã QR");
-
-                    // Tạo mã đơn và mở form Quét QR ngay lập tức
                     string maDonHang = "HD_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
                     frmMain mainForm = this.TopLevelControl as frmMain;
                     if (mainForm != null)
@@ -113,7 +97,6 @@ namespace appquanlynhanviencuahang
             {
                 dgvDanhSachSP.AutoGenerateColumns = true;
                 dgvDanhSachSP.DataSource = dtSanPham;
-
                 if (dgvDanhSachSP.Columns.Contains("Đơn Giá")) dgvDanhSachSP.Columns["Đơn Giá"].DefaultCellStyle.Format = "N0";
                 if (dgvDanhSachSP.Columns.Contains("Thành Tiền")) dgvDanhSachSP.Columns["Thành Tiền"].DefaultCellStyle.Format = "N0";
             }
@@ -132,22 +115,8 @@ namespace appquanlynhanviencuahang
                     txt.Text = placeholder;
                     txt.ForeColor = Color.Gray;
                 }
-
-                txt.Enter += (s, e) => {
-                    if (txt.Text == placeholder)
-                    {
-                        txt.Text = "";
-                        txt.ForeColor = Color.Black;
-                    }
-                };
-
-                txt.Leave += (s, e) => {
-                    if (string.IsNullOrWhiteSpace(txt.Text))
-                    {
-                        txt.Text = placeholder;
-                        txt.ForeColor = Color.Gray;
-                    }
-                };
+                txt.Enter += (s, e) => { if (txt.Text == placeholder) { txt.Text = ""; txt.ForeColor = Color.Black; } };
+                txt.Leave += (s, e) => { if (string.IsNullOrWhiteSpace(txt.Text)) { txt.Text = placeholder; txt.ForeColor = Color.Gray; } };
             }
         }
 
@@ -160,76 +129,131 @@ namespace appquanlynhanviencuahang
             if (cardTheNganHang != null) cardTheNganHang.BackColor = normalBackColor;
             if (cardQuetQR != null) cardQuetQR.BackColor = normalBackColor;
 
-            if (selectedCard != null)
-            {
-                selectedCard.BackColor = Color.FromArgb(230, 242, 255);
-            }
+            if (selectedCard != null) selectedCard.BackColor = Color.FromArgb(230, 242, 255);
         }
 
         // ======================================================================
-        // XỬ LÝ NÚT HOÀN TẤT THANH TOÁN (Dành cho Tiền mặt / Thẻ)
+        // NÚT HOÀN TẤT THANH TOÁN SẼ LƯU VÀO CSDL VÀ IN BILL
         // ======================================================================
         private void btnHoanTat_Click(object sender, EventArgs e)
         {
             string maDonHang = "HD_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
 
-            // KIỂM TRA: Lỡ người dùng bấm nhầm nút Hoàn tất khi đang ở chế độ QR
             if (phuongThucThanhToan == "Quét mã QR")
             {
                 frmMain mainForm = this.TopLevelControl as frmMain;
-                if (mainForm != null)
-                {
-                    mainForm.OpenChildForm(new frmThanhToanQuaQR(dtSanPham, tamTinh, thueVAT, (double)tongTien, maDonHang), null);
-                }
+                if (mainForm != null) mainForm.OpenChildForm(new frmThanhToanQuaQR(dtSanPham, tamTinh, thueVAT, (double)tongTien, maDonHang), null);
                 return;
             }
 
-            // ==========================================================
-            // PHẦN BÊN DƯỚI DÀNH CHO TIỀN MẶT / THẺ NGÂN HÀNG
-            // ==========================================================
-            string tenNhanVien = !string.IsNullOrEmpty(PhienDangNhap.HoVaTen) ? PhienDangNhap.HoVaTen : "Trần Vũ Tuấn Kiệt";
+            string maNhanVien = !string.IsNullOrEmpty(PhienDangNhap.MaNhanVien) ? PhienDangNhap.MaNhanVien : "NV01";
             string thoiGian = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
 
-            KhoLichSu.DanhSachDonHang.Rows.Add(maDonHang, tenNhanVien, phuongThucThanhToan, tongTien, thoiGian);
-            KhoLichSu.VuaThanhToanXong = true;
+            // 1. TIẾN HÀNH LƯU DỮ LIỆU XUỐNG SQL SERVER
+            string chuoiKetNoi = @"Data Source=.\SQLEXPRESS;Initial Catalog=quanlycuahangdungcuhoctap;Integrated Security=True";
+            try
+            {
+                using (SqlConnection con = new SqlConnection(chuoiKetNoi))
+                {
+                    con.Open();
 
-            MessageBox.Show("Thanh toán thành công!\nMã Đơn Hàng: " + maDonHang, "Hóa Đơn & Lịch Sử Giao Dịch", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // Lưu vào bảng HoaDon (Tạm gán 'KH03' là Khách vãng lai, sửa lại mã KH nếu cần)
+                    string sqlInsertHoaDon = "INSERT INTO HoaDon (MaHoaDon, MaKhachHang, MaNhanVien, NgayLap, TongTien) VALUES (@MaHD, 'KH03', @MaNV, @NgayLap, @TongTien)";
+                    using (SqlCommand cmd = new SqlCommand(sqlInsertHoaDon, con))
+                    {
+                        cmd.Parameters.AddWithValue("@MaHD", maDonHang);
+                        cmd.Parameters.AddWithValue("@MaNV", maNhanVien);
+                        cmd.Parameters.AddWithValue("@NgayLap", DateTime.Now);
+                        cmd.Parameters.AddWithValue("@TongTien", tongTien);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    // Lưu từng sản phẩm vào bảng ChiTietHoaDon và Trừ Tồn Kho
+                    if (dtSanPham != null)
+                    {
+                        foreach (DataRow row in dtSanPham.Rows)
+                        {
+                            string maSP = row["Mã Sản Phẩm"].ToString();
+                            int soLuong = Convert.ToInt32(row["Số Lượng"]);
+                            double gia = Convert.ToDouble(row["Đơn Giá"]);
+                            double tien = Convert.ToDouble(row["Thành Tiền"]);
+
+                            // Lưu chi tiết
+                            string sqlInsertCTHD = "INSERT INTO ChiTietHoaDon (MaHoaDon, MaSanPham, SoLuong, DonGia, ThanhTien) VALUES (@MaHD, @MaSP, @SL, @Gia, @Tien)";
+                            using (SqlCommand cmdCTHD = new SqlCommand(sqlInsertCTHD, con))
+                            {
+                                cmdCTHD.Parameters.AddWithValue("@MaHD", maDonHang);
+                                cmdCTHD.Parameters.AddWithValue("@MaSP", maSP);
+                                cmdCTHD.Parameters.AddWithValue("@SL", soLuong);
+                                cmdCTHD.Parameters.AddWithValue("@Gia", gia);
+                                cmdCTHD.Parameters.AddWithValue("@Tien", tien);
+                                cmdCTHD.ExecuteNonQuery();
+                            }
+
+                            // Trừ tồn kho
+                            string sqlUpdateTonKho = "UPDATE SanPham SET SoLuongTon = SoLuongTon - @SL WHERE MaSanPham = @MaSP";
+                            using (SqlCommand cmdUpdate = new SqlCommand(sqlUpdateTonKho, con))
+                            {
+                                cmdUpdate.Parameters.AddWithValue("@SL", soLuong);
+                                cmdUpdate.Parameters.AddWithValue("@MaSP", maSP);
+                                cmdUpdate.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+                // Bật cờ hiệu để trang Bán Hàng tự xóa giỏ hàng
+                KhoLichSu.VuaThanhToanXong = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi lưu hóa đơn vào CSDL: " + ex.Message, "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return; // Có lỗi thì dừng, không in bill
+            }
+
+            // 2. TẠO HÓA ĐƠN CHI TIẾT CHO KHÁCH HÀNG SAU KHI LƯU CSDL THÀNH CÔNG
+            StringBuilder bill = new StringBuilder();
+            bill.AppendLine("THANH TOÁN THÀNH CÔNG!\n");
+            bill.AppendLine("Mã Đơn Hàng: " + maDonHang);
+            bill.AppendLine("Thời gian: " + thoiGian);
+            bill.AppendLine("Khách hàng: Khách vãng lai");
+            bill.AppendLine("--------------------------------------------------------------");
+
+            if (dtSanPham != null)
+            {
+                foreach (DataRow row in dtSanPham.Rows)
+                {
+                    string tenSP = row["Tên Sản Phẩm"].ToString();
+                    string sl = row["Số Lượng"].ToString();
+                    string tien = Convert.ToDouble(row["Thành Tiền"]).ToString("N0");
+                    bill.AppendLine($"- {tenSP} (x{sl}): {tien} đ");
+                }
+            }
+
+            bill.AppendLine("--------------------------------------------------------------");
+            bill.AppendLine($"Tạm tính:     {tamTinh.ToString("N0")} đ");
+            bill.AppendLine($"Thuế VAT:     {thueVAT.ToString("N0")} đ");
+            bill.AppendLine($"TỔNG TIỀN:   {tongTien.ToString("N0")} VNĐ");
+            bill.AppendLine("\nCảm ơn quý khách đã mua sắm!");
+
+            MessageBox.Show(bill.ToString(), "Biên Lai Giao Dịch", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             frmMain main = this.TopLevelControl as frmMain;
-            if (main != null)
-            {
-                main.OpenChildForm(new frmLichSuBanHang(), null);
-            }
+            if (main != null) main.OpenChildForm(new frmLichSuBanHang(), null);
         }
 
         private void btnInHoaDon_Click(object sender, EventArgs e)
         {
             frmMain mainForm = this.TopLevelControl as frmMain;
-            if (mainForm != null)
-            {
-                mainForm.OpenChildForm(new frmThongTinDeIn(dtSanPham, tamTinh, thueVAT, (double)tongTien), null);
-            }
+            if (mainForm != null) mainForm.OpenChildForm(new frmThongTinDeIn(dtSanPham, tamTinh, thueVAT, (double)tongTien), null);
         }
 
-        // ======================================================================
-        // XỬ LÝ NÚT QUAY LẠI TRANG TRƯỚC
-        // ======================================================================
         private void btnquaylaitrangtruoc_Click(object sender, EventArgs e)
         {
             frmMain mainForm = this.TopLevelControl as frmMain;
-            if (mainForm != null)
-            {
-                // Gọi form Lập Hóa Đơn và truyền lại giỏ hàng hiện tại để không bị mất
-                mainForm.OpenChildForm(new frmLapHoaDon(dtSanPham), null);
-            }
+            if (mainForm != null) mainForm.OpenChildForm(new frmLapHoaDon(dtSanPham), null);
         }
 
-        private void btnDong_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        // Các sự kiện mặc định để không bị lỗi giao diện Designer
+        private void btnDong_Click(object sender, EventArgs e) { this.Close(); }
         private void cardTienMat_Paint(object sender, PaintEventArgs e) { }
         private void cardTheNganHang_Paint(object sender, PaintEventArgs e) { }
         private void cardQuetQR_Paint(object sender, PaintEventArgs e) { }

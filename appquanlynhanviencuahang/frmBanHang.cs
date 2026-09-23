@@ -1,69 +1,149 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient; // BẮT BUỘC THÊM THƯ VIỆN NÀY ĐỂ KẾT NỐI SQL
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace appquanlynhanviencuahang
 {
     public partial class frmBanHang : Form
     {
-        // GIỮ NGUYÊN STATIC ĐỂ LƯU GIỎ HÀNG
         static DataTable dtGioHang = null;
         DataTable dtSanPham = new DataTable();
+
+        // Chuỗi kết nối chuẩn đến CSDL quanlycuahangdungcuhoctap của bạn
+        string chuoiKetNoi = @"Data Source=.\SQLEXPRESS;Initial Catalog=quanlycuahangdungcuhoctap;Integrated Security=True";
 
         public frmBanHang()
         {
             InitializeComponent();
 
-            this.Load += (s, e) =>
-            {
-                DoiMauNutDanhMuc(btnDanhMucTatCa);
-                KhoiTaoBangGioHang();
-                TaoDanhSachSanPham();
-                LoadDanhSachSanPham("Tất cả sản phẩm", "");
-
-                KiemTraVaXoaGioHang(); // 1. Kiểm tra cờ hiệu khi vừa load form
-                CapNhatTongTien();
-            };
-
-            // Tự động làm mới giỏ hàng và tổng tiền khi quay lại tab Bán Hàng
-            this.VisibleChanged += (s, e) =>
-            {
-                if (this.Visible)
-                {
-                    KiemTraVaXoaGioHang(); // 2. Kiểm tra cờ hiệu mỗi khi tab này hiện lên lại
-
-                    if (dgvGioHang != null)
-                    {
-                        dgvGioHang.DataSource = null;
-                        dgvGioHang.DataSource = dtGioHang;
-                    }
-                    CapNhatTongTien();
-                }
-            };
+            this.Load += FrmBanHang_Load;
+            this.VisibleChanged += FrmBanHang_VisibleChanged;
         }
 
-        // =========================================================================
-        // HÀM BẮT CỜ HIỆU ĐỂ TỰ ĐỘNG DỌN RÁC
-        // =========================================================================
-        private void KiemTraVaXoaGioHang()
+        private void FrmBanHang_Load(object sender, EventArgs e)
         {
-            // Nếu phát hiện cờ hiệu từ form Thanh Toán báo là đã thanh toán xong
-            if (KhoLichSu.VuaThanhToanXong == true)
+            DoiMauNutDanhMuc(btnDanhMucTatCa);
+            KhoiTaoBangGioHang();
+
+            // Gọi hàm lấy dữ liệu từ SQL
+            TaoDanhSachSanPhamTuCSDL();
+
+            LoadDanhSachSanPham("Tất cả sản phẩm", "");
+
+            KiemTraVaXoaGioHang();
+            CapNhatTongTien();
+        }
+
+        private void FrmBanHang_VisibleChanged(object sender, EventArgs e)
+        {
+            if (this.Visible)
             {
-                if (dtGioHang != null)
+                KiemTraVaXoaGioHang();
+
+                if (dgvGioHang != null)
                 {
-                    dtGioHang.Rows.Clear(); // Quét sạch giỏ hàng
+                    dgvGioHang.DataSource = null;
+                    dgvGioHang.DataSource = dtGioHang;
                 }
-                KhoLichSu.VuaThanhToanXong = false; // Tắt cờ đi để lần sau mua không bị xóa nhầm
+                CapNhatTongTien();
             }
         }
 
+        // =========================================================================
+        // 2. KẾT NỐI VÀ LẤY DỮ LIỆU TỪ SQL SERVER
+        // =========================================================================
+        private void TaoDanhSachSanPhamTuCSDL()
+        {
+            dtSanPham = new DataTable();
+
+            // ĐÃ SỬA: Câu lệnh SQL nối bảng SanPham và DanhMuc, đổi tên cột cho khớp code
+            string query = @"
+                SELECT 
+                    sp.MaSanPham AS MaSP, 
+                    sp.TenSanPham AS TenSP, 
+                    sp.DonGia AS Gia, 
+                    dm.TenDanhMuc AS DanhMuc, 
+                    sp.SoLuongTon AS TonKho 
+                FROM SanPham sp
+                INNER JOIN DanhMuc dm ON sp.MaDanhMuc = dm.MaDanhMuc";
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(chuoiKetNoi))
+                {
+                    con.Open();
+                    SqlDataAdapter da = new SqlDataAdapter(query, con);
+                    da.Fill(dtSanPham); // Đổ dữ liệu từ SQL thẳng vào bảng dtSanPham
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi kết nối CSDL. Vui lòng kiểm tra lại Chuỗi kết nối!\nChi tiết: " + ex.Message, "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                // Nếu lỗi mạng/SQL, tự động nạp dữ liệu mẫu để app không bị trắng tinh
+                TaoDuLieuMauDePhongHo();
+            }
+        }
+
+        // Hàm dự phòng: Lỡ CSDL bị rớt mạng thì vẫn có hàng để test
+        private void TaoDuLieuMauDePhongHo()
+        {
+            dtSanPham.Columns.Add("MaSP", typeof(string));
+            dtSanPham.Columns.Add("TenSP", typeof(string));
+            dtSanPham.Columns.Add("Gia", typeof(double));
+            dtSanPham.Columns.Add("DanhMuc", typeof(string));
+            dtSanPham.Columns.Add("TonKho", typeof(int));
+
+            dtSanPham.Rows.Add("SP01", "Bút bi Thiên Long 0.5", 5000, "Bút bi/ Chì", 50);
+            dtSanPham.Rows.Add("SP07", "Tập học sinh 96T", 12000, "Tập học sinh", 100);
+            dtSanPham.Rows.Add("SP14", "Gôm tẩy 4B Pentel", 10000, "Thước/ Tẩy", 30);
+        }
+
+        // =========================================================================
+        // 3. HIỂN THỊ THẺ SẢN PHẨM LÊN GIAO DIỆN
+        // =========================================================================
+        private void LoadDanhSachSanPham(string danhMuc, string tuKhoa = "")
+        {
+            if (flpDanhSachSP == null) return;
+            flpDanhSachSP.Controls.Clear();
+
+            foreach (DataRow row in dtSanPham.Rows)
+            {
+                string ma = row["MaSP"].ToString();
+                string ten = row["TenSP"].ToString();
+                decimal gia = Convert.ToDecimal(row["Gia"]);
+                string loai = row["DanhMuc"].ToString();
+
+                // Lấy tồn kho từ CSDL, nếu rỗng thì cho mặc định là 20
+                int ton = (dtSanPham.Columns.Contains("TonKho") && row["TonKho"] != DBNull.Value)
+                          ? Convert.ToInt32(row["TonKho"]) : 20;
+
+                if (danhMuc != "Tất cả sản phẩm" && loai != danhMuc) continue;
+                if (!string.IsNullOrEmpty(tuKhoa) && !ten.ToLower().Contains(tuKhoa.ToLower())) continue;
+
+                UC_CardSanPham card = new UC_CardSanPham();
+                card.HienThi(ma, ten, gia, ton, "");
+
+                card.ThemClick += (s, e) => {
+                    if (card.SoLuongTon <= 0)
+                    {
+                        MessageBox.Show("Sản phẩm này đã hết hàng trong kho!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    card.SoLuongTon -= 1;
+                    card.HienThi(card.MaSP, card.TenSP, card.DonGia, card.SoLuongTon, "");
+                    ThemVaoGioHang(card.MaSP, card.TenSP, card.DonGia);
+                };
+                flpDanhSachSP.Controls.Add(card);
+            }
+        }
+
+        // =========================================================================
+        // 4. XỬ LÝ GIỎ HÀNG VÀ THANH TOÁN
+        // =========================================================================
         private void KhoiTaoBangGioHang()
         {
             if (dtGioHang == null)
@@ -92,71 +172,25 @@ namespace appquanlynhanviencuahang
             }
 
             dgvGioHang.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-
             dgvGioHang.CellContentClick -= DgvGioHang_CellContentClick;
             dgvGioHang.CellContentClick += DgvGioHang_CellContentClick;
         }
 
-        private void TaoDanhSachSanPham()
+        private void KiemTraVaXoaGioHang()
         {
-            dtSanPham = new DataTable();
-            dtSanPham.Columns.Add("MaSP", typeof(string));
-            dtSanPham.Columns.Add("TenSP", typeof(string));
-            dtSanPham.Columns.Add("Gia", typeof(double));
-            dtSanPham.Columns.Add("DanhMuc", typeof(string));
-
-            dtSanPham.Rows.Add("SP01", "Bút bi Thiên Long 0.5", 5000, "Bút bi/ Chì");
-            dtSanPham.Rows.Add("SP02", "Bút bi bấm FO-024", 6000, "Bút bi/ Chì");
-            dtSanPham.Rows.Add("SP03", "Bút chì 2B Deli", 7000, "Bút bi/ Chì");
-            dtSanPham.Rows.Add("SP07", "Tập học sinh 96T", 12000, "Tập học sinh");
-            dtSanPham.Rows.Add("SP08", "Tập học sinh 200T", 22000, "Tập học sinh");
-            dtSanPham.Rows.Add("SP12", "Thước kẻ 20cm dẻo", 8000, "Thước/ Tẩy");
-            dtSanPham.Rows.Add("SP14", "Gôm tẩy 4B Pentel", 10000, "Thước/ Tẩy");
-            dtSanPham.Rows.Add("SP16", "Bộ Compa học sinh", 35000, "Compa/ Màu");
-            dtSanPham.Rows.Add("SP17", "Hộp sáp màu 24 màu", 45000, "Compa/ Màu");
-            dtSanPham.Rows.Add("SP20", "Bút dạ quang Pastel", 32000, "Bán chạy");
-            dtSanPham.Rows.Add("SP21", "Máy tính FX-580VN", 650000, "Bán chạy");
-        }
-
-        private void LoadDanhSachSanPham(string danhMuc, string tuKhoa = "")
-        {
-            if (flpDanhSachSP == null) return;
-            flpDanhSachSP.Controls.Clear();
-
-            foreach (DataRow row in dtSanPham.Rows)
+            if (KhoLichSu.VuaThanhToanXong)
             {
-                string ma = row["MaSP"].ToString();
-                string ten = row["TenSP"].ToString();
-                decimal gia = Convert.ToDecimal(row["Gia"]);
-                string loai = row["DanhMuc"].ToString();
+                if (dtGioHang != null) dtGioHang.Rows.Clear();
+                if (dgvGioHang != null)
+                {
+                    dgvGioHang.DataSource = null;
+                    dgvGioHang.DataSource = dtGioHang;
+                }
 
-                if (danhMuc != "Tất cả sản phẩm" && loai != danhMuc) continue;
-                if (!string.IsNullOrEmpty(tuKhoa) && !ten.ToLower().Contains(tuKhoa.ToLower())) continue;
-
-                UC_CardSanPham card = new UC_CardSanPham();
-                int ton = 20;
-
-                card.HienThi(ma, ten, gia, ton, "");
-
-                card.ThemClick += (s, e) => {
-                    if (card.SoLuongTon <= 0)
-                    {
-                        MessageBox.Show("Sản phẩm này đã hết hàng trong kho!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                    card.SoLuongTon -= 1;
-                    card.HienThi(card.MaSP, card.TenSP, card.DonGia, card.SoLuongTon, "");
-                    ThemVaoGioHang(card.MaSP, card.TenSP, card.DonGia);
-                };
-                flpDanhSachSP.Controls.Add(card);
+                LoadDanhSachSanPham("Tất cả sản phẩm");
+                DoiMauNutDanhMuc(btnDanhMucTatCa);
+                KhoLichSu.VuaThanhToanXong = false;
             }
-        }
-
-        private void txtTimKiem_TextChanged(object sender, EventArgs e)
-        {
-            string tuKhoa = txtTimKiem.Text.Trim();
-            if (tuKhoa == "Tìm kiếm sản phẩm theo tên hoặc mã...") tuKhoa = "";
-            LoadDanhSachSanPham("Tất cả sản phẩm", tuKhoa);
         }
 
         private void ThemVaoGioHang(string maSP, string tenSP, decimal donGia)
@@ -183,11 +217,9 @@ namespace appquanlynhanviencuahang
             {
                 dgvGioHang.DataSource = null;
                 dgvGioHang.DataSource = dtGioHang;
-
                 if (dgvGioHang.Columns.Contains("Đơn Giá")) dgvGioHang.Columns["Đơn Giá"].DefaultCellStyle.Format = "N0";
                 if (dgvGioHang.Columns.Contains("Thành Tiền")) dgvGioHang.Columns["Thành Tiền"].DefaultCellStyle.Format = "N0";
             }
-
             CapNhatTongTien();
         }
 
@@ -217,9 +249,27 @@ namespace appquanlynhanviencuahang
                     if (dgvGioHang.Columns.Contains("Đơn Giá")) dgvGioHang.Columns["Đơn Giá"].DefaultCellStyle.Format = "N0";
                     if (dgvGioHang.Columns.Contains("Thành Tiền")) dgvGioHang.Columns["Thành Tiền"].DefaultCellStyle.Format = "N0";
                 }
-
                 CapNhatTongTien();
             }
+        }
+
+        private void CapNhatTongTien()
+        {
+            decimal tongTien = 0;
+            if (dtGioHang != null)
+            {
+                foreach (DataRow row in dtGioHang.Rows)
+                {
+                    if (row["Thành Tiền"] != DBNull.Value)
+                    {
+                        tongTien += Convert.ToDecimal(row["Thành Tiền"]);
+                    }
+                }
+            }
+
+            string chuoiTien = tongTien.ToString("N0") + " đ";
+            if (lblTongCongGiaTri != null) lblTongCongGiaTri.Text = chuoiTien;
+            if (lblTongTien != null) lblTongTien.Text = chuoiTien;
         }
 
         private void btnThanhToan_Click(object sender, EventArgs e)
@@ -252,29 +302,21 @@ namespace appquanlynhanviencuahang
 
                 CapNhatTongTien();
                 LoadDanhSachSanPham("Tất cả sản phẩm");
+                DoiMauNutDanhMuc(btnDanhMucTatCa);
                 MessageBox.Show("Đã hủy đơn hàng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
-        private void CapNhatTongTien()
+        private void txtTimKiem_TextChanged(object sender, EventArgs e)
         {
-            decimal tongTien = 0;
-            if (dtGioHang != null)
-            {
-                foreach (DataRow row in dtGioHang.Rows)
-                {
-                    if (row["Thành Tiền"] != DBNull.Value)
-                    {
-                        tongTien += Convert.ToDecimal(row["Thành Tiền"]);
-                    }
-                }
-            }
-
-            string chuoiTien = tongTien.ToString("N0") + " đ";
-            if (lblTongCongGiaTri != null) lblTongCongGiaTri.Text = chuoiTien;
-            if (lblTongTien != null) lblTongTien.Text = chuoiTien;
+            string tuKhoa = txtTimKiem.Text.Trim();
+            if (tuKhoa == "Tìm kiếm sản phẩm theo tên hoặc mã...") tuKhoa = "";
+            LoadDanhSachSanPham("Tất cả sản phẩm", tuKhoa);
         }
 
+        // =========================================================================
+        // 5. HIỆU ỨNG ĐỔI MÀU NÚT DANH MỤC
+        // =========================================================================
         private void DoiMauNutDanhMuc(Button activeButton)
         {
             Color defaultBackColor = Color.White;

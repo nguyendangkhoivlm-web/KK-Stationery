@@ -73,6 +73,7 @@
             this.btnGiaLapThanhCong.TabIndex = 7;
             this.btnGiaLapThanhCong.Text = "⚡ Giả Lập Đã Nhận Tiền";
             this.btnGiaLapThanhCong.UseVisualStyleBackColor = false;
+       //     this.btnGiaLapThanhCong.Click += new System.EventHandler(this.btnGiaLapThanhCong_Click_1);
             // 
             // btnHuyThanhToan
             // 
@@ -90,6 +91,7 @@
             this.btnHuyThanhToan.TabIndex = 6;
             this.btnHuyThanhToan.Text = "Hủy Bỏ";
             this.btnHuyThanhToan.UseVisualStyleBackColor = false;
+   //         this.btnHuyThanhToan.Click += new System.EventHandler(this.btnHuyThanhToan_Click_1);
             // 
             // tblNutBam
             // 
@@ -134,7 +136,7 @@
             this.tblCanGiua.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tblCanGiua.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 640F));
             this.tblCanGiua.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tblCanGiua.Size = new System.Drawing.Size(1021, 553);
+            this.tblCanGiua.Size = new System.Drawing.Size(1021, 636);
             this.tblCanGiua.TabIndex = 3;
             // 
             // pnlKhungThe
@@ -151,7 +153,7 @@
             this.pnlKhungThe.Controls.Add(this.lblHuongDanQuet);
             this.pnlKhungThe.Controls.Add(this.lblTieuDeThe);
             this.pnlKhungThe.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlKhungThe.Location = new System.Drawing.Point(153, -40);
+            this.pnlKhungThe.Location = new System.Drawing.Point(153, 1);
             this.pnlKhungThe.Name = "pnlKhungThe";
             this.pnlKhungThe.Padding = new System.Windows.Forms.Padding(35, 20, 35, 20);
             this.pnlKhungThe.Size = new System.Drawing.Size(714, 634);
@@ -288,7 +290,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1021, 608);
+            this.ClientSize = new System.Drawing.Size(1021, 691);
             this.Controls.Add(this.tblCanGiua);
             this.Controls.Add(this.pnlThanhTieuDe);
             this.Name = "frmThanhToanQuaQR";

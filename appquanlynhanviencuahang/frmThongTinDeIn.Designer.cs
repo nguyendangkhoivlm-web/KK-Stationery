@@ -56,7 +56,7 @@
             // 
             // txtDiaChi
             // 
-            this.txtDiaChi.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.txtDiaChi.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDiaChi.Font = new System.Drawing.Font("Segoe UI", 10.5F);
             this.txtDiaChi.Location = new System.Drawing.Point(35, 275);
@@ -77,7 +77,7 @@
             // 
             // txtSoDienThoai
             // 
-            this.txtSoDienThoai.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.txtSoDienThoai.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSoDienThoai.Font = new System.Drawing.Font("Segoe UI", 10.5F);
             this.txtSoDienThoai.Location = new System.Drawing.Point(35, 200);
@@ -98,7 +98,7 @@
             // 
             // txtTenKhachHang
             // 
-            this.txtTenKhachHang.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.txtTenKhachHang.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTenKhachHang.Font = new System.Drawing.Font("Segoe UI", 10.5F);
             this.txtTenKhachHang.Location = new System.Drawing.Point(35, 128);
@@ -166,7 +166,7 @@
             // 
             // lblTongTienHoaDon
             // 
-            this.lblTongTienHoaDon.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.lblTongTienHoaDon.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTongTienHoaDon.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.lblTongTienHoaDon.ForeColor = System.Drawing.Color.Blue;
@@ -200,7 +200,7 @@
             this.lblTrangThaiTimKiem.AutoSize = true;
             this.lblTrangThaiTimKiem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
             this.lblTrangThaiTimKiem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(185)))), ((int)(((byte)(129)))));
-            this.lblTrangThaiTimKiem.Location = new System.Drawing.Point(245, 172);
+            this.lblTrangThaiTimKiem.Location = new System.Drawing.Point(159, 175);
             this.lblTrangThaiTimKiem.Name = "lblTrangThaiTimKiem";
             this.lblTrangThaiTimKiem.Size = new System.Drawing.Size(0, 20);
             this.lblTrangThaiTimKiem.TabIndex = 13;
@@ -239,6 +239,7 @@
             this.btnHuyBo.TabIndex = 12;
             this.btnHuyBo.Text = "✖  Hủy Bỏ";
             this.btnHuyBo.UseVisualStyleBackColor = false;
+            this.btnHuyBo.Click += new System.EventHandler(this.btnHuyBo_Click_1);
             // 
             // lblGhiChuPhu
             // 

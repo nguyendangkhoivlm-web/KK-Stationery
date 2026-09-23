@@ -207,7 +207,7 @@
             this.btnThemSanPham.ForeColor = System.Drawing.Color.White;
             this.btnThemSanPham.Location = new System.Drawing.Point(767, 5);
             this.btnThemSanPham.Name = "btnThemSanPham";
-            this.btnThemSanPham.Size = new System.Drawing.Size(140, 35);
+            this.btnThemSanPham.Size = new System.Drawing.Size(140, 34);
             this.btnThemSanPham.TabIndex = 1;
             this.btnThemSanPham.Text = "+ Thêm Sản Phẩm";
             this.btnThemSanPham.UseVisualStyleBackColor = false;

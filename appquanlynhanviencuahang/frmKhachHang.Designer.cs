@@ -133,6 +133,7 @@
             this.btnXoaKhachHang.TabIndex = 2;
             this.btnXoaKhachHang.Text = "🗑 Xóa Khách Hàng";
             this.btnXoaKhachHang.UseVisualStyleBackColor = false;
+            this.btnXoaKhachHang.Click += new System.EventHandler(this.btnXoaKhachHang_Click_1);
             // 
             // btnThemKhachHang
             // 
@@ -148,6 +149,7 @@
             this.btnThemKhachHang.TabIndex = 1;
             this.btnThemKhachHang.Text = "+ Thêm Khách Hàng";
             this.btnThemKhachHang.UseVisualStyleBackColor = false;
+            this.btnThemKhachHang.Click += new System.EventHandler(this.btnThemKhachHang_Click_1);
             // 
             // lblTieuDe
             // 

@@ -194,6 +194,7 @@
             this.Controls.Add(this.lblTieuDeForm);
             this.Name = "frmLienHe";
             this.Text = "frmLienHe";
+            this.Load += new System.EventHandler(this.frmLienHe_Load_1);
             this.pnlKhungChinh.ResumeLayout(false);
             this.pnlKhungChinh.PerformLayout();
             this.ResumeLayout(false);
