@@ -117,5 +117,12 @@ namespace qlcuahangdcht
             UC_PhieuNhap uc = new UC_PhieuNhap();
             AddUserControl(uc);
         }
+
+        private void btnCaiDat_Click(object sender, EventArgs e)
+        {
+            HighlightButton(btnCaiDat);
+            UC_CaiDat uc = new UC_CaiDat();
+            AddUserControl(uc);
+        }
     }
 }                                                                                          

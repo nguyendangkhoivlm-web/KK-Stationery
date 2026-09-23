@@ -78,14 +78,6 @@ namespace qlcuahangdcht
             MessageBox.Show(thongBao, tieuDe, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void txtTenDangNhap_Enter(object sender, EventArgs e)
-        {
 
-        }
-
-        private void txtTenDangNhap_Leave(object sender, EventArgs e)
-        {
-
-        }
     }
 }
