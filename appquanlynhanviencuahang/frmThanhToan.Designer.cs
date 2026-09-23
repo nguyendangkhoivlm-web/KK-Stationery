@@ -57,8 +57,8 @@
             this.tblBoCucChinh = new System.Windows.Forms.TableLayoutPanel();
             this.lblTieuDeForm = new System.Windows.Forms.Label();
             this.pnlThanhTieuDe = new System.Windows.Forms.Panel();
-            this.btnquaylaitrangtruoc = new System.Windows.Forms.Button();
             this.lblNhanVien = new System.Windows.Forms.Label();
+            this.btnquaylaitrangtruoc = new System.Windows.Forms.Button();
             this.tblPhuongThuc.SuspendLayout();
             this.cardQuetQR.SuspendLayout();
             this.cardTheNganHang.SuspendLayout();
@@ -344,6 +344,7 @@
             this.btnHoanTat.TabIndex = 5;
             this.btnHoanTat.Text = "✔   Hoàn Tất Giao Dịch";
             this.btnHoanTat.UseVisualStyleBackColor = false;
+//            this.btnHoanTat.Click += new System.EventHandler(this.btnHoanTat_Click_1);
             // 
             // dgvDanhSachSP
             // 
@@ -467,6 +468,17 @@
             this.pnlThanhTieuDe.Size = new System.Drawing.Size(1203, 55);
             this.pnlThanhTieuDe.TabIndex = 2;
             // 
+            // lblNhanVien
+            // 
+            this.lblNhanVien.AutoSize = true;
+            this.lblNhanVien.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNhanVien.ForeColor = System.Drawing.Color.White;
+            this.lblNhanVien.Location = new System.Drawing.Point(858, 19);
+            this.lblNhanVien.Name = "lblNhanVien";
+            this.lblNhanVien.Size = new System.Drawing.Size(106, 25);
+            this.lblNhanVien.TabIndex = 4;
+            this.lblNhanVien.Text = "Nhân viên:";
+            // 
             // btnquaylaitrangtruoc
             // 
             this.btnquaylaitrangtruoc.Dock = System.Windows.Forms.DockStyle.Right;
@@ -481,17 +493,6 @@
             this.btnquaylaitrangtruoc.Text = "Quay lại";
             this.btnquaylaitrangtruoc.UseVisualStyleBackColor = true;
             this.btnquaylaitrangtruoc.Click += new System.EventHandler(this.btnquaylaitrangtruoc_Click);
-            // 
-            // lblNhanVien
-            // 
-            this.lblNhanVien.AutoSize = true;
-            this.lblNhanVien.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNhanVien.ForeColor = System.Drawing.Color.White;
-            this.lblNhanVien.Location = new System.Drawing.Point(858, 19);
-            this.lblNhanVien.Name = "lblNhanVien";
-            this.lblNhanVien.Size = new System.Drawing.Size(106, 25);
-            this.lblNhanVien.TabIndex = 4;
-            this.lblNhanVien.Text = "Nhân viên:";
             // 
             // frmThanhToan
             // 

@@ -123,7 +123,7 @@
             this.dgvGioHang.RowHeadersWidth = 51;
             this.dgvGioHang.RowTemplate.Height = 35;
             this.dgvGioHang.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvGioHang.Size = new System.Drawing.Size(454, 370);
+            this.dgvGioHang.Size = new System.Drawing.Size(448, 370);
             this.dgvGioHang.TabIndex = 1;
             // 
             // pnlBenTrai
@@ -136,7 +136,7 @@
             this.pnlBenTrai.Location = new System.Drawing.Point(0, 0);
             this.pnlBenTrai.Name = "pnlBenTrai";
             this.pnlBenTrai.Padding = new System.Windows.Forms.Padding(15);
-            this.pnlBenTrai.Size = new System.Drawing.Size(710, 625);
+            this.pnlBenTrai.Size = new System.Drawing.Size(716, 625);
             this.pnlBenTrai.TabIndex = 2;
             // 
             // flpDanhSachSP
@@ -147,7 +147,7 @@
             this.flpDanhSachSP.Location = new System.Drawing.Point(15, 110);
             this.flpDanhSachSP.Name = "flpDanhSachSP";
             this.flpDanhSachSP.Padding = new System.Windows.Forms.Padding(10);
-            this.flpDanhSachSP.Size = new System.Drawing.Size(680, 500);
+            this.flpDanhSachSP.Size = new System.Drawing.Size(686, 500);
             this.flpDanhSachSP.TabIndex = 2;
             // 
             // pnlLocDanhMuc
@@ -161,7 +161,7 @@
             this.pnlLocDanhMuc.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlLocDanhMuc.Location = new System.Drawing.Point(15, 60);
             this.pnlLocDanhMuc.Name = "pnlLocDanhMuc";
-            this.pnlLocDanhMuc.Size = new System.Drawing.Size(680, 50);
+            this.pnlLocDanhMuc.Size = new System.Drawing.Size(686, 50);
             this.pnlLocDanhMuc.TabIndex = 1;
             // 
             // btnDanhMucTatCa
@@ -261,7 +261,7 @@
             this.pnlTimKiemTren.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTimKiemTren.Location = new System.Drawing.Point(15, 15);
             this.pnlTimKiemTren.Name = "pnlTimKiemTren";
-            this.pnlTimKiemTren.Size = new System.Drawing.Size(680, 45);
+            this.pnlTimKiemTren.Size = new System.Drawing.Size(686, 45);
             this.pnlTimKiemTren.TabIndex = 0;
             // 
             // lblTieuDeChonSP
@@ -279,7 +279,7 @@
             // 
             this.txtTimKiem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTimKiem.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtTimKiem.Location = new System.Drawing.Point(419, 8);
+            this.txtTimKiem.Location = new System.Drawing.Point(425, 8);
             this.txtTimKiem.Name = "txtTimKiem";
             this.txtTimKiem.Size = new System.Drawing.Size(260, 30);
             this.txtTimKiem.TabIndex = 1;
@@ -290,7 +290,7 @@
             this.pnlTieuDeDonHang.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTieuDeDonHang.Location = new System.Drawing.Point(15, 15);
             this.pnlTieuDeDonHang.Name = "pnlTieuDeDonHang";
-            this.pnlTieuDeDonHang.Size = new System.Drawing.Size(454, 45);
+            this.pnlTieuDeDonHang.Size = new System.Drawing.Size(448, 45);
             this.pnlTieuDeDonHang.TabIndex = 0;
             // 
             // pnlBenPhai
@@ -301,10 +301,10 @@
             this.pnlBenPhai.Controls.Add(this.pnlTongKetDuoi);
             this.pnlBenPhai.Controls.Add(this.pnlTieuDeDonHang);
             this.pnlBenPhai.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnlBenPhai.Location = new System.Drawing.Point(710, 0);
+            this.pnlBenPhai.Location = new System.Drawing.Point(716, 0);
             this.pnlBenPhai.Name = "pnlBenPhai";
             this.pnlBenPhai.Padding = new System.Windows.Forms.Padding(15);
-            this.pnlBenPhai.Size = new System.Drawing.Size(486, 625);
+            this.pnlBenPhai.Size = new System.Drawing.Size(480, 625);
             this.pnlBenPhai.TabIndex = 3;
             // 
             // pnlTongKetDuoi
@@ -319,7 +319,7 @@
             this.pnlTongKetDuoi.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlTongKetDuoi.Location = new System.Drawing.Point(15, 430);
             this.pnlTongKetDuoi.Name = "pnlTongKetDuoi";
-            this.pnlTongKetDuoi.Size = new System.Drawing.Size(454, 178);
+            this.pnlTongKetDuoi.Size = new System.Drawing.Size(448, 178);
             this.pnlTongKetDuoi.TabIndex = 2;
             // 
             // lblTongCongTieuDe
@@ -338,7 +338,7 @@
             this.lblTongCongGiaTri.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTongCongGiaTri.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.lblTongCongGiaTri.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.lblTongCongGiaTri.Location = new System.Drawing.Point(256, 25);
+            this.lblTongCongGiaTri.Location = new System.Drawing.Point(250, 25);
             this.lblTongCongGiaTri.Name = "lblTongCongGiaTri";
             this.lblTongCongGiaTri.Size = new System.Drawing.Size(198, 17);
             this.lblTongCongGiaTri.TabIndex = 1;
@@ -369,7 +369,7 @@
             this.lblTongTien.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTongTien.Font = new System.Drawing.Font("Segoe UI", 13.5F, System.Drawing.FontStyle.Bold);
             this.lblTongTien.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
-            this.lblTongTien.Location = new System.Drawing.Point(236, 70);
+            this.lblTongTien.Location = new System.Drawing.Point(230, 70);
             this.lblTongTien.Name = "lblTongTien";
             this.lblTongTien.Size = new System.Drawing.Size(218, 28);
             this.lblTongTien.TabIndex = 6;

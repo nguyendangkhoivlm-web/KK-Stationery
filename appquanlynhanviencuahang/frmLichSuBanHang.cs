@@ -1,18 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient; // Bắt buộc để kết nối SQL
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace appquanlynhanviencuahang
 {
     public partial class frmLichSuBanHang : Form
     {
-        string placeholderText = "Tìm theo Mã HĐ hoặc SĐT...";
+        // 1. Khai báo chuỗi kết nối và bảng chứa dữ liệu thật
+        string chuoiKetNoi = @"Data Source=.\SQLEXPRESS;Initial Catalog=quanlycuahangdungcuhoctap;Integrated Security=True";
+        DataTable dtLichSu = new DataTable();
+
+        string placeholderText = "Tìm theo Mã HĐ hoặc Tên NV...";
 
         public frmLichSuBanHang()
         {
@@ -40,11 +40,50 @@ namespace appquanlynhanviencuahang
 
         private void frmLichSuBanHang_Load(object sender, EventArgs e)
         {
-            TaiDuLieuLichSu(KhoLichSu.DanhSachDonHang);
+            // Vừa mở form lên là gọi hàm kéo dữ liệu từ SQL ngay
+            TaiDuLieuTuCSDL();
+        }
+
+        // =========================================================================
+        // HÀM KÉO DỮ LIỆU TỪ SQL SERVER BẰNG LỆNH JOIN
+        // =========================================================================
+        private void TaiDuLieuTuCSDL()
+        {
+            try
+            {
+                SqlConnection conn = new SqlConnection(chuoiKetNoi);
+                conn.Open();
+
+                // Lệnh SQL kết nối bảng HoaDon với bảng NhanVien và KhachHang để lấy tên thật thay vì lấy Mã
+                string sql = @"
+                    SELECT 
+                        hd.MaHoaDon AS [Mã HĐ], 
+                        hd.NgayLap AS [Thời Gian], 
+                        nv.HoTen AS [Nhân Viên], 
+                        kh.HoTen AS [Khách Hàng],
+                        hd.TongTien AS [Tổng Tiền]
+                    FROM HoaDon hd
+                    LEFT JOIN NhanVien nv ON hd.MaNhanVien = nv.MaNhanVien
+                    LEFT JOIN KhachHang kh ON hd.MaKhachHang = kh.MaKhachHang";
+
+                SqlDataAdapter da = new SqlDataAdapter(sql, conn);
+
+                dtLichSu = new DataTable();
+                da.Fill(dtLichSu); // Đổ dữ liệu thật vào biến dtLichSu
+
+                conn.Close();
+
+                // Đẩy dữ liệu lên DataGridView và tính tổng tiền
+                HienThiVaTinhTong(dtLichSu);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi tải dữ liệu lịch sử: " + ex.Message, "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         // Hàm đổ dữ liệu vào DataGridView và tính toán tổng số đơn, tổng doanh thu
-        private void TaiDuLieuLichSu(DataTable dt)
+        private void HienThiVaTinhTong(DataTable dt)
         {
             if (dgvLichSu != null)
             {
@@ -79,6 +118,9 @@ namespace appquanlynhanviencuahang
             }
         }
 
+        // =========================================================================
+        // XỬ LÝ CHỮ MỜ TÌM KIẾM
+        // =========================================================================
         private void txtTimKiem_Enter(object sender, EventArgs e)
         {
             if (txtTimKiem.Text == placeholderText)
@@ -97,65 +139,72 @@ namespace appquanlynhanviencuahang
             }
         }
 
-        // 1. Tự động lọc khi người dùng gõ chữ vào ô tìm kiếm
+        // =========================================================================
+        // 1. TÌM KIẾM TỰ ĐỘNG KHI GÕ
+        // =========================================================================
         private void txtTimKiem_TextChanged(object sender, EventArgs e)
         {
             string tuKhoa = (txtTimKiem.Text != placeholderText) ? txtTimKiem.Text.Trim().ToLower() : "";
 
             if (string.IsNullOrEmpty(tuKhoa))
             {
-                TaiDuLieuLichSu(KhoLichSu.DanhSachDonHang);
+                HienThiVaTinhTong(dtLichSu); // Nếu không gõ gì thì hiện toàn bộ
                 return;
             }
 
-            DataTable dtFiltered = KhoLichSu.DanhSachDonHang.Clone();
-            foreach (DataRow row in KhoLichSu.DanhSachDonHang.Rows)
+            DataTable dtFiltered = dtLichSu.Clone();
+
+            foreach (DataRow row in dtLichSu.Rows)
             {
                 string maHD = row["Mã HĐ"].ToString().ToLower();
                 string nhanVien = row["Nhân Viên"].ToString().ToLower();
-                string phuongThuc = row["Phương Thức"].ToString().ToLower();
+                string khachHang = row["Khách Hàng"].ToString().ToLower();
 
-                if (maHD.Contains(tuKhoa) || nhanVien.Contains(tuKhoa) || phuongThuc.Contains(tuKhoa))
+                // Tìm theo mã HĐ, tên NV hoặc tên KH
+                if (maHD.Contains(tuKhoa) || nhanVien.Contains(tuKhoa) || khachHang.Contains(tuKhoa))
                 {
                     dtFiltered.ImportRow(row);
                 }
             }
 
-            TaiDuLieuLichSu(dtFiltered);
+            HienThiVaTinhTong(dtFiltered);
         }
 
-        // 2. Nút Lọc theo khoảng thời gian (Từ ngày - Đến ngày) kết hợp từ khóa
+        // =========================================================================
+        // 2. LỌC THEO KHOẢNG THỜI GIAN
+        // =========================================================================
         private void btnLocNgay_Click(object sender, EventArgs e)
         {
             DateTime tuNgay = dtpTuNgay.Value.Date;
-            DateTime denNgay = dtpDenNgay.Value.Date.AddDays(1).AddSeconds(-1); // Lấy hết cuối ngày đến ngày kết thúc
+            DateTime denNgay = dtpDenNgay.Value.Date.AddDays(1).AddSeconds(-1); // Lấy hết cuối ngày
             string tuKhoa = (txtTimKiem.Text != placeholderText) ? txtTimKiem.Text.Trim().ToLower() : "";
 
-            DataTable dtFiltered = KhoLichSu.DanhSachDonHang.Clone();
+            DataTable dtFiltered = dtLichSu.Clone();
 
-            foreach (DataRow row in KhoLichSu.DanhSachDonHang.Rows)
+            foreach (DataRow row in dtLichSu.Rows)
             {
-                // Giả sử cột "Thời Gian" lưu dạng chuỗi "dd/MM/yyyy HH:mm:ss" hoặc tương tự
                 if (DateTime.TryParse(row["Thời Gian"].ToString(), out DateTime ngayDonHang))
                 {
-                    bool thoảManNgay = (ngayDonHang >= tuNgay && ngayDonHang <= denNgay);
+                    bool thoaManNgay = (ngayDonHang >= tuNgay && ngayDonHang <= denNgay);
 
                     string maHD = row["Mã HĐ"].ToString().ToLower();
                     string nhanVien = row["Nhân Viên"].ToString().ToLower();
-                    bool thoảManTuKhoa = string.IsNullOrEmpty(tuKhoa) || maHD.Contains(tuKhoa) || nhanVien.Contains(tuKhoa);
+                    bool thoaManTuKhoa = string.IsNullOrEmpty(tuKhoa) || maHD.Contains(tuKhoa) || nhanVien.Contains(tuKhoa);
 
-                    if (thoảManNgay && thoảManTuKhoa)
+                    if (thoaManNgay && thoaManTuKhoa)
                     {
                         dtFiltered.ImportRow(row);
                     }
                 }
             }
 
-            TaiDuLieuLichSu(dtFiltered);
+            HienThiVaTinhTong(dtFiltered);
             MessageBox.Show(string.Format("Đã lọc được {0} hóa đơn trong khoảng thời gian đã chọn!", dtFiltered.Rows.Count), "Kết Quả Lọc", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        // 3. Nút In Lại Hóa Đơn đã chọn trên lưới
+        // =========================================================================
+        // 3. IN LẠI HÓA ĐƠN
+        // =========================================================================
         private void btnInLaiHoaDon_Click(object sender, EventArgs e)
         {
             if (dgvLichSu.SelectedRows.Count > 0 || dgvLichSu.CurrentRow != null)
