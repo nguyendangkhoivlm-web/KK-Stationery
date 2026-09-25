@@ -116,6 +116,10 @@
     <Compile Include="Migrations\202609090843101_TaoDatabaseBanDau.Designer.cs">
       <DependentUpon>202609090843101_TaoDatabaseBanDau.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202609252112157_ThemCotTongTien.cs" />
+    <Compile Include="Migrations\202609252112157_ThemCotTongTien.Designer.cs">
+      <DependentUpon>202609252112157_ThemCotTongTien.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ChiTietHoaDon.cs" />
     <Compile Include="Models\ChiTietPhieuNhap.cs" />
@@ -185,6 +189,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202609090843101_TaoDatabaseBanDau.resx">
       <DependentUpon>202609090843101_TaoDatabaseBanDau.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202609252112157_ThemCotTongTien.resx">
+      <DependentUpon>202609252112157_ThemCotTongTien.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
