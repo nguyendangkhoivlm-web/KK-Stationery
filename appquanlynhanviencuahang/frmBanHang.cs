@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Data;
-using System.Data.SqlClient; // BẮT BUỘC THÊM THƯ VIỆN NÀY ĐỂ KẾT NỐI SQL
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -12,15 +12,44 @@ namespace appquanlynhanviencuahang
         static DataTable dtGioHang = null;
         DataTable dtSanPham = new DataTable();
 
-        // Chuỗi kết nối chuẩn đến CSDL quanlycuahangdungcuhoctap của bạn
+        // Chuỗi kết nối chuẩn đến CSDL của bạn
         string chuoiKetNoi = @"Data Source=.\SQLEXPRESS;Initial Catalog=quanlycuahangdungcuhoctap;Integrated Security=True";
 
         public frmBanHang()
         {
             InitializeComponent();
 
+            // Kích hoạt nối dây tự động cho TẤT CẢ các nút bấm trên form
+            NoiDaySuKienToanBo();
+
             this.Load += FrmBanHang_Load;
             this.VisibleChanged += FrmBanHang_VisibleChanged;
+        }
+
+        // =========================================================================
+        // HÀM ÉP NỐI DÂY SỰ KIỆN: ĐẢM BẢO 100% CÁC NÚT ĐỀU HOẠT ĐỘNG
+        // =========================================================================
+        private void NoiDaySuKienToanBo()
+        {
+            // 1. Nối dây ô tìm kiếm
+            if (this.txtTimKiem != null)
+            {
+                this.txtTimKiem.TextChanged += txtTimKiem_TextChanged;
+                this.txtTimKiem.Enter += txtTimKiem_Enter;
+                this.txtTimKiem.Leave += txtTimKiem_Leave;
+            }
+
+            // 2. Nối dây các nút thao tác đơn hàng
+            if (this.btnHuyDon != null) this.btnHuyDon.Click += btnHuyDon_Click;
+            if (this.btnThanhToan != null) this.btnThanhToan.Click += btnThanhToan_Click;
+
+            // 3. Nối dây các nút lọc Danh Mục (Lúc trước bị thiếu chỗ này nên bấm không ăn)
+            if (this.btnDanhMucTatCa != null) this.btnDanhMucTatCa.Click += btnDanhMucTatCa_Click;
+            if (this.btnDanhMucBanChay != null) this.btnDanhMucBanChay.Click += btnDanhMucBanChay_Click;
+            if (this.btnDanhMucButChi != null) this.btnDanhMucButChi.Click += btnDanhMucButChi_Click;
+            if (this.btnDanhMucThuocTay != null) this.btnDanhMucThuocTay.Click += btnDanhMucThuocTay_Click;
+            if (this.btnDanhMucCompaMau != null) this.btnDanhMucCompaMau.Click += btnDanhMucCompaMau_Click;
+            if (this.btnDanhMucTapHocSinh != null) this.btnDanhMucTapHocSinh.Click += btnDanhMucTapHocSinh_Click;
         }
 
         private void FrmBanHang_Load(object sender, EventArgs e)
@@ -28,10 +57,16 @@ namespace appquanlynhanviencuahang
             DoiMauNutDanhMuc(btnDanhMucTatCa);
             KhoiTaoBangGioHang();
 
-            // Gọi hàm lấy dữ liệu từ SQL
+            // Lấy dữ liệu sản phẩm từ SQL
             TaoDanhSachSanPhamTuCSDL();
-
             LoadDanhSachSanPham("Tất cả sản phẩm", "");
+
+            // Cài đặt chữ mờ (placeholder) cho ô tìm kiếm
+            if (txtTimKiem != null)
+            {
+                txtTimKiem.Text = "Tìm kiếm sản phẩm theo tên hoặc mã...";
+                txtTimKiem.ForeColor = Color.Gray;
+            }
 
             KiemTraVaXoaGioHang();
             CapNhatTongTien();
@@ -53,13 +88,12 @@ namespace appquanlynhanviencuahang
         }
 
         // =========================================================================
-        // 2. KẾT NỐI VÀ LẤY DỮ LIỆU TỪ SQL SERVER
+        // LẤY DỮ LIỆU TỪ SQL SERVER
         // =========================================================================
         private void TaoDanhSachSanPhamTuCSDL()
         {
             dtSanPham = new DataTable();
 
-            // ĐÃ SỬA: Câu lệnh SQL nối bảng SanPham và DanhMuc, đổi tên cột cho khớp code
             string query = @"
                 SELECT 
                     sp.MaSanPham AS MaSP, 
@@ -76,19 +110,16 @@ namespace appquanlynhanviencuahang
                 {
                     con.Open();
                     SqlDataAdapter da = new SqlDataAdapter(query, con);
-                    da.Fill(dtSanPham); // Đổ dữ liệu từ SQL thẳng vào bảng dtSanPham
+                    da.Fill(dtSanPham);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi kết nối CSDL. Vui lòng kiểm tra lại Chuỗi kết nối!\nChi tiết: " + ex.Message, "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                // Nếu lỗi mạng/SQL, tự động nạp dữ liệu mẫu để app không bị trắng tinh
+                MessageBox.Show("Lỗi kết nối CSDL: " + ex.Message, "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 TaoDuLieuMauDePhongHo();
             }
         }
 
-        // Hàm dự phòng: Lỡ CSDL bị rớt mạng thì vẫn có hàng để test
         private void TaoDuLieuMauDePhongHo()
         {
             dtSanPham.Columns.Add("MaSP", typeof(string));
@@ -103,7 +134,7 @@ namespace appquanlynhanviencuahang
         }
 
         // =========================================================================
-        // 3. HIỂN THỊ THẺ SẢN PHẨM LÊN GIAO DIỆN
+        // HIỂN THỊ SẢN PHẨM LÊN GIAO DIỆN
         // =========================================================================
         private void LoadDanhSachSanPham(string danhMuc, string tuKhoa = "")
         {
@@ -117,12 +148,11 @@ namespace appquanlynhanviencuahang
                 decimal gia = Convert.ToDecimal(row["Gia"]);
                 string loai = row["DanhMuc"].ToString();
 
-                // Lấy tồn kho từ CSDL, nếu rỗng thì cho mặc định là 20
                 int ton = (dtSanPham.Columns.Contains("TonKho") && row["TonKho"] != DBNull.Value)
                           ? Convert.ToInt32(row["TonKho"]) : 20;
 
                 if (danhMuc != "Tất cả sản phẩm" && loai != danhMuc) continue;
-                if (!string.IsNullOrEmpty(tuKhoa) && !ten.ToLower().Contains(tuKhoa.ToLower())) continue;
+                if (!string.IsNullOrEmpty(tuKhoa) && !ten.ToLower().Contains(tuKhoa.ToLower()) && !ma.ToLower().Contains(tuKhoa.ToLower())) continue;
 
                 UC_CardSanPham card = new UC_CardSanPham();
                 card.HienThi(ma, ten, gia, ton, "");
@@ -142,7 +172,7 @@ namespace appquanlynhanviencuahang
         }
 
         // =========================================================================
-        // 4. XỬ LÝ GIỎ HÀNG VÀ THANH TOÁN
+        // XỬ LÝ GIỎ HÀNG VÀ THANH TOÁN
         // =========================================================================
         private void KhoiTaoBangGioHang()
         {
@@ -274,9 +304,9 @@ namespace appquanlynhanviencuahang
 
         private void btnThanhToan_Click(object sender, EventArgs e)
         {
-            if (dtGioHang.Rows.Count == 0)
+            if (dtGioHang == null || dtGioHang.Rows.Count == 0)
             {
-                MessageBox.Show("Vui lòng chọn sản phẩm trước khi thanh toán!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng chọn sản phẩm vào giỏ trước khi thanh toán!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -289,6 +319,12 @@ namespace appquanlynhanviencuahang
 
         private void btnHuyDon_Click(object sender, EventArgs e)
         {
+            if (dtGioHang == null || dtGioHang.Rows.Count == 0)
+            {
+                MessageBox.Show("Giỏ hàng đang trống!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             DialogResult dr = MessageBox.Show("Bạn có chắc chắn muốn hủy đơn hàng này không?", "Xác nhận hủy đơn", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (dr == DialogResult.Yes)
             {
@@ -307,15 +343,42 @@ namespace appquanlynhanviencuahang
             }
         }
 
+        // =========================================================================
+        // XỬ LÝ TÌM KIẾM CHUẨN XÁC TRÊN Ô TXTTIMKIEM
+        // =========================================================================
+        string placeholderText = "Tìm kiếm sản phẩm theo tên hoặc mã...";
+
+        private void txtTimKiem_Enter(object sender, EventArgs e)
+        {
+            if (txtTimKiem.Text == placeholderText)
+            {
+                txtTimKiem.Text = "";
+                txtTimKiem.ForeColor = Color.Black;
+            }
+        }
+
+        private void txtTimKiem_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtTimKiem.Text))
+            {
+                txtTimKiem.Text = placeholderText;
+                txtTimKiem.ForeColor = Color.Gray;
+                LoadDanhSachSanPham("Tất cả sản phẩm", "");
+            }
+        }
+
         private void txtTimKiem_TextChanged(object sender, EventArgs e)
         {
-            string tuKhoa = txtTimKiem.Text.Trim();
-            if (tuKhoa == "Tìm kiếm sản phẩm theo tên hoặc mã...") tuKhoa = "";
-            LoadDanhSachSanPham("Tất cả sản phẩm", tuKhoa);
+            if (txtTimKiem.Text != placeholderText)
+            {
+                string tuKhoa = txtTimKiem.Text.Trim();
+                LoadDanhSachSanPham("Tất cả sản phẩm", tuKhoa);
+                txtTimKiem.ForeColor = Color.Black;
+            }
         }
 
         // =========================================================================
-        // 5. HIỆU ỨNG ĐỔI MÀU NÚT DANH MỤC
+        // HIỆU ỨNG ĐỔI MÀU NÚT DANH MỤC
         // =========================================================================
         private void DoiMauNutDanhMuc(Button activeButton)
         {

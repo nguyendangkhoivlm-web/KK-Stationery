@@ -50,15 +50,17 @@
             this.btnHoanTat = new System.Windows.Forms.Button();
             this.dgvDanhSachSP = new System.Windows.Forms.DataGridView();
             this.lblTieuDeChiTiet = new System.Windows.Forms.Label();
-            this.lblTongTien = new System.Windows.Forms.Label();
-            this.lblThueVAT = new System.Windows.Forms.Label();
-            this.lblTamTinh = new System.Windows.Forms.Label();
             this.pnlBenTrai = new System.Windows.Forms.Panel();
             this.tblBoCucChinh = new System.Windows.Forms.TableLayoutPanel();
             this.lblTieuDeForm = new System.Windows.Forms.Label();
             this.pnlThanhTieuDe = new System.Windows.Forms.Panel();
             this.lblNhanVien = new System.Windows.Forms.Label();
             this.btnquaylaitrangtruoc = new System.Windows.Forms.Button();
+            this.pnlTongTienWrapper = new System.Windows.Forms.Panel();
+            this.lblTongTien = new System.Windows.Forms.Label();
+            this.pnlDuongKeNgang = new System.Windows.Forms.Panel();
+            this.lblThueVAT = new System.Windows.Forms.Label();
+            this.lblTamTinh = new System.Windows.Forms.Label();
             this.tblPhuongThuc.SuspendLayout();
             this.cardQuetQR.SuspendLayout();
             this.cardTheNganHang.SuspendLayout();
@@ -68,6 +70,7 @@
             this.pnlBenTrai.SuspendLayout();
             this.tblBoCucChinh.SuspendLayout();
             this.pnlThanhTieuDe.SuspendLayout();
+            this.pnlTongTienWrapper.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblTieuDePhuongThuc
@@ -312,7 +315,7 @@
             this.btnInHoaDon.Name = "btnInHoaDon";
             this.btnInHoaDon.Size = new System.Drawing.Size(574, 45);
             this.btnInHoaDon.TabIndex = 6;
-            this.btnInHoaDon.Text = "🖨   In Hóa Đơn";
+            this.btnInHoaDon.Text = "🖨  In Hóa Đơn Cho Khách";
             this.btnInHoaDon.UseVisualStyleBackColor = false;
             // 
             // pnlBenPhai
@@ -344,7 +347,6 @@
             this.btnHoanTat.TabIndex = 5;
             this.btnHoanTat.Text = "✔   Hoàn Tất Giao Dịch";
             this.btnHoanTat.UseVisualStyleBackColor = false;
-//            this.btnHoanTat.Click += new System.EventHandler(this.btnHoanTat_Click_1);
             // 
             // dgvDanhSachSP
             // 
@@ -364,7 +366,7 @@
             this.dgvDanhSachSP.RowHeadersVisible = false;
             this.dgvDanhSachSP.RowHeadersWidth = 51;
             this.dgvDanhSachSP.RowTemplate.Height = 38;
-            this.dgvDanhSachSP.Size = new System.Drawing.Size(527, 438);
+            this.dgvDanhSachSP.Size = new System.Drawing.Size(527, 413);
             this.dgvDanhSachSP.TabIndex = 1;
             // 
             // lblTieuDeChiTiet
@@ -378,48 +380,10 @@
             this.lblTieuDeChiTiet.TabIndex = 0;
             this.lblTieuDeChiTiet.Text = "Chi Tiết Hóa Đơn #HD12345";
             // 
-            // lblTongTien
-            // 
-            this.lblTongTien.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblTongTien.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            this.lblTongTien.ForeColor = System.Drawing.Color.Blue;
-            this.lblTongTien.Location = new System.Drawing.Point(134, 558);
-            this.lblTongTien.Name = "lblTongTien";
-            this.lblTongTien.Size = new System.Drawing.Size(410, 35);
-            this.lblTongTien.TabIndex = 4;
-            this.lblTongTien.Text = "Tổng Tiền: 0 VNĐ";
-            this.lblTongTien.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblThueVAT
-            // 
-            this.lblThueVAT.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblThueVAT.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblThueVAT.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
-            this.lblThueVAT.Location = new System.Drawing.Point(184, 528);
-            this.lblThueVAT.Name = "lblThueVAT";
-            this.lblThueVAT.Size = new System.Drawing.Size(360, 22);
-            this.lblThueVAT.TabIndex = 3;
-            this.lblThueVAT.Text = "Thuế VAT (8%): 0 VNĐ";
-            this.lblThueVAT.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblTamTinh
-            // 
-            this.lblTamTinh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblTamTinh.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblTamTinh.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
-            this.lblTamTinh.Location = new System.Drawing.Point(184, 503);
-            this.lblTamTinh.Name = "lblTamTinh";
-            this.lblTamTinh.Size = new System.Drawing.Size(360, 22);
-            this.lblTamTinh.TabIndex = 2;
-            this.lblTamTinh.Text = "Tạm tính: 0 VNĐ";
-            this.lblTamTinh.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // pnlBenTrai
             // 
             this.pnlBenTrai.BackColor = System.Drawing.Color.White;
-            this.pnlBenTrai.Controls.Add(this.lblTongTien);
-            this.pnlBenTrai.Controls.Add(this.lblThueVAT);
-            this.pnlBenTrai.Controls.Add(this.lblTamTinh);
+            this.pnlBenTrai.Controls.Add(this.pnlTongTienWrapper);
             this.pnlBenTrai.Controls.Add(this.dgvDanhSachSP);
             this.pnlBenTrai.Controls.Add(this.lblTieuDeChiTiet);
             this.pnlBenTrai.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -494,6 +458,69 @@
             this.btnquaylaitrangtruoc.UseVisualStyleBackColor = true;
             this.btnquaylaitrangtruoc.Click += new System.EventHandler(this.btnquaylaitrangtruoc_Click);
             // 
+            // pnlTongTienWrapper
+            // 
+            this.pnlTongTienWrapper.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.pnlTongTienWrapper.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlTongTienWrapper.Controls.Add(this.lblTongTien);
+            this.pnlTongTienWrapper.Controls.Add(this.pnlDuongKeNgang);
+            this.pnlTongTienWrapper.Controls.Add(this.lblThueVAT);
+            this.pnlTongTienWrapper.Controls.Add(this.lblTamTinh);
+            this.pnlTongTienWrapper.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlTongTienWrapper.Location = new System.Drawing.Point(15, 472);
+            this.pnlTongTienWrapper.Name = "pnlTongTienWrapper";
+            this.pnlTongTienWrapper.Padding = new System.Windows.Forms.Padding(14, 10, 14, 10);
+            this.pnlTongTienWrapper.Size = new System.Drawing.Size(527, 131);
+            this.pnlTongTienWrapper.TabIndex = 6;
+            // 
+            // lblTongTien
+            // 
+            this.lblTongTien.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblTongTien.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTongTien.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
+            this.lblTongTien.Location = new System.Drawing.Point(14, 77);
+            this.lblTongTien.Name = "lblTongTien";
+            this.lblTongTien.Size = new System.Drawing.Size(497, 42);
+            this.lblTongTien.TabIndex = 4;
+            this.lblTongTien.Text = "Tổng Tiền: 0 VNĐ";
+            this.lblTongTien.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // pnlDuongKeNgang
+            // 
+            this.pnlDuongKeNgang.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlDuongKeNgang.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.pnlDuongKeNgang.Location = new System.Drawing.Point(14, 72);
+            this.pnlDuongKeNgang.Name = "pnlDuongKeNgang";
+            this.pnlDuongKeNgang.Size = new System.Drawing.Size(497, 1);
+            this.pnlDuongKeNgang.TabIndex = 5;
+            // 
+            // lblThueVAT
+            // 
+            this.lblThueVAT.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblThueVAT.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblThueVAT.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
+            this.lblThueVAT.Location = new System.Drawing.Point(14, 40);
+            this.lblThueVAT.Name = "lblThueVAT";
+            this.lblThueVAT.Size = new System.Drawing.Size(497, 24);
+            this.lblThueVAT.TabIndex = 3;
+            this.lblThueVAT.Text = "Thuế VAT (8%): 0 VNĐ";
+            this.lblThueVAT.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblTamTinh
+            // 
+            this.lblTamTinh.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblTamTinh.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTamTinh.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
+            this.lblTamTinh.Location = new System.Drawing.Point(14, 8);
+            this.lblTamTinh.Name = "lblTamTinh";
+            this.lblTamTinh.Size = new System.Drawing.Size(497, 24);
+            this.lblTamTinh.TabIndex = 2;
+            this.lblTamTinh.Text = "Tạm tính: 0 VNĐ";
+            this.lblTamTinh.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // frmThanhToan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -517,6 +544,7 @@
             this.tblBoCucChinh.ResumeLayout(false);
             this.pnlThanhTieuDe.ResumeLayout(false);
             this.pnlThanhTieuDe.PerformLayout();
+            this.pnlTongTienWrapper.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -545,14 +573,16 @@
         private System.Windows.Forms.Button btnHoanTat;
         private System.Windows.Forms.DataGridView dgvDanhSachSP;
         private System.Windows.Forms.Label lblTieuDeChiTiet;
-        private System.Windows.Forms.Label lblTongTien;
-        private System.Windows.Forms.Label lblThueVAT;
-        private System.Windows.Forms.Label lblTamTinh;
         private System.Windows.Forms.Panel pnlBenTrai;
         private System.Windows.Forms.TableLayoutPanel tblBoCucChinh;
         private System.Windows.Forms.Label lblTieuDeForm;
         private System.Windows.Forms.Panel pnlThanhTieuDe;
         private System.Windows.Forms.Button btnquaylaitrangtruoc;
         private System.Windows.Forms.Label lblNhanVien;
+        private System.Windows.Forms.Panel pnlTongTienWrapper;
+        private System.Windows.Forms.Label lblTongTien;
+        private System.Windows.Forms.Panel pnlDuongKeNgang;
+        private System.Windows.Forms.Label lblThueVAT;
+        private System.Windows.Forms.Label lblTamTinh;
     }
 }

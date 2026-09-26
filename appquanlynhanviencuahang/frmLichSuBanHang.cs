@@ -1,223 +1,268 @@
 ﻿using System;
 using System.Data;
-using System.Data.SqlClient; // Bắt buộc để kết nối SQL
+using System.Data.SqlClient;
 using System.Drawing;
+using System.Text;
 using System.Windows.Forms;
 
 namespace appquanlynhanviencuahang
 {
     public partial class frmLichSuBanHang : Form
     {
-        // 1. Khai báo chuỗi kết nối và bảng chứa dữ liệu thật
         string chuoiKetNoi = @"Data Source=.\SQLEXPRESS;Initial Catalog=quanlycuahangdungcuhoctap;Integrated Security=True";
         DataTable dtLichSu = new DataTable();
-
         string placeholderText = "Tìm theo Mã HĐ hoặc Tên NV...";
 
         public frmLichSuBanHang()
         {
             InitializeComponent();
-
             this.Load += frmLichSuBanHang_Load;
 
-            // Gán sự kiện cho các nút bấm và ô tìm kiếm
-            if (btnLocNgay != null) btnLocNgay.Click += btnLocNgay_Click;
-            if (btnInLaiHoaDon != null) btnInLaiHoaDon.Click += btnInLaiHoaDon_Click;
+            if (btnLocNgay != null) { btnLocNgay.Click -= btnLocNgay_Click; btnLocNgay.Click += btnLocNgay_Click; }
+            if (btnInLaiHoaDon != null) { btnInLaiHoaDon.Click -= btnInLaiHoaDon_Click; btnInLaiHoaDon.Click += btnInLaiHoaDon_Click; }
 
             if (txtTimKiem != null)
             {
-                txtTimKiem.Enter += txtTimKiem_Enter;
-                txtTimKiem.Leave += txtTimKiem_Leave;
-                txtTimKiem.TextChanged += txtTimKiem_TextChanged; // Tự động lọc khi gõ chữ
+                txtTimKiem.Enter -= txtTimKiem_Enter; txtTimKiem.Enter += txtTimKiem_Enter;
+                txtTimKiem.Leave -= txtTimKiem_Leave; txtTimKiem.Leave += txtTimKiem_Leave;
+                txtTimKiem.TextChanged -= txtTimKiem_TextChanged; txtTimKiem.TextChanged += txtTimKiem_TextChanged;
+            }
 
-                if (string.IsNullOrWhiteSpace(txtTimKiem.Text) || txtTimKiem.Text == placeholderText)
-                {
-                    txtTimKiem.Text = placeholderText;
-                    txtTimKiem.ForeColor = Color.Gray;
-                }
+            // GẮN SỰ KIỆN CLICK ĐÚP CHUỘT VÀO DÒNG ĐỂ XEM HÓA ĐƠN NHANH
+            if (dgvLichSu != null)
+            {
+                dgvLichSu.CellDoubleClick -= dgvLichSu_CellDoubleClick;
+                dgvLichSu.CellDoubleClick += dgvLichSu_CellDoubleClick;
             }
         }
 
         private void frmLichSuBanHang_Load(object sender, EventArgs e)
         {
-            // Vừa mở form lên là gọi hàm kéo dữ liệu từ SQL ngay
-            TaiDuLieuTuCSDL();
-        }
-
-        // =========================================================================
-        // HÀM KÉO DỮ LIỆU TỪ SQL SERVER BẰNG LỆNH JOIN
-        // =========================================================================
-        private void TaiDuLieuTuCSDL()
-        {
-            try
-            {
-                SqlConnection conn = new SqlConnection(chuoiKetNoi);
-                conn.Open();
-
-                // Lệnh SQL kết nối bảng HoaDon với bảng NhanVien và KhachHang để lấy tên thật thay vì lấy Mã
-                string sql = @"
-                    SELECT 
-                        hd.MaHoaDon AS [Mã HĐ], 
-                        hd.NgayLap AS [Thời Gian], 
-                        nv.HoTen AS [Nhân Viên], 
-                        kh.HoTen AS [Khách Hàng],
-                        hd.TongTien AS [Tổng Tiền]
-                    FROM HoaDon hd
-                    LEFT JOIN NhanVien nv ON hd.MaNhanVien = nv.MaNhanVien
-                    LEFT JOIN KhachHang kh ON hd.MaKhachHang = kh.MaKhachHang";
-
-                SqlDataAdapter da = new SqlDataAdapter(sql, conn);
-
-                dtLichSu = new DataTable();
-                da.Fill(dtLichSu); // Đổ dữ liệu thật vào biến dtLichSu
-
-                conn.Close();
-
-                // Đẩy dữ liệu lên DataGridView và tính tổng tiền
-                HienThiVaTinhTong(dtLichSu);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi tải dữ liệu lịch sử: " + ex.Message, "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        // Hàm đổ dữ liệu vào DataGridView và tính toán tổng số đơn, tổng doanh thu
-        private void HienThiVaTinhTong(DataTable dt)
-        {
-            if (dgvLichSu != null)
-            {
-                dgvLichSu.DataSource = null;
-                dgvLichSu.DataSource = dt;
-
-                if (dgvLichSu.Columns.Contains("Tổng Tiền"))
-                {
-                    dgvLichSu.Columns["Tổng Tiền"].DefaultCellStyle.Format = "N0";
-                }
-            }
-
-            int tongSoDon = dt.Rows.Count;
-            decimal tongDoanhThu = 0;
-
-            foreach (DataRow row in dt.Rows)
-            {
-                if (row["Tổng Tiền"] != DBNull.Value)
-                {
-                    tongDoanhThu += Convert.ToDecimal(row["Tổng Tiền"]);
-                }
-            }
-
-            if (lblTongSoHoaDon != null)
-            {
-                lblTongSoHoaDon.Text = "Tổng số: " + tongSoDon + " đơn hàng";
-            }
-
-            if (lblTongDoanhThu != null)
-            {
-                lblTongDoanhThu.Text = "Tổng Doanh Thu: " + tongDoanhThu.ToString("N0") + " VNĐ";
-            }
-        }
-
-        // =========================================================================
-        // XỬ LÝ CHỮ MỜ TÌM KIẾM
-        // =========================================================================
-        private void txtTimKiem_Enter(object sender, EventArgs e)
-        {
-            if (txtTimKiem.Text == placeholderText)
-            {
-                txtTimKiem.Text = "";
-                txtTimKiem.ForeColor = Color.Black;
-            }
-        }
-
-        private void txtTimKiem_Leave(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(txtTimKiem.Text))
+            if (txtTimKiem != null && (string.IsNullOrWhiteSpace(txtTimKiem.Text) || txtTimKiem.Text == placeholderText))
             {
                 txtTimKiem.Text = placeholderText;
                 txtTimKiem.ForeColor = Color.Gray;
             }
+            TaiDuLieuTuCSDL();
         }
 
-        // =========================================================================
-        // 1. TÌM KIẾM TỰ ĐỘNG KHI GÕ
-        // =========================================================================
+        private void TaiDuLieuTuCSDL()
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(chuoiKetNoi))
+                {
+                    conn.Open();
+                    string sql = @"
+                        SELECT 
+                            hd.MaHoaDon AS [Mã HĐ], 
+                            hd.NgayLap AS [Thời Gian], 
+                            ISNULL(nv.HoTen, hd.MaNhanVien) AS [Nhân Viên], 
+                            ISNULL(kh.HoTen, hd.MaKhachHang) AS [Khách Hàng],
+                            hd.TongTien AS [Tổng Tiền]
+                        FROM HoaDon hd
+                        LEFT JOIN NhanVien nv ON hd.MaNhanVien = nv.MaNhanVien
+                        LEFT JOIN KhachHang kh ON hd.MaKhachHang = kh.MaKhachHang
+                        ORDER BY hd.NgayLap DESC";
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(sql, conn))
+                    {
+                        dtLichSu = new DataTable();
+                        da.Fill(dtLichSu);
+                    }
+                }
+                HienThiVaTinhTong(dtLichSu);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi tải lịch sử: " + ex.Message, "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void HienThiVaTinhTong(DataTable dt)
+        {
+            if (dgvLichSu != null)
+            {
+                dgvLichSu.AutoGenerateColumns = true;
+                dgvLichSu.DataSource = null;
+                dgvLichSu.DataSource = dt;
+                dgvLichSu.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                dgvLichSu.AllowUserToAddRows = false;
+                dgvLichSu.ReadOnly = true;
+                dgvLichSu.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Đảm bảo chọn được nguyên dòng
+
+                if (dgvLichSu.Columns.Contains("Tổng Tiền"))
+                    dgvLichSu.Columns["Tổng Tiền"].DefaultCellStyle.Format = "N0";
+            }
+
+            int tongSoDon = dt.Rows.Count;
+            decimal tongDoanhThu = 0;
+            foreach (DataRow row in dt.Rows)
+            {
+                if (row["Tổng Tiền"] != DBNull.Value) tongDoanhThu += Convert.ToDecimal(row["Tổng Tiền"]);
+            }
+
+            if (lblTongSoHoaDon != null) lblTongSoHoaDon.Text = "Tổng số: " + tongSoDon + " đơn hàng";
+            if (lblTongDoanhThu != null) lblTongDoanhThu.Text = "Tổng Doanh Thu: " + tongDoanhThu.ToString("N0") + " VNĐ";
+        }
+
+        private void txtTimKiem_Enter(object sender, EventArgs e)
+        {
+            if (txtTimKiem.Text == placeholderText) { txtTimKiem.Text = ""; txtTimKiem.ForeColor = Color.Black; }
+        }
+
+        private void txtTimKiem_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtTimKiem.Text)) { txtTimKiem.Text = placeholderText; txtTimKiem.ForeColor = Color.Gray; }
+        }
+
         private void txtTimKiem_TextChanged(object sender, EventArgs e)
         {
+            if (dtLichSu == null || dtLichSu.Rows.Count == 0) return;
             string tuKhoa = (txtTimKiem.Text != placeholderText) ? txtTimKiem.Text.Trim().ToLower() : "";
-
-            if (string.IsNullOrEmpty(tuKhoa))
-            {
-                HienThiVaTinhTong(dtLichSu); // Nếu không gõ gì thì hiện toàn bộ
-                return;
-            }
+            if (string.IsNullOrEmpty(tuKhoa)) { HienThiVaTinhTong(dtLichSu); return; }
 
             DataTable dtFiltered = dtLichSu.Clone();
-
             foreach (DataRow row in dtLichSu.Rows)
             {
-                string maHD = row["Mã HĐ"].ToString().ToLower();
-                string nhanVien = row["Nhân Viên"].ToString().ToLower();
-                string khachHang = row["Khách Hàng"].ToString().ToLower();
-
-                // Tìm theo mã HĐ, tên NV hoặc tên KH
-                if (maHD.Contains(tuKhoa) || nhanVien.Contains(tuKhoa) || khachHang.Contains(tuKhoa))
-                {
+                if (row["Mã HĐ"].ToString().ToLower().Contains(tuKhoa) || row["Nhân Viên"].ToString().ToLower().Contains(tuKhoa) || row["Khách Hàng"].ToString().ToLower().Contains(tuKhoa))
                     dtFiltered.ImportRow(row);
-                }
             }
-
             HienThiVaTinhTong(dtFiltered);
         }
 
-        // =========================================================================
-        // 2. LỌC THEO KHOẢNG THỜI GIAN
-        // =========================================================================
         private void btnLocNgay_Click(object sender, EventArgs e)
         {
+            if (dtLichSu == null || dtLichSu.Rows.Count == 0) return;
             DateTime tuNgay = dtpTuNgay.Value.Date;
-            DateTime denNgay = dtpDenNgay.Value.Date.AddDays(1).AddSeconds(-1); // Lấy hết cuối ngày
+            DateTime denNgay = dtpDenNgay.Value.Date.AddDays(1).AddSeconds(-1);
             string tuKhoa = (txtTimKiem.Text != placeholderText) ? txtTimKiem.Text.Trim().ToLower() : "";
 
             DataTable dtFiltered = dtLichSu.Clone();
-
             foreach (DataRow row in dtLichSu.Rows)
             {
                 if (DateTime.TryParse(row["Thời Gian"].ToString(), out DateTime ngayDonHang))
                 {
                     bool thoaManNgay = (ngayDonHang >= tuNgay && ngayDonHang <= denNgay);
-
-                    string maHD = row["Mã HĐ"].ToString().ToLower();
-                    string nhanVien = row["Nhân Viên"].ToString().ToLower();
-                    bool thoaManTuKhoa = string.IsNullOrEmpty(tuKhoa) || maHD.Contains(tuKhoa) || nhanVien.Contains(tuKhoa);
-
-                    if (thoaManNgay && thoaManTuKhoa)
-                    {
-                        dtFiltered.ImportRow(row);
-                    }
+                    bool thoaManTuKhoa = string.IsNullOrEmpty(tuKhoa) || row["Mã HĐ"].ToString().ToLower().Contains(tuKhoa) || row["Nhân Viên"].ToString().ToLower().Contains(tuKhoa);
+                    if (thoaManNgay && thoaManTuKhoa) dtFiltered.ImportRow(row);
                 }
             }
-
             HienThiVaTinhTong(dtFiltered);
-            MessageBox.Show(string.Format("Đã lọc được {0} hóa đơn trong khoảng thời gian đã chọn!", dtFiltered.Rows.Count), "Kết Quả Lọc", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        // Sự kiện gọi nút In khi click đúp chuột
+        private void dgvLichSu_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                btnInLaiHoaDon_Click(sender, e);
+            }
         }
 
         // =========================================================================
-        // 3. IN LẠI HÓA ĐƠN
+        // HÀM CHUI VÀO CSDL LẤY CHI TIẾT SẢN PHẨM VÀ VẼ LẠI HÓA ĐƠN
         // =========================================================================
         private void btnInLaiHoaDon_Click(object sender, EventArgs e)
         {
             if (dgvLichSu.SelectedRows.Count > 0 || dgvLichSu.CurrentRow != null)
             {
                 DataGridViewRow row = dgvLichSu.CurrentRow;
-                string maHD = row.Cells["Mã HĐ"].Value.ToString();
-                string tongTienHD = Convert.ToDecimal(row.Cells["Tổng Tiền"].Value).ToString("N0");
+                if (row.IsNewRow) return;
 
-                MessageBox.Show(string.Format("Đang gửi lệnh in lại hóa đơn [{0}] - Tổng tiền: {1} VNĐ", maHD, tongTienHD), "In Lại Hóa Đơn", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                string maHD = row.Cells["Mã HĐ"].Value.ToString();
+
+                try
+                {
+                    using (SqlConnection conn = new SqlConnection(chuoiKetNoi))
+                    {
+                        conn.Open();
+
+                        // 1. Kéo thông tin tổng quan của hóa đơn
+                        string sqlHD = @"
+                            SELECT hd.NgayLap, hd.TongTien, 
+                                   ISNULL(nv.HoTen, hd.MaNhanVien) AS NhanVien,
+                                   ISNULL(kh.HoTen, 'Khách vãng lai') AS KhachHang,
+                                   ISNULL(kh.SDT, 'Không có') AS SDT,
+                                   ISNULL(kh.DiaChi, 'Mua trực tiếp') AS DiaChi
+                            FROM HoaDon hd
+                            LEFT JOIN NhanVien nv ON hd.MaNhanVien = nv.MaNhanVien
+                            LEFT JOIN KhachHang kh ON hd.MaKhachHang = kh.MaKhachHang
+                            WHERE hd.MaHoaDon = @MaHD";
+
+                        string thoiGian = "", nhanVien = "", khachHang = "", sdt = "", diaChi = "";
+                        double tongTien = 0;
+
+                        using (SqlCommand cmdHD = new SqlCommand(sqlHD, conn))
+                        {
+                            cmdHD.Parameters.AddWithValue("@MaHD", maHD);
+                            using (SqlDataReader reader = cmdHD.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    thoiGian = Convert.ToDateTime(reader["NgayLap"]).ToString("dd/MM/yyyy HH:mm:ss");
+                                    nhanVien = reader["NhanVien"].ToString();
+                                    khachHang = reader["KhachHang"].ToString();
+                                    sdt = reader["SDT"].ToString();
+                                    diaChi = reader["DiaChi"].ToString();
+                                    tongTien = Convert.ToDouble(reader["TongTien"]);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Không tìm thấy dữ liệu hóa đơn này trong hệ thống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+                            }
+                        }
+
+                        // 2. Bắt đầu vẽ tờ bill
+                        StringBuilder bill = new StringBuilder();
+                        bill.AppendLine("===== IN LẠI HÓA ĐƠN =====");
+                        bill.AppendLine("Mã Đơn Hàng: " + maHD);
+                        bill.AppendLine("Thời gian: " + thoiGian);
+                        bill.AppendLine("Nhân viên: " + nhanVien);
+                        bill.AppendLine("Khách hàng: " + khachHang);
+                        bill.AppendLine("SĐT: " + sdt);
+                        bill.AppendLine("Địa chỉ: " + diaChi);
+                        bill.AppendLine("--------------------------------------------------------------");
+
+                        // 3. Kéo chi tiết các mặt hàng đã mua
+                        string sqlCT = @"
+                            SELECT sp.TenSanPham, ct.SoLuong, ct.DonGia, ct.ThanhTien
+                            FROM ChiTietHoaDon ct
+                            INNER JOIN SanPham sp ON ct.MaSanPham = sp.MaSanPham
+                            WHERE ct.MaHoaDon = @MaHD";
+
+                        using (SqlCommand cmdCT = new SqlCommand(sqlCT, conn))
+                        {
+                            cmdCT.Parameters.AddWithValue("@MaHD", maHD);
+                            using (SqlDataReader readerCT = cmdCT.ExecuteReader())
+                            {
+                                while (readerCT.Read())
+                                {
+                                    string tenSP = readerCT["TenSanPham"].ToString();
+                                    int sl = Convert.ToInt32(readerCT["SoLuong"]);
+                                    double tien = Convert.ToDouble(readerCT["ThanhTien"]);
+                                    bill.AppendLine("- " + tenSP + " (x" + sl + "): " + tien.ToString("N0") + " đ");
+                                }
+                            }
+                        }
+
+                        bill.AppendLine("--------------------------------------------------------------");
+                        bill.AppendLine("TỔNG TIỀN:    " + tongTien.ToString("N0") + " VNĐ");
+                        bill.AppendLine("\nBản sao lưu từ Lịch sử bán hàng.");
+
+                        MessageBox.Show(bill.ToString(), "Chi Tiết Hóa Đơn", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Có lỗi khi lôi chi tiết hóa đơn từ SQL: " + ex.Message, "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {
-                MessageBox.Show("Vui lòng chọn dòng đơn hàng cần in lại trên bảng!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng click chọn một dòng đơn hàng trên bảng để xem!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }

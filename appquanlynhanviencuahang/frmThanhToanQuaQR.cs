@@ -1,8 +1,9 @@
 ﻿using qlnhanvien;
 using System;
 using System.Data;
-using System.Data.SqlClient; // BẮT BUỘC THÊM THƯ VIỆN NÀY ĐỂ KẾT NỐI SQL
+using System.Data.SqlClient;
 using System.Drawing;
+using System.Text;
 using System.Windows.Forms;
 
 namespace appquanlynhanviencuahang
@@ -13,6 +14,9 @@ namespace appquanlynhanviencuahang
         double tamTinh, thueVAT, tongTien;
         string maDonHang;
         int thoiGianConLai = 300; // Đếm ngược 5 phút (300 giây)
+
+        // Chuỗi kết nối chuẩn
+        string chuoiKetNoi = @"Data Source=.\SQLEXPRESS;Initial Catalog=quanlycuahangdungcuhoctap;Integrated Security=True";
 
         // 1. Constructor mặc định
         public frmThanhToanQuaQR()
@@ -30,14 +34,20 @@ namespace appquanlynhanviencuahang
             this.tongTien = total;
             this.maDonHang = maDon;
 
-            // =========================================================
-            // Nối dây sự kiện bằng code cho chắc chắn (Chuẩn cơ bản)
-            // =========================================================
+            // Nối dây sự kiện bằng code cho chắc chắn 
+            this.Load -= frmThanhToanQuaQR_Load;
             this.Load += frmThanhToanQuaQR_Load;
+
+            btnGiaLapThanhCong.Click -= btnGiaLapThanhCong_Click;
             btnGiaLapThanhCong.Click += btnGiaLapThanhCong_Click;
+
+            btnHuyThanhToan.Click -= btnHuyThanhToan_Click;
             btnHuyThanhToan.Click += btnHuyThanhToan_Click;
+
+            btnQuayLai.Click -= btnQuayLai_Click;
             btnQuayLai.Click += btnQuayLai_Click;
 
+            timerDemNguoc.Tick -= TimerDemNguoc_Tick;
             timerDemNguoc.Tick += TimerDemNguoc_Tick;
         }
 
@@ -45,33 +55,27 @@ namespace appquanlynhanviencuahang
         {
             if (string.IsNullOrEmpty(maDonHang))
             {
-                maDonHang = "HD_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
+                maDonHang = "HD" + DateTime.Now.ToString("ddHHmmss");
             }
 
-            // Hiển thị số tiền và mã đơn lên giao diện
             lblSoTien.Text = tongTien.ToString("N0") + " VNĐ";
             lblNoiDungChuyenKhoan.Text = "Nội dung CK: " + maDonHang;
 
-            // Gọi API sinh mã QR tự động điền số tiền và nội dung
             string urlQR = $"https://img.vietqr.io/image/MB-0987654321-compact2.png?amount={tongTien}&addInfo={maDonHang}&accountName=TRAN VU TUAN KIET";
             picMaQR.LoadAsync(urlQR);
 
-            // Bắt đầu chạy đồng hồ đếm ngược
             timerDemNguoc.Start();
         }
 
         private void TimerDemNguoc_Tick(object sender, EventArgs e)
         {
-            thoiGianConLai--; // Trừ đi 1 giây
+            thoiGianConLai--;
 
-            // Tính ra phút và giây
             int phut = thoiGianConLai / 60;
             int giay = thoiGianConLai % 60;
 
-            // Cập nhật lên Label
             lblThoiGianConLai.Text = string.Format("⏳ Mã QR có hiệu lực trong: {0:D2}:{1:D2}", phut, giay);
 
-            // Hết giờ thì dừng đồng hồ và khóa nút bấm
             if (thoiGianConLai <= 0)
             {
                 timerDemNguoc.Stop();
@@ -81,86 +85,139 @@ namespace appquanlynhanviencuahang
         }
 
         // =========================================================================
-        // NÚT GIẢ LẬP ĐÃ NHẬN TIỀN (LƯU VÀO CSDL SQL SERVER)
+        // NÚT GIẢ LẬP ĐÃ NHẬN TIỀN (LƯU CSDL VÀ IN BIÊN LAI)
         // =========================================================================
         private void btnGiaLapThanhCong_Click(object sender, EventArgs e)
         {
-            timerDemNguoc.Stop(); // Nhận được tiền thì dừng đếm ngược
-
-            string maNhanVien = !string.IsNullOrEmpty(PhienDangNhap.MaNhanVien) ? PhienDangNhap.MaNhanVien : "NV01";
-            string chuoiKetNoi = @"Data Source=.\SQLEXPRESS;Initial Catalog=quanlycuahangdungcuhoctap;Integrated Security=True";
+            timerDemNguoc.Stop();
 
             try
             {
-                using (SqlConnection con = new SqlConnection(chuoiKetNoi))
+                using (SqlConnection conn = new SqlConnection(chuoiKetNoi))
                 {
-                    con.Open();
+                    conn.Open();
+                    SqlTransaction transaction = conn.BeginTransaction();
 
-                    // 1. Lưu vào bảng HoaDon
-                    string sqlInsertHoaDon = "INSERT INTO HoaDon (MaHoaDon, MaKhachHang, MaNhanVien, NgayLap, TongTien) VALUES (@MaHD, 'KH03', @MaNV, @NgayLap, @TongTien)";
-                    using (SqlCommand cmd = new SqlCommand(sqlInsertHoaDon, con))
+                    try
                     {
-                        cmd.Parameters.AddWithValue("@MaHD", maDonHang);
-                        cmd.Parameters.AddWithValue("@MaNV", maNhanVien);
-                        cmd.Parameters.AddWithValue("@NgayLap", DateTime.Now);
-                        cmd.Parameters.AddWithValue("@TongTien", (decimal)tongTien);
-                        cmd.ExecuteNonQuery();
-                    }
-
-                    // 2. Lưu chi tiết và trừ tồn kho
-                    if (dtSanPham != null)
-                    {
-                        foreach (DataRow row in dtSanPham.Rows)
+                        // 1. BẢO VỆ NHÂN VIÊN
+                        string maNhanVienChuan = "NV01";
+                        using (SqlCommand cmdNV = new SqlCommand("IF NOT EXISTS (SELECT 1 FROM NhanVien WHERE MaNhanVien = 'NV01') INSERT INTO NhanVien (MaNhanVien, HoTen) VALUES ('NV01', N'Admin')", conn, transaction))
                         {
-                            string maSP = row["Mã Sản Phẩm"].ToString();
-                            int soLuong = Convert.ToInt32(row["Số Lượng"]);
-                            double gia = Convert.ToDouble(row["Đơn Giá"]);
-                            double tien = Convert.ToDouble(row["Thành Tiền"]);
+                            cmdNV.ExecuteNonQuery();
+                        }
 
-                            // Lưu ChiTietHoaDon
-                            string sqlInsertCTHD = "INSERT INTO ChiTietHoaDon (MaHoaDon, MaSanPham, SoLuong, DonGia, ThanhTien) VALUES (@MaHD, @MaSP, @SL, @Gia, @Tien)";
-                            using (SqlCommand cmdCTHD = new SqlCommand(sqlInsertCTHD, con))
-                            {
-                                cmdCTHD.Parameters.AddWithValue("@MaHD", maDonHang);
-                                cmdCTHD.Parameters.AddWithValue("@MaSP", maSP);
-                                cmdCTHD.Parameters.AddWithValue("@SL", soLuong);
-                                cmdCTHD.Parameters.AddWithValue("@Gia", gia);
-                                cmdCTHD.Parameters.AddWithValue("@Tien", tien);
-                                cmdCTHD.ExecuteNonQuery();
-                            }
+                        using (SqlCommand cmdGetNV = new SqlCommand("SELECT TOP 1 MaNhanVien FROM NhanVien", conn, transaction))
+                        {
+                            object resNV = cmdGetNV.ExecuteScalar();
+                            if (resNV != null) maNhanVienChuan = resNV.ToString();
+                        }
 
-                            // Trừ tồn kho
-                            string sqlUpdateTonKho = "UPDATE SanPham SET SoLuongTon = SoLuongTon - @SL WHERE MaSanPham = @MaSP";
-                            using (SqlCommand cmdUpdate = new SqlCommand(sqlUpdateTonKho, con))
+                        // 2. BẢO VỆ KHÁCH HÀNG
+                        string maKhachHangChuan = "KH01";
+                        using (SqlCommand cmdKH = new SqlCommand("IF NOT EXISTS (SELECT 1 FROM KhachHang WHERE MaKhachHang = 'KH01') INSERT INTO KhachHang (MaKhachHang, HoTen, SDT, DiaChi, Email) VALUES ('KH01', N'Khách vãng lai', N'Không có', N'Tại quầy', N'Không có')", conn, transaction))
+                        {
+                            cmdKH.ExecuteNonQuery();
+                        }
+
+                        // 3. LƯU VÀO BẢNG HÓA ĐƠN
+                        string sqlInsertHoaDon = "INSERT INTO HoaDon (MaHoaDon, MaKhachHang, MaNhanVien, NgayLap, TongTien) VALUES (@MaHD, @MaKH, @MaNV, @NgayLap, @TongTien)";
+                        using (SqlCommand cmd = new SqlCommand(sqlInsertHoaDon, conn, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@MaHD", maDonHang);
+                            cmd.Parameters.AddWithValue("@MaKH", maKhachHangChuan);
+                            cmd.Parameters.AddWithValue("@MaNV", maNhanVienChuan);
+                            cmd.Parameters.AddWithValue("@NgayLap", DateTime.Now);
+                            cmd.Parameters.AddWithValue("@TongTien", (decimal)tongTien);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        // 4. LƯU CHI TIẾT & TRỪ TỒN KHO
+                        if (dtSanPham != null)
+                        {
+                            foreach (DataRow row in dtSanPham.Rows)
                             {
-                                cmdUpdate.Parameters.AddWithValue("@SL", soLuong);
-                                cmdUpdate.Parameters.AddWithValue("@MaSP", maSP);
-                                cmdUpdate.ExecuteNonQuery();
+                                string maSP = row["Mã Sản Phẩm"].ToString();
+                                int soLuong = Convert.ToInt32(row["Số Lượng"]);
+                                double gia = Convert.ToDouble(row["Đơn Giá"]);
+                                double tien = Convert.ToDouble(row["Thành Tiền"]);
+
+                                string sqlInsertCTHD = "INSERT INTO ChiTietHoaDon (MaHoaDon, MaSanPham, SoLuong, DonGia, ThanhTien) VALUES (@MaHD, @MaSP, @SL, @Gia, @Tien)";
+                                using (SqlCommand cmdCTHD = new SqlCommand(sqlInsertCTHD, conn, transaction))
+                                {
+                                    cmdCTHD.Parameters.AddWithValue("@MaHD", maDonHang);
+                                    cmdCTHD.Parameters.AddWithValue("@MaSP", maSP);
+                                    cmdCTHD.Parameters.AddWithValue("@SL", soLuong);
+                                    cmdCTHD.Parameters.AddWithValue("@Gia", gia);
+                                    cmdCTHD.Parameters.AddWithValue("@Tien", tien);
+                                    cmdCTHD.ExecuteNonQuery();
+                                }
+
+                                string sqlUpdateTonKho = "UPDATE SanPham SET SoLuongTon = SoLuongTon - @SL WHERE MaSanPham = @MaSP";
+                                using (SqlCommand cmdUpdate = new SqlCommand(sqlUpdateTonKho, conn, transaction))
+                                {
+                                    cmdUpdate.Parameters.AddWithValue("@SL", soLuong);
+                                    cmdUpdate.Parameters.AddWithValue("@MaSP", maSP);
+                                    cmdUpdate.ExecuteNonQuery();
+                                }
                             }
                         }
+
+                        transaction.Commit();
+                        KhoLichSu.VuaThanhToanXong = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        MessageBox.Show("Lỗi lưu hóa đơn QR vào CSDL: " + ex.Message, "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
                     }
                 }
-
-                // Bật cờ hiệu để trang Bán Hàng tự dọn giỏ hàng
-                KhoLichSu.VuaThanhToanXong = true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi lưu hóa đơn QR vào CSDL: " + ex.Message, "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi kết nối CSDL: " + ex.Message, "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            MessageBox.Show("Đã nhận được tiền qua mã QR thành công!\nHệ thống vừa lưu hóa đơn vào cơ sở dữ liệu.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // =========================================================
+            // 5. TẠO VÀ HIỂN THỊ HÓA ĐƠN CHI TIẾT LÊN MÀN HÌNH
+            // =========================================================
+            StringBuilder bill = new StringBuilder();
+            bill.AppendLine("===== THANH TOÁN QR THÀNH CÔNG =====\n");
+            bill.AppendLine("Mã Đơn Hàng: " + maDonHang);
+            bill.AppendLine("Thời gian: " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
+            bill.AppendLine("Khách hàng: Khách vãng lai");
+            bill.AppendLine("Phương thức: Chuyển khoản VietQR");
+            bill.AppendLine("--------------------------------------------------------------");
 
-            // Nhảy sang form In Hóa Đơn
+            if (dtSanPham != null)
+            {
+                foreach (DataRow row in dtSanPham.Rows)
+                {
+                    string tenSP = row["Tên Sản Phẩm"].ToString();
+                    string sl = row["Số Lượng"].ToString();
+                    string tien = Convert.ToDouble(row["Thành Tiền"]).ToString("N0");
+                    bill.AppendLine($"- {tenSP} (x{sl}): {tien} đ");
+                }
+            }
+
+            bill.AppendLine("--------------------------------------------------------------");
+            bill.AppendLine($"Tạm tính:     {tamTinh.ToString("N0")} đ");
+            bill.AppendLine($"Thuế VAT:     {thueVAT.ToString("N0")} đ");
+            bill.AppendLine($"TỔNG TIỀN:    {tongTien.ToString("N0")} VNĐ");
+            bill.AppendLine("\nĐã nhận tiền. Cảm ơn quý khách!");
+
+            MessageBox.Show(bill.ToString(), "Biên Lai Giao Dịch", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            // Nhảy sang Lịch Sử Bán Hàng sau khi xem xong hóa đơn
             frmMain mainForm = this.TopLevelControl as frmMain;
             if (mainForm != null)
             {
-                mainForm.OpenChildForm(new frmThongTinDeIn(dtSanPham, tamTinh, thueVAT, (double)tongTien), null);
+                mainForm.OpenChildForm(new frmLichSuBanHang(), null);
             }
         }
 
-        // Nút Hủy Bỏ (Nhảy về trang Tổng kết thanh toán)
         private void btnHuyThanhToan_Click(object sender, EventArgs e)
         {
             timerDemNguoc.Stop();
@@ -172,7 +229,6 @@ namespace appquanlynhanviencuahang
             }
         }
 
-        // Nút Quay Lại ở thanh tiêu đề (Dùng chung lệnh với nút Hủy)
         private void btnQuayLai_Click(object sender, EventArgs e)
         {
             btnHuyThanhToan_Click(sender, e);

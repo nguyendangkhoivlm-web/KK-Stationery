@@ -73,7 +73,6 @@
             this.btnGiaLapThanhCong.TabIndex = 7;
             this.btnGiaLapThanhCong.Text = "⚡ Giả Lập Đã Nhận Tiền";
             this.btnGiaLapThanhCong.UseVisualStyleBackColor = false;
-       //     this.btnGiaLapThanhCong.Click += new System.EventHandler(this.btnGiaLapThanhCong_Click_1);
             // 
             // btnHuyThanhToan
             // 
@@ -91,7 +90,6 @@
             this.btnHuyThanhToan.TabIndex = 6;
             this.btnHuyThanhToan.Text = "Hủy Bỏ";
             this.btnHuyThanhToan.UseVisualStyleBackColor = false;
-   //         this.btnHuyThanhToan.Click += new System.EventHandler(this.btnHuyThanhToan_Click_1);
             // 
             // tblNutBam
             // 

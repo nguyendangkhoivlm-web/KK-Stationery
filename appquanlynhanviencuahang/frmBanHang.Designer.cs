@@ -43,23 +43,26 @@
             this.btnDanhMucCompaMau = new System.Windows.Forms.Button();
             this.btnDanhMucTapHocSinh = new System.Windows.Forms.Button();
             this.pnlTimKiemTren = new System.Windows.Forms.Panel();
-            this.lblTieuDeChonSP = new System.Windows.Forms.Label();
+            this.pnlSearchBoxBorder = new System.Windows.Forms.Panel();
             this.txtTimKiem = new System.Windows.Forms.TextBox();
+            this.lblSearchIcon = new System.Windows.Forms.Label();
+            this.lblTieuDeChonSP = new System.Windows.Forms.Label();
             this.pnlTieuDeDonHang = new System.Windows.Forms.Panel();
             this.pnlBenPhai = new System.Windows.Forms.Panel();
             this.pnlTongKetDuoi = new System.Windows.Forms.Panel();
+            this.btnThanhToan = new System.Windows.Forms.Button();
+            this.btnHuyDon = new System.Windows.Forms.Button();
             this.lblTongCongTieuDe = new System.Windows.Forms.Label();
             this.lblTongCongGiaTri = new System.Windows.Forms.Label();
             this.pnlDuongKe = new System.Windows.Forms.Panel();
             this.lblKhachCanTraTieuDe = new System.Windows.Forms.Label();
             this.lblTongTien = new System.Windows.Forms.Label();
-            this.btnHuyDon = new System.Windows.Forms.Button();
-            this.btnThanhToan = new System.Windows.Forms.Button();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGioHang)).BeginInit();
             this.pnlBenTrai.SuspendLayout();
             this.pnlLocDanhMuc.SuspendLayout();
             this.pnlTimKiemTren.SuspendLayout();
+            this.pnlSearchBoxBorder.SuspendLayout();
             this.pnlTieuDeDonHang.SuspendLayout();
             this.pnlBenPhai.SuspendLayout();
             this.pnlTongKetDuoi.SuspendLayout();
@@ -256,13 +259,50 @@
             // 
             // pnlTimKiemTren
             // 
+            this.pnlTimKiemTren.Controls.Add(this.pnlSearchBoxBorder);
             this.pnlTimKiemTren.Controls.Add(this.lblTieuDeChonSP);
-            this.pnlTimKiemTren.Controls.Add(this.txtTimKiem);
             this.pnlTimKiemTren.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTimKiemTren.Location = new System.Drawing.Point(15, 15);
             this.pnlTimKiemTren.Name = "pnlTimKiemTren";
             this.pnlTimKiemTren.Size = new System.Drawing.Size(686, 45);
             this.pnlTimKiemTren.TabIndex = 0;
+            // 
+            // pnlSearchBoxBorder
+            // 
+            this.pnlSearchBoxBorder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlSearchBoxBorder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.pnlSearchBoxBorder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlSearchBoxBorder.Controls.Add(this.txtTimKiem);
+            this.pnlSearchBoxBorder.Controls.Add(this.lblSearchIcon);
+            this.pnlSearchBoxBorder.Location = new System.Drawing.Point(319, 4);
+            this.pnlSearchBoxBorder.Name = "pnlSearchBoxBorder";
+            this.pnlSearchBoxBorder.Padding = new System.Windows.Forms.Padding(6, 4, 6, 4);
+            this.pnlSearchBoxBorder.Size = new System.Drawing.Size(358, 36);
+            this.pnlSearchBoxBorder.TabIndex = 2;
+            // 
+            // txtTimKiem
+            // 
+            this.txtTimKiem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.txtTimKiem.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtTimKiem.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtTimKiem.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.txtTimKiem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.txtTimKiem.Location = new System.Drawing.Point(34, 4);
+            this.txtTimKiem.Name = "txtTimKiem";
+            this.txtTimKiem.Size = new System.Drawing.Size(316, 23);
+            this.txtTimKiem.TabIndex = 1;
+            // 
+            // lblSearchIcon
+            // 
+            this.lblSearchIcon.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblSearchIcon.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lblSearchIcon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
+            this.lblSearchIcon.Location = new System.Drawing.Point(6, 4);
+            this.lblSearchIcon.Name = "lblSearchIcon";
+            this.lblSearchIcon.Size = new System.Drawing.Size(28, 26);
+            this.lblSearchIcon.TabIndex = 0;
+            this.lblSearchIcon.Text = "🔍";
+            this.lblSearchIcon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblTieuDeChonSP
             // 
@@ -274,15 +314,6 @@
             this.lblTieuDeChonSP.Size = new System.Drawing.Size(192, 32);
             this.lblTieuDeChonSP.TabIndex = 0;
             this.lblTieuDeChonSP.Text = "Chọn Sản Phẩm";
-            // 
-            // txtTimKiem
-            // 
-            this.txtTimKiem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtTimKiem.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtTimKiem.Location = new System.Drawing.Point(425, 8);
-            this.txtTimKiem.Name = "txtTimKiem";
-            this.txtTimKiem.Size = new System.Drawing.Size(260, 30);
-            this.txtTimKiem.TabIndex = 1;
             // 
             // pnlTieuDeDonHang
             // 
@@ -309,18 +340,50 @@
             // 
             // pnlTongKetDuoi
             // 
+            this.pnlTongKetDuoi.Controls.Add(this.btnThanhToan);
+            this.pnlTongKetDuoi.Controls.Add(this.btnHuyDon);
             this.pnlTongKetDuoi.Controls.Add(this.lblTongCongTieuDe);
             this.pnlTongKetDuoi.Controls.Add(this.lblTongCongGiaTri);
             this.pnlTongKetDuoi.Controls.Add(this.pnlDuongKe);
             this.pnlTongKetDuoi.Controls.Add(this.lblKhachCanTraTieuDe);
             this.pnlTongKetDuoi.Controls.Add(this.lblTongTien);
-            this.pnlTongKetDuoi.Controls.Add(this.btnHuyDon);
-            this.pnlTongKetDuoi.Controls.Add(this.btnThanhToan);
             this.pnlTongKetDuoi.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlTongKetDuoi.Location = new System.Drawing.Point(15, 430);
             this.pnlTongKetDuoi.Name = "pnlTongKetDuoi";
             this.pnlTongKetDuoi.Size = new System.Drawing.Size(448, 178);
             this.pnlTongKetDuoi.TabIndex = 2;
+            // 
+            // btnThanhToan
+            // 
+            this.btnThanhToan.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnThanhToan.BackColor = System.Drawing.Color.LimeGreen;
+            this.btnThanhToan.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnThanhToan.FlatAppearance.BorderSize = 0;
+            this.btnThanhToan.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnThanhToan.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.btnThanhToan.ForeColor = System.Drawing.Color.White;
+            this.btnThanhToan.Location = new System.Drawing.Point(201, 115);
+            this.btnThanhToan.Name = "btnThanhToan";
+            this.btnThanhToan.Size = new System.Drawing.Size(228, 46);
+            this.btnThanhToan.TabIndex = 10;
+            this.btnThanhToan.Text = "💳 Thanh toán";
+            this.btnThanhToan.UseVisualStyleBackColor = false;
+            // 
+            // btnHuyDon
+            // 
+            this.btnHuyDon.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.btnHuyDon.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnHuyDon.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(202)))), ((int)(((byte)(202)))));
+            this.btnHuyDon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHuyDon.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnHuyDon.ForeColor = System.Drawing.Color.OrangeRed;
+            this.btnHuyDon.Location = new System.Drawing.Point(55, 115);
+            this.btnHuyDon.Name = "btnHuyDon";
+            this.btnHuyDon.Size = new System.Drawing.Size(140, 46);
+            this.btnHuyDon.TabIndex = 9;
+            this.btnHuyDon.Text = "🗑 Hủy đơn";
+            this.btnHuyDon.UseVisualStyleBackColor = false;
             // 
             // lblTongCongTieuDe
             // 
@@ -338,7 +401,7 @@
             this.lblTongCongGiaTri.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTongCongGiaTri.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.lblTongCongGiaTri.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.lblTongCongGiaTri.Location = new System.Drawing.Point(250, 25);
+            this.lblTongCongGiaTri.Location = new System.Drawing.Point(248, 25);
             this.lblTongCongGiaTri.Name = "lblTongCongGiaTri";
             this.lblTongCongGiaTri.Size = new System.Drawing.Size(198, 17);
             this.lblTongCongGiaTri.TabIndex = 1;
@@ -369,44 +432,12 @@
             this.lblTongTien.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTongTien.Font = new System.Drawing.Font("Segoe UI", 13.5F, System.Drawing.FontStyle.Bold);
             this.lblTongTien.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
-            this.lblTongTien.Location = new System.Drawing.Point(230, 70);
+            this.lblTongTien.Location = new System.Drawing.Point(228, 70);
             this.lblTongTien.Name = "lblTongTien";
             this.lblTongTien.Size = new System.Drawing.Size(218, 28);
             this.lblTongTien.TabIndex = 6;
             this.lblTongTien.Text = "0 đ";
             this.lblTongTien.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // btnHuyDon
-            // 
-            this.btnHuyDon.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.btnHuyDon.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnHuyDon.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(202)))), ((int)(((byte)(202)))));
-            this.btnHuyDon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHuyDon.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnHuyDon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
-            this.btnHuyDon.Location = new System.Drawing.Point(61, 115);
-            this.btnHuyDon.Name = "btnHuyDon";
-            this.btnHuyDon.Size = new System.Drawing.Size(145, 45);
-            this.btnHuyDon.TabIndex = 7;
-            this.btnHuyDon.Text = "Hủy đơn";
-            this.btnHuyDon.UseVisualStyleBackColor = false;
-            this.btnHuyDon.Click += new System.EventHandler(this.btnHuyDon_Click);
-            // 
-            // btnThanhToan
-            // 
-            this.btnThanhToan.BackColor = System.Drawing.Color.LimeGreen;
-            this.btnThanhToan.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnThanhToan.FlatAppearance.BorderSize = 0;
-            this.btnThanhToan.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnThanhToan.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnThanhToan.ForeColor = System.Drawing.Color.White;
-            this.btnThanhToan.Location = new System.Drawing.Point(224, 115);
-            this.btnThanhToan.Name = "btnThanhToan";
-            this.btnThanhToan.Size = new System.Drawing.Size(173, 45);
-            this.btnThanhToan.TabIndex = 8;
-            this.btnThanhToan.Text = "Thanh toán";
-            this.btnThanhToan.UseVisualStyleBackColor = false;
-            this.btnThanhToan.Click += new System.EventHandler(this.btnThanhToan_Click);
             // 
             // fileSystemWatcher1
             // 
@@ -427,6 +458,8 @@
             this.pnlLocDanhMuc.ResumeLayout(false);
             this.pnlTimKiemTren.ResumeLayout(false);
             this.pnlTimKiemTren.PerformLayout();
+            this.pnlSearchBoxBorder.ResumeLayout(false);
+            this.pnlSearchBoxBorder.PerformLayout();
             this.pnlTieuDeDonHang.ResumeLayout(false);
             this.pnlTieuDeDonHang.PerformLayout();
             this.pnlBenPhai.ResumeLayout(false);
@@ -452,7 +485,6 @@
         private System.Windows.Forms.Button btnDanhMucTapHocSinh;
         private System.Windows.Forms.Panel pnlTimKiemTren;
         private System.Windows.Forms.Label lblTieuDeChonSP;
-        private System.Windows.Forms.TextBox txtTimKiem;
         private System.Windows.Forms.Panel pnlTieuDeDonHang;
         private System.Windows.Forms.Panel pnlBenPhai;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
@@ -462,7 +494,10 @@
         private System.Windows.Forms.Panel pnlDuongKe;
         private System.Windows.Forms.Label lblKhachCanTraTieuDe;
         private System.Windows.Forms.Label lblTongTien;
-        private System.Windows.Forms.Button btnHuyDon;
+        private System.Windows.Forms.Panel pnlSearchBoxBorder;
+        private System.Windows.Forms.TextBox txtTimKiem;
+        private System.Windows.Forms.Label lblSearchIcon;
         private System.Windows.Forms.Button btnThanhToan;
+        private System.Windows.Forms.Button btnHuyDon;
     }
 }

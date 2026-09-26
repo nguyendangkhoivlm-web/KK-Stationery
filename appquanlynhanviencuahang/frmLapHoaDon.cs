@@ -16,15 +16,38 @@ namespace appquanlynhanviencuahang
         public frmLapHoaDon()
         {
             InitializeComponent();
+            NoiDaySuKienChoNutBam(); // Kích hoạt nối dây tự động
         }
 
         // 2. Constructor nhận dữ liệu từ Form Bán Hàng truyền sang
         public frmLapHoaDon(DataTable dtTruyenSang)
         {
             InitializeComponent();
+            NoiDaySuKienChoNutBam(); // Kích hoạt nối dây tự động
+
             if (dtTruyenSang != null)
             {
                 dtSanPham = dtTruyenSang.Copy(); // Copy dữ liệu sang bảng hóa đơn
+            }
+        }
+
+        // =========================================================================
+        // BÍ QUYẾT BẢO ĐẢM CÁC NÚT LUÔN CHẠY: NỐI DÂY SỰ KIỆN TRỰC TIẾP BẰNG CODE
+        // =========================================================================
+        private void NoiDaySuKienChoNutBam()
+        {
+            if (btnThanhToan1 != null) btnThanhToan1.Click += btnThanhToan1_Click;
+            if (btnThemSanPham != null) btnThemSanPham.Click += btnThemSanPham_Click;
+            if (btnXoaSanPham != null) btnXoaSanPham.Click += btnXoaSanPham_Click;
+            if (btnCapNhatHoaDon != null) btnCapNhatHoaDon.Click += btnCapNhatHoaDon_Click;
+            if (btnLuuNhap != null) btnLuuNhap.Click += btnLuuNhap_Click;
+            if (btnTroLaiTrangTruoc != null) btnTroLaiTrangTruoc.Click += btnTroLaiTrangTruoc_Click;
+
+            if (txtTimKiemSanPham != null)
+            {
+                txtTimKiemSanPham.Enter += txtTimKiemSanPham_Enter;
+                txtTimKiemSanPham.Leave += txtTimKiemSanPham_Leave;
+                txtTimKiemSanPham.TextChanged += txtTimKiemSanPham_TextChanged;
             }
         }
 
@@ -73,7 +96,6 @@ namespace appquanlynhanviencuahang
         {
             tamTinh = 0;
 
-            // Vòng lặp cơ bản tính tổng cột Thành Tiền
             for (int i = 0; i < dtSanPham.Rows.Count; i++)
             {
                 tamTinh += Convert.ToDouble(dtSanPham.Rows[i]["Thành Tiền"]);
@@ -97,13 +119,9 @@ namespace appquanlynhanviencuahang
 
         private void btnThemSanPham_Click(object sender, EventArgs e)
         {
-            // Tìm Form Main (form cha) đang bọc cái form hiện tại
             frmMain mainForm = this.TopLevelControl as frmMain;
-
             if (mainForm != null)
             {
-                // Mở form Chọn Sản Phẩm ngay BÊN TRONG form cha
-                // Đồng thời quăng cái giỏ hàng (dtSanPham) sang form đó để nó thêm đồ vào
                 mainForm.OpenChildForm(new frmChonSanPham(dtSanPham), null);
             }
         }
@@ -181,7 +199,7 @@ namespace appquanlynhanviencuahang
 
         private void txtTimKiemSanPham_TextChanged(object sender, EventArgs e)
         {
-            // Để trống, sau này có thể thêm code lọc sản phẩm giống bên Form Khách Hàng
+            // Xử lý lọc sản phẩm khi gõ chữ nếu cần
         }
     }
 }

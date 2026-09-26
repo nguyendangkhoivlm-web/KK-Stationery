@@ -68,7 +68,7 @@
             // btnInLaiHoaDon
             // 
             this.btnInLaiHoaDon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnInLaiHoaDon.BackColor = System.Drawing.Color.SpringGreen;
+            this.btnInLaiHoaDon.BackColor = System.Drawing.Color.LimeGreen;
             this.btnInLaiHoaDon.FlatAppearance.BorderSize = 0;
             this.btnInLaiHoaDon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnInLaiHoaDon.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
