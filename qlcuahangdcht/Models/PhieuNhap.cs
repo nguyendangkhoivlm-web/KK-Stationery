@@ -26,6 +26,8 @@ namespace qlcuahangdcht.Models
         [ForeignKey("MaNhanVien")]
         public virtual NhanVien NhanVien { get; set; }
 
+        public decimal TongTien { get; set; }
+
         public virtual ICollection<ChiTietPhieuNhap> ChiTietPhieuNhaps { get; set; }
     }
 }

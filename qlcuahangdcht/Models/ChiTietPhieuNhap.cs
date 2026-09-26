@@ -26,5 +26,8 @@ namespace qlcuahangdcht.Models
         public string MaSanPham { get; set; }
         [ForeignKey("MaSanPham")]
         public virtual SanPham SanPham { get; set; }
+
+        [NotMapped]
+        public decimal ThanhTien => SoLuong * GiaNhap;
     }
 }
