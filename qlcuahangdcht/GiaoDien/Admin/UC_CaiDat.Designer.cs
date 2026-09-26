@@ -35,7 +35,7 @@
             this.btnLuuAdmin = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.txtPassAdmin = new System.Windows.Forms.TextBox();
+            this.txtMatKhauAdmin = new System.Windows.Forms.TextBox();
             this.txtUserAdmin = new System.Windows.Forms.TextBox();
             this.txtSDTAdmin = new System.Windows.Forms.TextBox();
             this.txtHoTenAdmin = new System.Windows.Forms.TextBox();
@@ -45,8 +45,8 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.grpBaoMat = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.txtXacNhanMatKhau = new System.Windows.Forms.TextBox();
+            this.btnDoiMatKhau = new System.Windows.Forms.Button();
+            this.txtNhapLaiMatKhau = new System.Windows.Forms.TextBox();
             this.txtMatKhauMoi = new System.Windows.Forms.TextBox();
             this.txtMatKhauCu = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -128,6 +128,7 @@
             this.btnHuyAdmin.TabIndex = 10;
             this.btnHuyAdmin.Text = "Hủy";
             this.btnHuyAdmin.UseVisualStyleBackColor = false;
+            this.btnHuyAdmin.Click += new System.EventHandler(this.btnHuyAdmin_Click);
             // 
             // btnLuuAdmin
             // 
@@ -142,6 +143,7 @@
             this.btnLuuAdmin.TabIndex = 9;
             this.btnLuuAdmin.Text = "Lưu";
             this.btnLuuAdmin.UseVisualStyleBackColor = false;
+            this.btnLuuAdmin.Click += new System.EventHandler(this.btnLuuAdmin_Click);
             // 
             // label13
             // 
@@ -160,7 +162,7 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.txtPassAdmin);
+            this.groupBox1.Controls.Add(this.txtMatKhauAdmin);
             this.groupBox1.Controls.Add(this.txtUserAdmin);
             this.groupBox1.Controls.Add(this.txtSDTAdmin);
             this.groupBox1.Controls.Add(this.txtHoTenAdmin);
@@ -176,16 +178,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Thông tin Quản Trị Viên";
             // 
-            // txtPassAdmin
+            // txtMatKhauAdmin
             // 
-            this.txtPassAdmin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtMatKhauAdmin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPassAdmin.Location = new System.Drawing.Point(11, 359);
-            this.txtPassAdmin.Name = "txtPassAdmin";
-            this.txtPassAdmin.PasswordChar = '*';
-            this.txtPassAdmin.Size = new System.Drawing.Size(335, 30);
-            this.txtPassAdmin.TabIndex = 8;
-            this.txtPassAdmin.UseSystemPasswordChar = true;
+            this.txtMatKhauAdmin.Location = new System.Drawing.Point(11, 359);
+            this.txtMatKhauAdmin.Name = "txtMatKhauAdmin";
+            this.txtMatKhauAdmin.PasswordChar = '*';
+            this.txtMatKhauAdmin.Size = new System.Drawing.Size(335, 30);
+            this.txtMatKhauAdmin.TabIndex = 8;
+            this.txtMatKhauAdmin.UseSystemPasswordChar = true;
             // 
             // txtUserAdmin
             // 
@@ -266,8 +268,8 @@
             // grpBaoMat
             // 
             this.grpBaoMat.BackColor = System.Drawing.Color.White;
-            this.grpBaoMat.Controls.Add(this.button2);
-            this.grpBaoMat.Controls.Add(this.txtXacNhanMatKhau);
+            this.grpBaoMat.Controls.Add(this.btnDoiMatKhau);
+            this.grpBaoMat.Controls.Add(this.txtNhapLaiMatKhau);
             this.grpBaoMat.Controls.Add(this.txtMatKhauMoi);
             this.grpBaoMat.Controls.Add(this.txtMatKhauCu);
             this.grpBaoMat.Controls.Add(this.label7);
@@ -283,30 +285,31 @@
             this.grpBaoMat.TabStop = false;
             this.grpBaoMat.Text = "Bảo mật";
             // 
-            // button2
+            // btnDoiMatKhau
             // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.BackColor = System.Drawing.Color.SteelBlue;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.ForeColor = System.Drawing.Color.White;
-            this.button2.Location = new System.Drawing.Point(181, 659);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(176, 39);
-            this.button2.TabIndex = 9;
-            this.button2.Text = "Đổi mật khẩu!";
-            this.button2.UseVisualStyleBackColor = false;
+            this.btnDoiMatKhau.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDoiMatKhau.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnDoiMatKhau.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDoiMatKhau.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDoiMatKhau.ForeColor = System.Drawing.Color.White;
+            this.btnDoiMatKhau.Location = new System.Drawing.Point(181, 659);
+            this.btnDoiMatKhau.Name = "btnDoiMatKhau";
+            this.btnDoiMatKhau.Size = new System.Drawing.Size(176, 39);
+            this.btnDoiMatKhau.TabIndex = 9;
+            this.btnDoiMatKhau.Text = "Đổi mật khẩu!";
+            this.btnDoiMatKhau.UseVisualStyleBackColor = false;
+            this.btnDoiMatKhau.Click += new System.EventHandler(this.btnDoiMatKhau_Click);
             // 
-            // txtXacNhanMatKhau
+            // txtNhapLaiMatKhau
             // 
-            this.txtXacNhanMatKhau.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtNhapLaiMatKhau.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtXacNhanMatKhau.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtXacNhanMatKhau.Location = new System.Drawing.Point(28, 321);
-            this.txtXacNhanMatKhau.Name = "txtXacNhanMatKhau";
-            this.txtXacNhanMatKhau.Size = new System.Drawing.Size(329, 30);
-            this.txtXacNhanMatKhau.TabIndex = 7;
-            this.txtXacNhanMatKhau.UseSystemPasswordChar = true;
+            this.txtNhapLaiMatKhau.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNhapLaiMatKhau.Location = new System.Drawing.Point(28, 321);
+            this.txtNhapLaiMatKhau.Name = "txtNhapLaiMatKhau";
+            this.txtNhapLaiMatKhau.Size = new System.Drawing.Size(329, 30);
+            this.txtNhapLaiMatKhau.TabIndex = 7;
+            this.txtNhapLaiMatKhau.UseSystemPasswordChar = true;
             // 
             // txtMatKhauMoi
             // 
@@ -395,6 +398,7 @@
             this.btnCapNhatHoSo.TabIndex = 8;
             this.btnCapNhatHoSo.Text = "Cập nhật";
             this.btnCapNhatHoSo.UseVisualStyleBackColor = false;
+            this.btnCapNhatHoSo.Click += new System.EventHandler(this.btnCapNhatHoSo_Click);
             // 
             // txtDiaChi
             // 
@@ -512,8 +516,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox grpBaoMat;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TextBox txtXacNhanMatKhau;
+        private System.Windows.Forms.Button btnDoiMatKhau;
+        private System.Windows.Forms.TextBox txtNhapLaiMatKhau;
         private System.Windows.Forms.TextBox txtMatKhauMoi;
         private System.Windows.Forms.TextBox txtMatKhauCu;
         private System.Windows.Forms.Label label7;
@@ -524,7 +528,7 @@
         private System.Windows.Forms.Button btnLuuAdmin;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox txtPassAdmin;
+        private System.Windows.Forms.TextBox txtMatKhauAdmin;
         private System.Windows.Forms.TextBox txtUserAdmin;
         private System.Windows.Forms.TextBox txtSDTAdmin;
         private System.Windows.Forms.TextBox txtHoTenAdmin;
