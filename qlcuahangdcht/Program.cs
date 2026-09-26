@@ -18,7 +18,7 @@ namespace qlcuahangdcht
             Application.SetCompatibleTextRenderingDefault(false);
 
             // Sửa lại thành gọi LoginForm thay vì Form1
-            Application.Run(new LoginForm());
+            Application.Run(new MainForm());
         }
     }
 }
