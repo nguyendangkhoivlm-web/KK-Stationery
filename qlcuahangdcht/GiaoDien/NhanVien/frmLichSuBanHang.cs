@@ -1,7 +1,8 @@
-﻿using System;
+﻿using qlcuahangdcht.Models;
+using System;
 using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -9,7 +10,6 @@ namespace qlcuahangdcht
 {
     public partial class frmLichSuBanHang : Form
     {
-        string chuoiKetNoi = @"Data Source=.\SQLEXPRESS;Initial Catalog=quanlycuahangdungcuhoctap;Integrated Security=True";
         DataTable dtLichSu = new DataTable();
         string placeholderText = "Tìm theo Mã HĐ hoặc Tên NV...";
 
@@ -46,36 +46,49 @@ namespace qlcuahangdcht
             TaiDuLieuTuCSDL();
         }
 
+        // =========================================================================
+        // TẢI DỮ LIỆU TỪ CSDL BẰNG ENTITY FRAMEWORK
+        // =========================================================================
         private void TaiDuLieuTuCSDL()
         {
             try
             {
-                using (SqlConnection conn = new SqlConnection(chuoiKetNoi))
+                using (var db = new CuaHangDbContext())
                 {
-                    conn.Open();
-                    string sql = @"
-                        SELECT 
-                            hd.MaHoaDon AS [Mã HĐ], 
-                            hd.NgayLap AS [Thời Gian], 
-                            ISNULL(nv.HoTen, hd.MaNhanVien) AS [Nhân Viên], 
-                            ISNULL(kh.HoTen, hd.MaKhachHang) AS [Khách Hàng],
-                            hd.TongTien AS [Tổng Tiền]
-                        FROM HoaDon hd
-                        LEFT JOIN NhanVien nv ON hd.MaNhanVien = nv.MaNhanVien
-                        LEFT JOIN KhachHang kh ON hd.MaKhachHang = kh.MaKhachHang
-                        ORDER BY hd.NgayLap DESC";
+                    // Dùng LINQ kết hợp các bảng HoaDon, NhanVien, KhachHang
+                    var query = from hd in db.HoaDons
+                                join nv in db.NhanViens on hd.MaNhanVien equals nv.MaNhanVien into nvGroup
+                                from nv in nvGroup.DefaultIfEmpty()
+                                join kh in db.KhachHangs on hd.MaKhachHang equals kh.MaKhachHang into khGroup
+                                from kh in khGroup.DefaultIfEmpty()
+                                orderby hd.NgayLap descending
+                                select new
+                                {
+                                    MaHD = hd.MaHoaDon,
+                                    ThoiGian = hd.NgayLap,
+                                    NhanVien = nv != null ? nv.HoTen : hd.MaNhanVien,
+                                    KhachHang = kh != null ? kh.HoTen : hd.MaKhachHang,
+                                    TongTien = hd.TongTien
+                                };
 
-                    using (SqlDataAdapter da = new SqlDataAdapter(sql, conn))
+                    // Đổ dữ liệu vào DataTable để tận dụng lại logic lọc ngày/tìm kiếm mượt mà của bạn
+                    dtLichSu = new DataTable();
+                    dtLichSu.Columns.Add("Mã HĐ", typeof(string));
+                    dtLichSu.Columns.Add("Thời Gian", typeof(DateTime));
+                    dtLichSu.Columns.Add("Nhân Viên", typeof(string));
+                    dtLichSu.Columns.Add("Khách Hàng", typeof(string));
+                    dtLichSu.Columns.Add("Tổng Tiền", typeof(decimal));
+
+                    foreach (var item in query)
                     {
-                        dtLichSu = new DataTable();
-                        da.Fill(dtLichSu);
+                        dtLichSu.Rows.Add(item.MaHD, item.ThoiGian, item.NhanVien, item.KhachHang, item.TongTien);
                     }
                 }
                 HienThiVaTinhTong(dtLichSu);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi tải lịch sử: " + ex.Message, "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi tải lịch sử bằng Entity Framework: " + ex.Message, "Lỗi EF", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -161,7 +174,7 @@ namespace qlcuahangdcht
         }
 
         // =========================================================================
-        // HÀM CHUI VÀO CSDL LẤY CHI TIẾT SẢN PHẨM VÀ VẼ LẠI HÓA ĐƠN
+        // HÀM LẤY CHI TIẾT SẢN PHẨM VÀ VẼ LẠI HÓA ĐƠN BẰNG ENTITY FRAMEWORK
         // =========================================================================
         private void btnInLaiHoaDon_Click(object sender, EventArgs e)
         {
@@ -174,82 +187,65 @@ namespace qlcuahangdcht
 
                 try
                 {
-                    using (SqlConnection conn = new SqlConnection(chuoiKetNoi))
+                    using (var db = new CuaHangDbContext())
                     {
-                        conn.Open();
+                        // 1. Kéo thông tin tổng quan của hóa đơn bằng LINQ
+                        var hdInfo = (from hd in db.HoaDons
+                                      join nv in db.NhanViens on hd.MaNhanVien equals nv.MaNhanVien into nvGroup
+                                      from nv in nvGroup.DefaultIfEmpty()
+                                      join kh in db.KhachHangs on hd.MaKhachHang equals kh.MaKhachHang into khGroup
+                                      from kh in khGroup.DefaultIfEmpty()
+                                      where hd.MaHoaDon == maHD
+                                      select new
+                                      {
+                                          hd.NgayLap,
+                                          hd.TongTien,
+                                          NhanVien = nv != null ? nv.HoTen : hd.MaNhanVien,
+                                          KhachHang = kh != null ? kh.HoTen : "Khách vãng lai",
+                                          SDT = kh != null ? kh.SDT : "Không có",
+                                          DiaChi = kh != null ? kh.DiaChi : "Mua trực tiếp"
+                                      }).FirstOrDefault();
 
-                        // 1. Kéo thông tin tổng quan của hóa đơn
-                        string sqlHD = @"
-                            SELECT hd.NgayLap, hd.TongTien, 
-                                   ISNULL(nv.HoTen, hd.MaNhanVien) AS NhanVien,
-                                   ISNULL(kh.HoTen, 'Khách vãng lai') AS KhachHang,
-                                   ISNULL(kh.SDT, 'Không có') AS SDT,
-                                   ISNULL(kh.DiaChi, 'Mua trực tiếp') AS DiaChi
-                            FROM HoaDon hd
-                            LEFT JOIN NhanVien nv ON hd.MaNhanVien = nv.MaNhanVien
-                            LEFT JOIN KhachHang kh ON hd.MaKhachHang = kh.MaKhachHang
-                            WHERE hd.MaHoaDon = @MaHD";
-
-                        string thoiGian = "", nhanVien = "", khachHang = "", sdt = "", diaChi = "";
-                        double tongTien = 0;
-
-                        using (SqlCommand cmdHD = new SqlCommand(sqlHD, conn))
+                        if (hdInfo == null)
                         {
-                            cmdHD.Parameters.AddWithValue("@MaHD", maHD);
-                            using (SqlDataReader reader = cmdHD.ExecuteReader())
-                            {
-                                if (reader.Read())
-                                {
-                                    thoiGian = Convert.ToDateTime(reader["NgayLap"]).ToString("dd/MM/yyyy HH:mm:ss");
-                                    nhanVien = reader["NhanVien"].ToString();
-                                    khachHang = reader["KhachHang"].ToString();
-                                    sdt = reader["SDT"].ToString();
-                                    diaChi = reader["DiaChi"].ToString();
-                                    tongTien = Convert.ToDouble(reader["TongTien"]);
-                                }
-                                else
-                                {
-                                    MessageBox.Show("Không tìm thấy dữ liệu hóa đơn này trong hệ thống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    return;
-                                }
-                            }
+                            MessageBox.Show("Không tìm thấy dữ liệu hóa đơn này trong hệ thống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
                         }
+
+                        string thoiGian = hdInfo.NgayLap != null ? Convert.ToDateTime(hdInfo.NgayLap).ToString("dd/MM/yyyy HH:mm:ss") : "";
 
                         // 2. Bắt đầu vẽ tờ bill
                         StringBuilder bill = new StringBuilder();
                         bill.AppendLine("===== IN LẠI HÓA ĐƠN =====");
                         bill.AppendLine("Mã Đơn Hàng: " + maHD);
                         bill.AppendLine("Thời gian: " + thoiGian);
-                        bill.AppendLine("Nhân viên: " + nhanVien);
-                        bill.AppendLine("Khách hàng: " + khachHang);
-                        bill.AppendLine("SĐT: " + sdt);
-                        bill.AppendLine("Địa chỉ: " + diaChi);
+                        bill.AppendLine("Nhân viên: " + hdInfo.NhanVien);
+                        bill.AppendLine("Khách hàng: " + hdInfo.KhachHang);
+                        bill.AppendLine("SĐT: " + hdInfo.SDT);
+                        bill.AppendLine("Địa chỉ: " + hdInfo.DiaChi);
                         bill.AppendLine("--------------------------------------------------------------");
 
                         // 3. Kéo chi tiết các mặt hàng đã mua
-                        string sqlCT = @"
-                            SELECT sp.TenSanPham, ct.SoLuong, ct.DonGia, ct.ThanhTien
-                            FROM ChiTietHoaDon ct
-                            INNER JOIN SanPham sp ON ct.MaSanPham = sp.MaSanPham
-                            WHERE ct.MaHoaDon = @MaHD";
+                        var chiTietList = (from ct in db.ChiTietHoaDons
+                                           join sp in db.SanPhams on ct.MaSanPham equals sp.MaSanPham
+                                           where ct.MaHoaDon == maHD
+                                           select new
+                                           {
+                                               sp.TenSanPham,
+                                               ct.SoLuong,
+                                               ct.ThanhTien
+                                           }).ToList();
 
-                        using (SqlCommand cmdCT = new SqlCommand(sqlCT, conn))
+                        foreach (var item in chiTietList)
                         {
-                            cmdCT.Parameters.AddWithValue("@MaHD", maHD);
-                            using (SqlDataReader readerCT = cmdCT.ExecuteReader())
-                            {
-                                while (readerCT.Read())
-                                {
-                                    string tenSP = readerCT["TenSanPham"].ToString();
-                                    int sl = Convert.ToInt32(readerCT["SoLuong"]);
-                                    double tien = Convert.ToDouble(readerCT["ThanhTien"]);
-                                    bill.AppendLine("- " + tenSP + " (x" + sl + "): " + tien.ToString("N0") + " đ");
-                                }
-                            }
+                            string tenSP = item.TenSanPham;
+                            int sl = Convert.ToInt32(item.SoLuong);
+                            double tien = Convert.ToDouble(item.ThanhTien);
+                            bill.AppendLine("- " + tenSP + " (x" + sl + "): " + tien.ToString("N0") + " đ");
                         }
 
                         bill.AppendLine("--------------------------------------------------------------");
-                        bill.AppendLine("TỔNG TIỀN:    " + tongTien.ToString("N0") + " VNĐ");
+                        bill.AppendLine("TỔNG TIỀN:    " + Convert.ToDouble(hdInfo.TongTien).ToString("N0") + " VNĐ");
                         bill.AppendLine("\nBản sao lưu từ Lịch sử bán hàng.");
 
                         MessageBox.Show(bill.ToString(), "Chi Tiết Hóa Đơn", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -257,7 +253,7 @@ namespace qlcuahangdcht
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Có lỗi khi lôi chi tiết hóa đơn từ SQL: " + ex.Message, "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Có lỗi khi lôi chi tiết hóa đơn bằng Entity Framework: " + ex.Message, "Lỗi EF", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else

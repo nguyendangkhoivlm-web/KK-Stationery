@@ -1,15 +1,13 @@
-﻿using System;
-using System.Data.SqlClient; // Bắt buộc để lưu CSDL
+﻿using qlcuahangdcht.Models;
+using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace qlcuahangdcht
 {
     public partial class frmThongTinDeIn1 : Form
     {
-        // Chuỗi kết nối CSDL
-        string chuoiKetNoi = @"Data Source=.\SQLEXPRESS;Initial Catalog=quanlycuahangdungcuhoctap;Integrated Security=True";
-
         public frmThongTinDeIn1()
         {
             InitializeComponent();
@@ -72,7 +70,7 @@ namespace qlcuahangdcht
         }
 
         // ==========================================================
-        // NÚT LƯU KHÁCH HÀNG (KẾT NỐI SQL SERVER - ĐÃ THÊM CỘT EMAIL)
+        // NÚT LƯU KHÁCH HÀNG (SỬ DỤNG ENTITY FRAMEWORK)
         // ==========================================================
         private void NutDangKyMoi_Test_Click(object sender, EventArgs e)
         {
@@ -94,27 +92,25 @@ namespace qlcuahangdcht
                 return;
             }
 
-            // Tiến hành lưu xuống CSDL
+            // Tiến hành lưu xuống CSDL bằng Entity Framework
             try
             {
-                using (SqlConnection conn = new SqlConnection(chuoiKetNoi))
+                using (var db = new CuaHangDbContext())
                 {
-                    conn.Open();
-
                     // Tự động sinh mã khách hàng (ví dụ: KH_3520)
                     string maKHMoi = "KH_" + DateTime.Now.ToString("mmss");
 
-                    // ĐÃ THÊM EMAIL VÀO ĐÂY
-                    string sqlThem = "INSERT INTO KhachHang (MaKhachHang, HoTen, SDT, DiaChi, Email) VALUES (@MaKH, @HoTen, @SDT, @DiaChi, @Email)";
-                    using (SqlCommand cmd = new SqlCommand(sqlThem, conn))
+                    var khMoi = new KhachHang
                     {
-                        cmd.Parameters.AddWithValue("@MaKH", maKHMoi);
-                        cmd.Parameters.AddWithValue("@HoTen", tenKH);
-                        cmd.Parameters.AddWithValue("@SDT", sdt);
-                        cmd.Parameters.AddWithValue("@DiaChi", string.IsNullOrEmpty(diaChi) ? "Đồng Tháp" : diaChi);
-                        cmd.Parameters.AddWithValue("@Email", "khachhang@gmail.com"); // Gán Email mặc định
-                        cmd.ExecuteNonQuery();
-                    }
+                        MaKhachHang = maKHMoi,
+                        HoTen = tenKH,
+                        SDT = sdt,
+                        DiaChi = string.IsNullOrEmpty(diaChi) ? "Đồng Tháp" : diaChi,
+                        Email = "khachhang@gmail.com" // Gán Email mặc định
+                    };
+
+                    db.KhachHangs.Add(khMoi);
+                    db.SaveChanges(); // Lưu thay đổi xuống CSDL
                 }
 
                 MessageBox.Show("Đã thêm khách hàng [" + tenKH + "] thành công!", "Thành Công", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -124,7 +120,7 @@ namespace qlcuahangdcht
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi kết nối CSDL: " + ex.Message, "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi thêm khách hàng bằng Entity Framework: " + ex.Message, "Lỗi EF", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

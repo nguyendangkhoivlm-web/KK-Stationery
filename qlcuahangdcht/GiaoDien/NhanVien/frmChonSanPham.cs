@@ -1,16 +1,14 @@
-﻿using System;
+﻿using qlcuahangdcht.Models;
+using System;
 using System.Data;
-using System.Data.SqlClient; // Thư viện kết nối CSDL
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace qlcuahangdcht
 {
     public partial class frmChonSanPham : Form
     {
-        // Khai báo chuỗi kết nối chuẩn đến CSDL của bạn
-        string chuoiKetNoi = @"Data Source=.\SQLEXPRESS;Initial Catalog=quanlycuahangdungcuhoctap;Integrated Security=True";
-
         DataTable dtKhoSanPham = new DataTable();
         string placeholderText = "Tìm kiếm sản phẩm theo tên hoặc mã...";
 
@@ -33,8 +31,8 @@ namespace qlcuahangdcht
 
         private void frmChonSanPham_Load(object sender, EventArgs e)
         {
-            // Gọi hàm tải dữ liệu từ CSDL SQL Server thay vì gán cứng
-            TaiDuLieuSanPhamTuCSDL();
+            // Gọi hàm tải dữ liệu từ CSDL thông qua Entity Framework
+            TaiDuLieuSanPhamTuEF();
 
             // Đổ danh mục lên ComboBox
             cboDanhMuc.Items.Add("Tất cả");
@@ -59,35 +57,45 @@ namespace qlcuahangdcht
         }
 
         // =========================================================================
-        // HÀM KÉO DỮ LIỆU TỪ SQL SERVER (Dùng JOIN để lấy tên danh mục)
+        // HÀM KÉO DỮ LIỆU TỪ CSDL BẰNG ENTITY FRAMEWORK
         // =========================================================================
-        private void TaiDuLieuSanPhamTuCSDL()
+        private void TaiDuLieuSanPhamTuEF()
         {
             dtKhoSanPham = new DataTable();
-
-            string query = @"
-                SELECT 
-                    sp.MaSanPham AS MaSP, 
-                    sp.TenSanPham AS TenSP, 
-                    dm.TenDanhMuc AS DanhMuc, 
-                    sp.DonGia AS DonGia, 
-                    sp.SoLuongTon AS TonKho, 
-                    sp.DonViTinh AS DonViTinh 
-                FROM SanPham sp
-                INNER JOIN DanhMuc dm ON sp.MaDanhMuc = dm.MaDanhMuc";
+            dtKhoSanPham.Columns.Add("MaSP", typeof(string));
+            dtKhoSanPham.Columns.Add("TenSP", typeof(string));
+            dtKhoSanPham.Columns.Add("DanhMuc", typeof(string));
+            dtKhoSanPham.Columns.Add("DonGia", typeof(decimal));
+            dtKhoSanPham.Columns.Add("TonKho", typeof(int));
+            dtKhoSanPham.Columns.Add("DonViTinh", typeof(string));
 
             try
             {
-                using (SqlConnection con = new SqlConnection(chuoiKetNoi))
+                using (var db = new CuaHangDbContext())
                 {
-                    con.Open();
-                    SqlDataAdapter da = new SqlDataAdapter(query, con);
-                    da.Fill(dtKhoSanPham);
+                    // Dùng LINQ kết hợp SanPham và DanhMuc
+                    var query = from sp in db.SanPhams
+                                join dm in db.DanhMucs on sp.MaDanhMuc equals dm.MaDanhMuc into dmGroup
+                                from dm in dmGroup.DefaultIfEmpty()
+                                select new
+                                {
+                                    MaSP = sp.MaSanPham,
+                                    TenSP = sp.TenSanPham,
+                                    DanhMuc = dm != null ? dm.TenDanhMuc : "Khác",
+                                    DonGia = sp.DonGia, // Khớp với thuộc tính Giá trong Model của bạn
+                                    TonKho = sp.SoLuongTon,
+                                    DonViTinh = sp.DonViTinh
+                                };
+
+                    foreach (var item in query)
+                    {
+                        dtKhoSanPham.Rows.Add(item.MaSP, item.TenSP, item.DanhMuc, item.DonGia, item.TonKho, item.DonViTinh);
+                    }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi kết nối CSDL khi tải danh sách chọn sản phẩm: " + ex.Message, "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi kết nối CSDL khi tải danh sách chọn sản phẩm bằng EF: " + ex.Message, "Lỗi EF", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

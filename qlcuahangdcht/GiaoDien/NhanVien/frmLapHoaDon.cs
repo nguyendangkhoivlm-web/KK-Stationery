@@ -1,4 +1,5 @@
-﻿using System;
+﻿using qlcuahangdcht.Models;
+using System;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
@@ -70,10 +71,10 @@ namespace qlcuahangdcht
             // Tính tiền và hiển thị thông tin
             TinhTongTien();
 
-            // Lấy tên nhân viên đang đăng nhập (hoặc tên mặc định)
-            string tenNV = !string.IsNullOrEmpty(PhienDangNhap.HoVaTen) ? PhienDangNhap.HoVaTen : "Trần Vũ Tuấn Kiệt";
-            lblNhanVien.Text = "Nhân viên: " + tenNV;
-            lblNgayLap.Text = "Ngày Lập: " + DateTime.Now.ToString("dd/MM/yyyy");
+            // Lấy tên nhân viên (hiển thị mặc định hoặc từ phiên đăng nhập)
+            string tenNV = "Trần Vũ Tuấn Kiệt";
+            if (lblNhanVien != null) lblNhanVien.Text = "Nhân viên: " + tenNV;
+            if (lblNgayLap != null) lblNgayLap.Text = "Ngày Lập: " + DateTime.Now.ToString("dd/MM/yyyy");
         }
 
         // 4. Khởi tạo bảng mẫu (Dùng khi chạy thẳng form này mà không qua form Bán Hàng)
@@ -87,8 +88,8 @@ namespace qlcuahangdcht
             dtSanPham.Columns.Add("Thành Tiền", typeof(double));
 
             dtSanPham.Rows.Add("SP01", "Bút bi Thiên Long 0.5", 5, 5000, 25000);
-            dtSanPham.Rows.Add("SP02", "Tập học sinh 96 trang", 10, 12000, 120000);
-            dtSanPham.Rows.Add("SP03", "Bộ Compa học sinh Deli", 1, 35000, 35000);
+            dtSanPham.Rows.Add("SP07", "Tập học sinh 96T", 10, 12000, 120000);
+            dtSanPham.Rows.Add("SP14", "Gôm tẩy 4B Pentel", 1, 10000, 10000);
         }
 
         // 5. Hàm tính toán tiền
@@ -98,22 +99,25 @@ namespace qlcuahangdcht
 
             for (int i = 0; i < dtSanPham.Rows.Count; i++)
             {
-                tamTinh += Convert.ToDouble(dtSanPham.Rows[i]["Thành Tiền"]);
+                if (dtSanPham.Rows[i]["Thành Tiền"] != DBNull.Value)
+                {
+                    tamTinh += Convert.ToDouble(dtSanPham.Rows[i]["Thành Tiền"]);
+                }
             }
 
             thueVAT = tamTinh * 0.08; // VAT 8%
             tongCong = tamTinh + thueVAT;
 
-            lblTamTinh.Text = "Tạm tính: " + tamTinh.ToString("N0") + " VNĐ";
-            lblThueVAT.Text = "Thuế VAT (8%): " + thueVAT.ToString("N0") + " VNĐ";
-            lblTongCong.Text = "Tổng cộng: " + tongCong.ToString("N0") + " VNĐ";
+            if (lblTamTinh != null) lblTamTinh.Text = "Tạm tính: " + tamTinh.ToString("N0") + " VNĐ";
+            if (lblThueVAT != null) lblThueVAT.Text = "Thuế VAT (8%): " + thueVAT.ToString("N0") + " VNĐ";
+            if (lblTongCong != null) lblTongCong.Text = "Tổng cộng: " + tongCong.ToString("N0") + " VNĐ";
         }
 
         // 6. Các nút chức năng
         private void btnCapNhatHoaDon_Click(object sender, EventArgs e)
         {
             TinhTongTien();
-            lblKhachHang.Text = "Khách Hàng: Khách vãng lai";
+            if (lblKhachHang != null) lblKhachHang.Text = "Khách Hàng: Khách vãng lai";
             MessageBox.Show("Đã làm mới lại thông tin hóa đơn!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -128,19 +132,22 @@ namespace qlcuahangdcht
 
         private void btnXoaSanPham_Click(object sender, EventArgs e)
         {
-            if (dgvDanhSachSanPham.CurrentRow != null)
+            if (dgvDanhSachSanPham.CurrentRow != null && dgvDanhSachSanPham.CurrentRow.Index >= 0)
             {
                 int viTri = dgvDanhSachSanPham.CurrentRow.Index;
-                string tenSP = dtSanPham.Rows[viTri]["Tên Sản Phẩm"].ToString();
-
-                DialogResult dr = MessageBox.Show("Bạn có chắc muốn xóa '" + tenSP + "' khỏi hóa đơn không?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-                if (dr == DialogResult.Yes)
+                if (viTri < dtSanPham.Rows.Count)
                 {
-                    dtSanPham.Rows.RemoveAt(viTri);
-                    dgvDanhSachSanPham.DataSource = null;
-                    dgvDanhSachSanPham.DataSource = dtSanPham;
-                    TinhTongTien();
+                    string tenSP = dtSanPham.Rows[viTri]["Tên Sản Phẩm"].ToString();
+
+                    DialogResult dr = MessageBox.Show("Bạn có chắc muốn xóa '" + tenSP + "' khỏi hóa đơn không?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    if (dr == DialogResult.Yes)
+                    {
+                        dtSanPham.Rows.RemoveAt(viTri);
+                        dgvDanhSachSanPham.DataSource = null;
+                        dgvDanhSachSanPham.DataSource = dtSanPham;
+                        TinhTongTien();
+                    }
                 }
             }
             else
@@ -190,7 +197,7 @@ namespace qlcuahangdcht
 
         private void txtTimKiemSanPham_Leave(object sender, EventArgs e)
         {
-            if (txtTimKiemSanPham.Text.Trim() == "")
+            if (string.IsNullOrWhiteSpace(txtTimKiemSanPham.Text))
             {
                 txtTimKiemSanPham.Text = "Tìm kiếm sản phẩm theo tên hoặc mã...";
                 txtTimKiemSanPham.ForeColor = Color.Gray;
@@ -199,7 +206,7 @@ namespace qlcuahangdcht
 
         private void txtTimKiemSanPham_TextChanged(object sender, EventArgs e)
         {
-            // Xử lý lọc sản phẩm khi gõ chữ nếu cần
+            // Xử lý lọc sản phẩm trên giỏ hàng nếu cần
         }
     }
 }

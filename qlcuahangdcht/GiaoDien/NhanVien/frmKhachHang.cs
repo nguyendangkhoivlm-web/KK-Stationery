@@ -1,18 +1,19 @@
-﻿using qlnhanvien;
+﻿using qlcuahangdcht.Models;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace qlcuahangdcht
 {
     public partial class frmKhachHang : Form
     {
-        // 1. Khai báo chuỗi kết nối toàn cục
-        string chuoiKetNoi = @"Data Source=.\SQLEXPRESS;Initial Catalog=quanlycuahangdungcuhoctap;Integrated Security=True";
-
-        // Khai báo bảng chứa dữ liệu
+        // Khai báo bảng chứa dữ liệu tạm thời để phục vụ tìm kiếm nhanh trên UI
         DataTable dtKhachHang = new DataTable();
         string placeholderText = "Tìm kiếm theo Mã hoặc Số điện thoại...";
 
@@ -30,7 +31,6 @@ namespace qlcuahangdcht
             this.txtTimKiem.TextChanged += txtTimKiem_TextChanged;
 
             // 3. NỐI DÂY CHO NÚT XÓA BẰNG CODE ĐỂ ĐẢM BẢO HOẠT ĐỘNG 100%
-            // (Nếu nút xóa của bạn có tên khác ở giao diện, hãy đổi chữ btnXoaKhachHang thành tên đó)
             this.btnXoaKhachHang.Click += btnXoaKhachHang_Click;
         }
 
@@ -47,21 +47,39 @@ namespace qlcuahangdcht
         }
 
         // =========================================================================
-        // HÀM TẢI DỮ LIỆU TỪ SQL
+        // HÀM TẢI DỮ LIỆU TỪ CSDL BẰNG ENTITY FRAMEWORK
         // =========================================================================
         private void TaiDuLieuKhachHang()
         {
             try
             {
-                SqlConnection conn = new SqlConnection(chuoiKetNoi);
-                conn.Open();
+                using (var db = new CuaHangDbContext())
+                {
+                    // Truy vấn dữ liệu từ bảng KhachHang bằng LINQ
+                    var query = db.KhachHangs
+                                  .Select(k => new
+                                  {
+                                      MaKH = k.MaKhachHang,
+                                      TenKhachHang = k.HoTen,
+                                      SoDienThoai = k.SDT,
+                                      DiaChi = k.DiaChi,
+                                      Email = k.Email
+                                  })
+                                  .ToList();
 
-                string sql = "SELECT MaKhachHang AS [Mã KH], HoTen AS [Tên Khách Hàng], SDT AS [Số Điện Thoại], DiaChi AS [Địa Chỉ], Email FROM KhachHang";
-                SqlDataAdapter da = new SqlDataAdapter(sql, conn);
+                    // Đổ dữ liệu vào DataTable để tương thích với cơ chế tìm kiếm sẵn có
+                    dtKhachHang = new DataTable();
+                    dtKhachHang.Columns.Add("Mã KH", typeof(string));
+                    dtKhachHang.Columns.Add("Tên Khách Hàng", typeof(string));
+                    dtKhachHang.Columns.Add("Số Điện Thoại", typeof(string));
+                    dtKhachHang.Columns.Add("Địa Chỉ", typeof(string));
+                    dtKhachHang.Columns.Add("Email", typeof(string));
 
-                dtKhachHang = new DataTable();
-                da.Fill(dtKhachHang);
-                conn.Close();
+                    foreach (var item in query)
+                    {
+                        dtKhachHang.Rows.Add(item.MaKH, item.TenKhachHang, item.SoDienThoai, item.DiaChi, item.Email);
+                    }
+                }
 
                 dgvDanhSachKhachHang.DataSource = null;
                 dgvDanhSachKhachHang.Columns.Clear();
@@ -76,7 +94,7 @@ namespace qlcuahangdcht
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi tải dữ liệu Khách hàng: " + ex.Message, "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi tải dữ liệu Khách hàng bằng Entity Framework: " + ex.Message, "Lỗi EF", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -177,7 +195,7 @@ namespace qlcuahangdcht
         }
 
         // =========================================================================
-        // NÚT XÓA KHÁCH HÀNG (ĐÃ BẬT TÍNH NĂNG VÀ HIỂN THỊ THÔNG BÁO)
+        // NÚT XÓA KHÁCH HÀNG (SỬ DỤNG ENTITY FRAMEWORK)
         // =========================================================================
         private void btnXoaKhachHang_Click(object sender, EventArgs e)
         {
@@ -194,16 +212,19 @@ namespace qlcuahangdcht
                 {
                     try
                     {
-                        using (SqlConnection conn = new SqlConnection(chuoiKetNoi))
+                        using (var db = new CuaHangDbContext())
                         {
-                            conn.Open();
-
-                            // Dùng Parameter để bảo mật và tránh lỗi cú pháp SQL
-                            string sqlXoa = "DELETE FROM KhachHang WHERE MaKhachHang = @MaKH";
-                            using (SqlCommand cmd = new SqlCommand(sqlXoa, conn))
+                            // Tìm khách hàng trong cơ sở dữ liệu bằng Entity Framework
+                            var kh = db.KhachHangs.Find(maKHXoa);
+                            if (kh != null)
                             {
-                                cmd.Parameters.AddWithValue("@MaKH", maKHXoa);
-                                cmd.ExecuteNonQuery(); // Chạy lệnh xóa
+                                db.KhachHangs.Remove(kh); // Xóa khỏi DbSet
+                                db.SaveChanges();         // Lưu thay đổi xuống CSDL
+                            }
+                            else
+                            {
+                                MessageBox.Show("Không tìm thấy khách hàng này trong hệ thống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
                             }
                         }
 
@@ -223,7 +244,6 @@ namespace qlcuahangdcht
             }
         }
 
-        // Đoạn thừa nếu lỡ tạo bên giao diện, cứ để trống không sao cả
         private void btnXoaKhachHang_Click_1(object sender, EventArgs e)
         {
 

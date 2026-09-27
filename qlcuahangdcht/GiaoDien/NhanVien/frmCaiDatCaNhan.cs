@@ -1,6 +1,6 @@
-﻿using System;
+﻿using qlcuahangdcht.Models;
+using System;
 using System.Data;
-using System.Data.SqlClient; // BẮT BUỘC THÊM THƯ VIỆN NÀY
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -9,9 +9,6 @@ namespace qlcuahangdcht
 {
     public partial class frmCaiDatCaNhan : Form
     {
-        // 1. Khai báo chuỗi kết nối CSDL
-        string chuoiKetNoi = @"Data Source=.\SQLEXPRESS;Initial Catalog=quanlycuahangdungcuhoctap;Integrated Security=True";
-
         private bool đangHienMatKhau = false;
         private static bool đangBatCheDoToi = false;
 
@@ -103,7 +100,7 @@ namespace qlcuahangdcht
         }
 
         // =========================================================================
-        // CHỨC NĂNG ĐỔI MẬT KHẨU (KIỂM TRA VÀ LƯU VÀO CSDL)
+        // CHỨC NĂNG ĐỔI MẬT KHẨU (SỬ DỤNG ENTITY FRAMEWORK)
         // =========================================================================
         private void btnDoiMatKhau_Click_1(object sender, EventArgs e)
         {
@@ -138,44 +135,36 @@ namespace qlcuahangdcht
                 return;
             }
 
-            // 2. Kết nối CSDL để xử lý
+            // 2. Kết nối CSDL để xử lý bằng Entity Framework
             try
             {
-                SqlConnection conn = new SqlConnection(chuoiKetNoi);
-                conn.Open();
-
-                // BƯỚC A: Kiểm tra xem mật khẩu cũ gõ vào có đúng với trong CSDL không
-                string sqlKiemTra = "SELECT COUNT(*) FROM TaiKhoan WHERE MaNhanVien = '" + maNVDangNhap + "' AND MatKhau = '" + matKhauCu + "'";
-                SqlCommand cmdKiemTra = new SqlCommand(sqlKiemTra, conn);
-
-                // ExecuteScalar trả về giá trị của cột đầu tiên (số lượng dòng tìm được)
-                int ketQua = (int)cmdKiemTra.ExecuteScalar();
-
-                if (ketQua == 0)
+                using (var db = new CuaHangDbContext())
                 {
-                    // Nếu trả về 0 nghĩa là sai mật khẩu cũ
-                    MessageBox.Show("Mật khẩu hiện tại không chính xác! Vui lòng thử lại.", "Báo lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    conn.Close();
-                    return;
+                    // BƯỚC A: Tìm tài khoản khớp mã nhân viên và mật khẩu cũ
+                    var taiKhoan = db.TaiKhoans.FirstOrDefault(tk => tk.MaNhanVien == maNVDangNhap && tk.MatKhau == matKhauCu);
+
+                    if (taiKhoan == null)
+                    {
+                        // Không tìm thấy nghĩa là sai mật khẩu cũ
+                        MessageBox.Show("Mật khẩu hiện tại không chính xác! Vui lòng thử lại.", "Báo lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    // BƯỚC B: Mật khẩu cũ đúng -> Cập nhật mật khẩu mới
+                    taiKhoan.MatKhau = matKhauMoi;
+                    db.SaveChanges(); // Lưu thay đổi xuống CSDL
+
+                    MessageBox.Show("Đổi mật khẩu thành công! Hãy ghi nhớ mật khẩu mới của bạn.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Xóa sạch các ô nhập sau khi đổi thành công
+                    txtMatKhauCu.Clear();
+                    txtMatKhauMoi.Clear();
+                    txtXacNhanMatKhau.Clear();
                 }
-
-                // BƯỚC B: Mật khẩu cũ đúng -> Cập nhật mật khẩu mới
-                string sqlCapNhat = "UPDATE TaiKhoan SET MatKhau = '" + matKhauMoi + "' WHERE MaNhanVien = '" + maNVDangNhap + "'";
-                SqlCommand cmdCapNhat = new SqlCommand(sqlCapNhat, conn);
-                cmdCapNhat.ExecuteNonQuery();
-
-                conn.Close();
-
-                MessageBox.Show("Đổi mật khẩu thành công! Hãy ghi nhớ mật khẩu mới của bạn.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Xóa sạch các ô nhập sau khi đổi thành công
-                txtMatKhauCu.Clear();
-                txtMatKhauMoi.Clear();
-                txtXacNhanMatKhau.Clear();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi kết nối hệ thống đổi mật khẩu: " + ex.Message, "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi khi kết nối hệ thống đổi mật khẩu bằng EF: " + ex.Message, "Lỗi EF", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

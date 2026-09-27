@@ -1,8 +1,8 @@
-﻿using qlnhanvien;
+﻿using qlcuahangdcht.Models;
 using System;
 using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -14,9 +14,6 @@ namespace qlcuahangdcht
         double tamTinh, thueVAT, tongTien;
         string maDonHang;
         int thoiGianConLai = 300; // Đếm ngược 5 phút (300 giây)
-
-        // Chuỗi kết nối chuẩn
-        string chuoiKetNoi = @"Data Source=.\SQLEXPRESS;Initial Catalog=quanlycuahangdungcuhoctap;Integrated Security=True";
 
         // 1. Constructor mặc định
         public frmThanhToanQuaQR()
@@ -85,7 +82,7 @@ namespace qlcuahangdcht
         }
 
         // =========================================================================
-        // NÚT GIẢ LẬP ĐÃ NHẬN TIỀN (LƯU CSDL VÀ IN BIÊN LAI)
+        // NÚT GIẢ LẬP ĐÃ NHẬN TIỀN (LƯU CSDL BẰNG ENTITY FRAMEWORK VÀ IN BIÊN LAI)
         // =========================================================================
         private void btnGiaLapThanhCong_Click(object sender, EventArgs e)
         {
@@ -93,90 +90,71 @@ namespace qlcuahangdcht
 
             try
             {
-                using (SqlConnection conn = new SqlConnection(chuoiKetNoi))
+                using (var db = new CuaHangDbContext())
                 {
-                    conn.Open();
-                    SqlTransaction transaction = conn.BeginTransaction();
-
-                    try
+                    // 1. Đảm bảo nhân viên NV01 luôn tồn tại
+                    var nv = db.NhanViens.Find("NV01");
+                    if (nv == null)
                     {
-                        // 1. BẢO VỆ NHÂN VIÊN
-                        string maNhanVienChuan = "NV01";
-                        using (SqlCommand cmdNV = new SqlCommand("IF NOT EXISTS (SELECT 1 FROM NhanVien WHERE MaNhanVien = 'NV01') INSERT INTO NhanVien (MaNhanVien, HoTen) VALUES ('NV01', N'Admin')", conn, transaction))
-                        {
-                            cmdNV.ExecuteNonQuery();
-                        }
+                        db.NhanViens.Add(new NhanVien { MaNhanVien = "NV01", HoTen = "Nhân Viên" });
+                    }
 
-                        using (SqlCommand cmdGetNV = new SqlCommand("SELECT TOP 1 MaNhanVien FROM NhanVien", conn, transaction))
-                        {
-                            object resNV = cmdGetNV.ExecuteScalar();
-                            if (resNV != null) maNhanVienChuan = resNV.ToString();
-                        }
+                    // 2. Đảm bảo khách vãng lai KH01 luôn tồn tại (Chống lỗi khóa ngoại)
+                    var kh = db.KhachHangs.Find("KH01");
+                    if (kh == null)
+                    {
+                        db.KhachHangs.Add(new KhachHang { MaKhachHang = "KH01", HoTen = "Khách vãng lai", SDT = "Không có", DiaChi = "Tại quầy", Email = "Không có" });
+                    }
 
-                        // 2. BẢO VỆ KHÁCH HÀNG
-                        string maKhachHangChuan = "KH01";
-                        using (SqlCommand cmdKH = new SqlCommand("IF NOT EXISTS (SELECT 1 FROM KhachHang WHERE MaKhachHang = 'KH01') INSERT INTO KhachHang (MaKhachHang, HoTen, SDT, DiaChi, Email) VALUES ('KH01', N'Khách vãng lai', N'Không có', N'Tại quầy', N'Không có')", conn, transaction))
-                        {
-                            cmdKH.ExecuteNonQuery();
-                        }
+                    // 3. Tạo và lưu Hóa Đơn mới
+                    var hoaDonMoi = new HoaDon
+                    {
+                        MaHoaDon = maDonHang,
+                        MaKhachHang = "KH01",
+                        MaNhanVien = "NV01",
+                        NgayLap = DateTime.Now,
+                        TongTien = (decimal)tongTien
+                    };
+                    db.HoaDons.Add(hoaDonMoi);
 
-                        // 3. LƯU VÀO BẢNG HÓA ĐƠN
-                        string sqlInsertHoaDon = "INSERT INTO HoaDon (MaHoaDon, MaKhachHang, MaNhanVien, NgayLap, TongTien) VALUES (@MaHD, @MaKH, @MaNV, @NgayLap, @TongTien)";
-                        using (SqlCommand cmd = new SqlCommand(sqlInsertHoaDon, conn, transaction))
+                    // 4. Lưu Chi Tiết Hóa Đơn & Trừ Tồn Kho Sản Phẩm
+                    if (dtSanPham != null)
+                    {
+                        foreach (DataRow row in dtSanPham.Rows)
                         {
-                            cmd.Parameters.AddWithValue("@MaHD", maDonHang);
-                            cmd.Parameters.AddWithValue("@MaKH", maKhachHangChuan);
-                            cmd.Parameters.AddWithValue("@MaNV", maNhanVienChuan);
-                            cmd.Parameters.AddWithValue("@NgayLap", DateTime.Now);
-                            cmd.Parameters.AddWithValue("@TongTien", (decimal)tongTien);
-                            cmd.ExecuteNonQuery();
-                        }
+                            string maSP = row["Mã Sản Phẩm"].ToString();
+                            int soLuong = Convert.ToInt32(row["Số Lượng"]);
+                            decimal gia = Convert.ToDecimal(row["Đơn Giá"]);
+                            decimal tien = Convert.ToDecimal(row["Thành Tiền"]);
 
-                        // 4. LƯU CHI TIẾT & TRỪ TỒN KHO
-                        if (dtSanPham != null)
-                        {
-                            foreach (DataRow row in dtSanPham.Rows)
+                            // Thêm chi tiết hóa đơn
+                            var chiTiet = new ChiTietHoaDon
                             {
-                                string maSP = row["Mã Sản Phẩm"].ToString();
-                                int soLuong = Convert.ToInt32(row["Số Lượng"]);
-                                double gia = Convert.ToDouble(row["Đơn Giá"]);
-                                double tien = Convert.ToDouble(row["Thành Tiền"]);
+                                MaHoaDon = maDonHang,
+                                MaSanPham = maSP,
+                                SoLuong = soLuong,
+                                DonGia = gia,
+                                ThanhTien = tien
+                            };
+                            db.ChiTietHoaDons.Add(chiTiet);
 
-                                string sqlInsertCTHD = "INSERT INTO ChiTietHoaDon (MaHoaDon, MaSanPham, SoLuong, DonGia, ThanhTien) VALUES (@MaHD, @MaSP, @SL, @Gia, @Tien)";
-                                using (SqlCommand cmdCTHD = new SqlCommand(sqlInsertCTHD, conn, transaction))
-                                {
-                                    cmdCTHD.Parameters.AddWithValue("@MaHD", maDonHang);
-                                    cmdCTHD.Parameters.AddWithValue("@MaSP", maSP);
-                                    cmdCTHD.Parameters.AddWithValue("@SL", soLuong);
-                                    cmdCTHD.Parameters.AddWithValue("@Gia", gia);
-                                    cmdCTHD.Parameters.AddWithValue("@Tien", tien);
-                                    cmdCTHD.ExecuteNonQuery();
-                                }
-
-                                string sqlUpdateTonKho = "UPDATE SanPham SET SoLuongTon = SoLuongTon - @SL WHERE MaSanPham = @MaSP";
-                                using (SqlCommand cmdUpdate = new SqlCommand(sqlUpdateTonKho, conn, transaction))
-                                {
-                                    cmdUpdate.Parameters.AddWithValue("@SL", soLuong);
-                                    cmdUpdate.Parameters.AddWithValue("@MaSP", maSP);
-                                    cmdUpdate.ExecuteNonQuery();
-                                }
+                            // Trừ tồn kho sản phẩm tương ứng
+                            var sanPham = db.SanPhams.Find(maSP);
+                            if (sanPham != null)
+                            {
+                                sanPham.SoLuongTon -= soLuong;
                             }
                         }
+                    }
 
-                        transaction.Commit();
-                        KhoLichSu.VuaThanhToanXong = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        transaction.Rollback();
-                        MessageBox.Show("Lỗi lưu hóa đơn QR vào CSDL: " + ex.Message, "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
+                    // Lưu toàn bộ giao dịch xuống CSDL qua Entity Framework
+                    db.SaveChanges();
+                    KhoLichSu.VuaThanhToanXong = true;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi kết nối CSDL: " + ex.Message, "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi lưu hóa đơn QR bằng Entity Framework: " + ex.Message, "Lỗi EF", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -203,8 +181,8 @@ namespace qlcuahangdcht
             }
 
             bill.AppendLine("--------------------------------------------------------------");
-            bill.AppendLine($"Tạm tính:     {tamTinh.ToString("N0")} đ");
-            bill.AppendLine($"Thuế VAT:     {thueVAT.ToString("N0")} đ");
+            bill.AppendLine($"Tạm tính:      {tamTinh.ToString("N0")} đ");
+            bill.AppendLine($"Thuế VAT:      {thueVAT.ToString("N0")} đ");
             bill.AppendLine($"TỔNG TIỀN:    {tongTien.ToString("N0")} VNĐ");
             bill.AppendLine("\nĐã nhận tiền. Cảm ơn quý khách!");
 

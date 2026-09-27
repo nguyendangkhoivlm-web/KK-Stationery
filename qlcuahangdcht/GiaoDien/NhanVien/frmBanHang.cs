@@ -1,6 +1,6 @@
-﻿using System;
+﻿using qlcuahangdcht.Models;
+using System;
 using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -11,9 +11,6 @@ namespace qlcuahangdcht
     {
         static DataTable dtGioHang = null;
         DataTable dtSanPham = new DataTable();
-
-        // Chuỗi kết nối chuẩn đến CSDL của bạn
-        string chuoiKetNoi = @"Data Source=.\SQLEXPRESS;Initial Catalog=quanlycuahangdungcuhoctap;Integrated Security=True";
 
         public frmBanHang()
         {
@@ -43,7 +40,7 @@ namespace qlcuahangdcht
             if (this.btnHuyDon != null) this.btnHuyDon.Click += btnHuyDon_Click;
             if (this.btnThanhToan != null) this.btnThanhToan.Click += btnThanhToan_Click;
 
-            // 3. Nối dây các nút lọc Danh Mục (Lúc trước bị thiếu chỗ này nên bấm không ăn)
+            // 3. Nối dây các nút lọc Danh Mục
             if (this.btnDanhMucTatCa != null) this.btnDanhMucTatCa.Click += btnDanhMucTatCa_Click;
             if (this.btnDanhMucBanChay != null) this.btnDanhMucBanChay.Click += btnDanhMucBanChay_Click;
             if (this.btnDanhMucButChi != null) this.btnDanhMucButChi.Click += btnDanhMucButChi_Click;
@@ -57,8 +54,8 @@ namespace qlcuahangdcht
             DoiMauNutDanhMuc(btnDanhMucTatCa);
             KhoiTaoBangGioHang();
 
-            // Lấy dữ liệu sản phẩm từ SQL
-            TaoDanhSachSanPhamTuCSDL();
+            // Lấy dữ liệu sản phẩm bằng Entity Framework
+            TaoDanhSachSanPhamTuEF();
             LoadDanhSachSanPham("Tất cả sản phẩm", "");
 
             // Cài đặt chữ mờ (placeholder) cho ô tìm kiếm
@@ -88,46 +85,50 @@ namespace qlcuahangdcht
         }
 
         // =========================================================================
-        // LẤY DỮ LIỆU TỪ SQL SERVER
+        // LẤY DỮ LIỆU TỪ CSDL BẰNG ENTITY FRAMEWORK
         // =========================================================================
-        private void TaoDanhSachSanPhamTuCSDL()
+        private void TaoDanhSachSanPhamTuEF()
         {
             dtSanPham = new DataTable();
-
-            string query = @"
-                SELECT 
-                    sp.MaSanPham AS MaSP, 
-                    sp.TenSanPham AS TenSP, 
-                    sp.DonGia AS Gia, 
-                    dm.TenDanhMuc AS DanhMuc, 
-                    sp.SoLuongTon AS TonKho 
-                FROM SanPham sp
-                INNER JOIN DanhMuc dm ON sp.MaDanhMuc = dm.MaDanhMuc";
-
-            try
-            {
-                using (SqlConnection con = new SqlConnection(chuoiKetNoi))
-                {
-                    con.Open();
-                    SqlDataAdapter da = new SqlDataAdapter(query, con);
-                    da.Fill(dtSanPham);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi kết nối CSDL: " + ex.Message, "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                TaoDuLieuMauDePhongHo();
-            }
-        }
-
-        private void TaoDuLieuMauDePhongHo()
-        {
             dtSanPham.Columns.Add("MaSP", typeof(string));
             dtSanPham.Columns.Add("TenSP", typeof(string));
             dtSanPham.Columns.Add("Gia", typeof(double));
             dtSanPham.Columns.Add("DanhMuc", typeof(string));
             dtSanPham.Columns.Add("TonKho", typeof(int));
 
+            try
+            {
+                using (var db = new CuaHangDbContext())
+                {
+                    // Dùng LINQ kết hợp bảng SanPham và DanhMuc qua Entity Framework
+                    var query = from sp in db.SanPhams
+                                join dm in db.DanhMucs on sp.MaDanhMuc equals dm.MaDanhMuc into dmGroup
+                                from dm in dmGroup.DefaultIfEmpty()
+                                select new
+                                {
+                                    MaSP = sp.MaSanPham,
+                                    TenSP = sp.TenSanPham,
+                                    Gia = (double)sp.DonGia,
+                                    DanhMuc = dm != null ? dm.TenDanhMuc : "Khác",
+                                    TonKho = sp.SoLuongTon
+                                };
+
+                    foreach (var item in query)
+                    {
+                        dtSanPham.Rows.Add(item.MaSP, item.TenSP, item.Gia, item.DanhMuc, item.TonKho);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi tải dữ liệu bằng Entity Framework: " + ex.Message, "Lỗi EF", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                TaoDuLieuMauDePhongHo();
+            }
+        }
+
+        private void TaoDuLieuMauDePhongHo()
+        {
+            if (dtSanPham.Rows.Count > 0) return;
             dtSanPham.Rows.Add("SP01", "Bút bi Thiên Long 0.5", 5000, "Bút bi/ Chì", 50);
             dtSanPham.Rows.Add("SP07", "Tập học sinh 96T", 12000, "Tập học sinh", 100);
             dtSanPham.Rows.Add("SP14", "Gôm tẩy 4B Pentel", 10000, "Thước/ Tẩy", 30);
@@ -149,7 +150,7 @@ namespace qlcuahangdcht
                 string loai = row["DanhMuc"].ToString();
 
                 int ton = (dtSanPham.Columns.Contains("TonKho") && row["TonKho"] != DBNull.Value)
-                          ? Convert.ToInt32(row["TonKho"]) : 20;
+                        ? Convert.ToInt32(row["TonKho"]) : 20;
 
                 if (danhMuc != "Tất cả sản phẩm" && loai != danhMuc) continue;
                 if (!string.IsNullOrEmpty(tuKhoa) && !ten.ToLower().Contains(tuKhoa.ToLower()) && !ma.ToLower().Contains(tuKhoa.ToLower())) continue;

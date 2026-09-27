@@ -1,12 +1,13 @@
-﻿using qlcuahangdcht;
+﻿using qlcuahangdcht.Models; // Gọi Entity Framework Models
+using qlcuahangdcht; // Gọi các form bên namespace chính
 using System;
 using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace qlnhanvien
+namespace qlnhanvien // Đã sửa lại namespace khớp chính xác với file Designer
 {
     public partial class frmThongTinDeIn : Form
     {
@@ -17,9 +18,6 @@ namespace qlnhanvien
 
         // Cờ lưu mã khách hàng (Mặc định KH01 là khách vãng lai)
         string maKhachHangHienTai = "KH01";
-
-        // Chuỗi kết nối CSDL của bạn
-        string chuoiKetNoi = @"Data Source=.\SQLEXPRESS;Initial Catalog=quanlycuahangdungcuhoctap;Integrated Security=True";
 
         public frmThongTinDeIn()
         {
@@ -40,22 +38,30 @@ namespace qlnhanvien
 
         private void NoiDaySuKienChoNutBam()
         {
+            // Tên chuẩn xác theo file Designer bạn gửi
             if (btnKhachLe != null) { btnKhachLe.Click -= btnKhachLe_Click; btnKhachLe.Click += btnKhachLe_Click; }
             if (btnInHoaDon != null) { btnInHoaDon.Click -= btnInHoaDon_Click; btnInHoaDon.Click += btnInHoaDon_Click; }
             if (btnDangKyMoi != null) { btnDangKyMoi.Click -= btnDangKyMoi_Click; btnDangKyMoi.Click += btnDangKyMoi_Click; }
             if (btnHuyBo != null) { btnHuyBo.Click -= btnHuyBo_Click; btnHuyBo.Click += btnHuyBo_Click; }
             if (btnQuayLai != null) { btnQuayLai.Click -= btnQuayLai_Click; btnQuayLai.Click += btnQuayLai_Click; }
+
+            this.Load += frmThongTinDeIn_Load;
         }
 
         private void frmThongTinDeIn_Load(object sender, EventArgs e)
         {
-            lblTongTienHoaDon.Text = "Tổng tiền thanh toán: " + tongTien.ToString("N0") + " VNĐ";
-            txtSoDienThoai.MaxLength = 10;
-            txtSoDienThoai.TextChanged -= TxtSoDienThoai_TextChanged;
-            txtSoDienThoai.TextChanged += TxtSoDienThoai_TextChanged;
-            txtSoDienThoai.KeyPress -= TxtSoDienThoai_KeyPress;
-            txtSoDienThoai.KeyPress += TxtSoDienThoai_KeyPress;
-            txtSoDienThoai.Focus();
+            if (lblTongTienHoaDon != null)
+                lblTongTienHoaDon.Text = "Tổng tiền thanh toán: " + tongTien.ToString("N0") + " VNĐ";
+
+            if (txtSoDienThoai != null)
+            {
+                txtSoDienThoai.MaxLength = 10;
+                txtSoDienThoai.TextChanged -= TxtSoDienThoai_TextChanged;
+                txtSoDienThoai.TextChanged += TxtSoDienThoai_TextChanged;
+                txtSoDienThoai.KeyPress -= TxtSoDienThoai_KeyPress;
+                txtSoDienThoai.KeyPress += TxtSoDienThoai_KeyPress;
+                txtSoDienThoai.Focus();
+            }
         }
 
         private void TxtSoDienThoai_KeyPress(object sender, KeyPressEventArgs e)
@@ -66,118 +72,165 @@ namespace qlnhanvien
         private void TxtSoDienThoai_TextChanged(object sender, EventArgs e)
         {
             string sdt = txtSoDienThoai.Text.Trim();
-            if (sdt == "0901234567" || sdt == "0912345678") { lblTrangThaiTimKiem.Text = "✓ Đã tìm thấy KH!"; lblTrangThaiTimKiem.ForeColor = Color.LimeGreen; }
-            else if (sdt.Length == 10) { lblTrangThaiTimKiem.Text = "ℹ Khách hàng mới."; lblTrangThaiTimKiem.ForeColor = Color.OrangeRed; }
-            else { lblTrangThaiTimKiem.Text = ""; }
+            if (sdt == "0901234567" || sdt == "0912345678")
+            {
+                if (lblTrangThaiTimKiem != null) { lblTrangThaiTimKiem.Text = "✓ Đã tìm thấy KH!"; lblTrangThaiTimKiem.ForeColor = Color.LimeGreen; }
+            }
+            else if (sdt.Length == 10)
+            {
+                if (lblTrangThaiTimKiem != null) { lblTrangThaiTimKiem.Text = "ℹ Khách hàng mới."; lblTrangThaiTimKiem.ForeColor = Color.OrangeRed; }
+            }
+            else
+            {
+                if (lblTrangThaiTimKiem != null) { lblTrangThaiTimKiem.Text = ""; }
+            }
         }
 
         private void btnKhachLe_Click(object sender, EventArgs e)
         {
-            txtTenKhachHang.Text = "Khách vãng lai"; txtSoDienThoai.Text = "Không có";
-            txtDiaChi.Text = "Mua trực tiếp"; txtEmail.Text = "Không có";
+            if (txtTenKhachHang != null) txtTenKhachHang.Text = "Khách vãng lai";
+            if (txtSoDienThoai != null) txtSoDienThoai.Text = "Không có";
+            if (txtDiaChi != null) txtDiaChi.Text = "Mua trực tiếp";
+            if (txtEmail != null) txtEmail.Text = "Không có";
             maKhachHangHienTai = "KH01";
             MessageBox.Show("Đã điền tự động thông tin Khách Lẻ!\nVui lòng bấm 'In Hóa Đơn' để hoàn tất.", "Hướng dẫn", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnInHoaDon_Click(object sender, EventArgs e)
         {
-            if (txtTenKhachHang.Text.Trim() == "") { MessageBox.Show("Vui lòng nhập Tên!"); return; }
-            string sdt = txtSoDienThoai.Text.Trim();
-            if (sdt != "" && sdt != "Không có" && sdt.Length != 10) { MessageBox.Show("SĐT không hợp lệ!"); return; }
+            if (txtTenKhachHang != null && txtTenKhachHang.Text.Trim() == "") { MessageBox.Show("Vui lòng nhập Tên khách hàng!"); return; }
+            string sdt = txtSoDienThoai != null ? txtSoDienThoai.Text.Trim() : "";
+            if (sdt != "" && sdt != "Không có" && sdt.Length != 10) { MessageBox.Show("Số điện thoại không hợp lệ!"); return; }
             if (sdt.Length == 10 && maKhachHangHienTai == "KH01") { maKhachHangHienTai = "KH" + DateTime.Now.ToString("mmss"); }
             ThucHienInHoaDon();
         }
 
+        // =========================================================================
+        // NÚT ĐĂNG KÝ KHÁCH HÀNG MỚI (SỬ DỤNG ENTITY FRAMEWORK)
+        // =========================================================================
         private void btnDangKyMoi_Click(object sender, EventArgs e)
         {
-            if (txtTenKhachHang.Text.Trim() == "" || txtSoDienThoai.Text.Trim() == "") { MessageBox.Show("Nhập đủ Họ Tên và SĐT!"); return; }
+            string tenKH = txtTenKhachHang != null ? txtTenKhachHang.Text.Trim() : "";
+            string sdt = txtSoDienThoai != null ? txtSoDienThoai.Text.Trim() : "";
+            string diaChi = txtDiaChi != null ? txtDiaChi.Text.Trim() : "";
+            string email = txtEmail != null ? txtEmail.Text.Trim() : "";
+
+            if (string.IsNullOrEmpty(tenKH) || string.IsNullOrEmpty(sdt))
+            {
+                MessageBox.Show("Vui lòng nhập đầy đủ Họ Tên và SĐT khách hàng!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             try
             {
-                using (SqlConnection conn = new SqlConnection(chuoiKetNoi))
+                using (var db = new CuaHangDbContext())
                 {
-                    conn.Open();
                     string maKHMoi = "KH" + DateTime.Now.ToString("mmss");
-                    string sqlThem = "INSERT INTO KhachHang (MaKhachHang, HoTen, SDT, DiaChi, Email) VALUES (@MaKH, @HoTen, @SDT, @DiaChi, @Email)";
-                    using (SqlCommand cmd = new SqlCommand(sqlThem, conn))
+
+                    var khMoi = new KhachHang
                     {
-                        cmd.Parameters.AddWithValue("@MaKH", maKHMoi);
-                        cmd.Parameters.AddWithValue("@HoTen", txtTenKhachHang.Text.Trim());
-                        cmd.Parameters.AddWithValue("@SDT", txtSoDienThoai.Text.Trim());
-                        cmd.Parameters.AddWithValue("@DiaChi", string.IsNullOrEmpty(txtDiaChi.Text.Trim()) ? "Đồng Tháp" : txtDiaChi.Text.Trim());
-                        cmd.Parameters.AddWithValue("@Email", string.IsNullOrEmpty(txtEmail.Text.Trim()) ? "Không" : txtEmail.Text.Trim());
-                        cmd.ExecuteNonQuery();
-                    }
+                        MaKhachHang = maKHMoi,
+                        HoTen = tenKH,
+                        SDT = sdt,
+                        DiaChi = string.IsNullOrEmpty(diaChi) ? "Đồng Tháp" : diaChi,
+                        Email = string.IsNullOrEmpty(email) ? "Không có" : email
+                    };
+
+                    db.KhachHangs.Add(khMoi);
+                    db.SaveChanges(); // Lưu xuống CSDL bằng EF
+
                     maKhachHangHienTai = maKHMoi;
                 }
-                MessageBox.Show("Lưu Khách hàng thành công!", "Thành Công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                lblTrangThaiTimKiem.Text = "✓ Đã lưu thông tin khách hàng mới!";
-                lblTrangThaiTimKiem.ForeColor = Color.LimeGreen;
+
+                MessageBox.Show("Lưu thông tin khách hàng mới thành công!", "Thành Công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (lblTrangThaiTimKiem != null)
+                {
+                    lblTrangThaiTimKiem.Text = "✓ Đã lưu thông tin khách hàng mới!";
+                    lblTrangThaiTimKiem.ForeColor = Color.LimeGreen;
+                }
             }
-            catch (Exception ex) { MessageBox.Show("Lỗi: " + ex.Message); }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi đăng ký khách hàng mới bằng EF: " + ex.Message, "Lỗi EF", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnHuyBo_Click(object sender, EventArgs e)
         {
-            frmMain mainForm = this.TopLevelControl as frmMain;
-            if (mainForm != null) mainForm.OpenChildForm(new frmBanHang(), null);
+            Form mainForm = this.TopLevelControl as Form;
+            if (mainForm != null && mainForm.Name == "frmMain")
+            {
+                ((qlcuahangdcht.frmMain)mainForm).OpenChildForm(new qlcuahangdcht.frmBanHang(), null);
+            }
             else this.Close();
         }
 
         // =========================================================================
-        // PHỤC HỒI LẠI HÓA ĐƠN GIẤY CHI TIẾT + BẢO VỆ DỮ LIỆU SQL
+        // THỰC HIỆN IN HÓA ĐƠN VÀ LƯU VÀO CSDL BẰNG ENTITY FRAMEWORK
         // =========================================================================
         private void ThucHienInHoaDon()
         {
             string maDonHang = "HD" + DateTime.Now.ToString("ddHHmmss");
             string thoiGian = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
 
-            // 1. CHUẨN BỊ MẶT CHỮ CHO BẢN IN HÓA ĐƠN
+            string tenKhachIn = txtTenKhachHang != null && txtTenKhachHang.Text != "" ? txtTenKhachHang.Text : "Khách vãng lai";
+            string sdtIn = txtSoDienThoai != null && txtSoDienThoai.Text != "" ? txtSoDienThoai.Text : "Không có";
+            string emailIn = txtEmail != null ? txtEmail.Text.Trim() : "";
+
+            // 1. Chuẩn bị nội dung hóa đơn hiển thị
             StringBuilder bill = new StringBuilder();
             bill.AppendLine("ĐANG GỬI LỆNH IN HÓA ĐƠN...\n");
             bill.AppendLine("Mã Đơn Hàng: " + maDonHang);
             bill.AppendLine("Thời gian: " + thoiGian);
-            bill.AppendLine("Khách hàng: " + (txtTenKhachHang.Text != "" ? txtTenKhachHang.Text : "Khách vãng lai"));
-            bill.AppendLine("SĐT: " + (txtSoDienThoai.Text != "" ? txtSoDienThoai.Text : "Không có"));
-            if (!string.IsNullOrEmpty(txtEmail.Text) && txtEmail.Text != "Không có")
+            bill.AppendLine("Khách hàng: " + tenKhachIn);
+            bill.AppendLine("SĐT: " + sdtIn);
+            if (!string.IsNullOrEmpty(emailIn) && emailIn != "Không có")
             {
-                bill.AppendLine("Email: " + txtEmail.Text.Trim());
+                bill.AppendLine("Email: " + emailIn);
             }
             bill.AppendLine("--------------------------------------------------------------");
 
-            // 2. LƯU DỮ LIỆU VÀ GHI CHI TIẾT SẢN PHẨM VÀO HÓA ĐƠN
-            if (dtSanPham != null && dtSanPham.Rows.Count > 0)
+            // 2. Lưu giao dịch xuống CSDL an toàn thông qua Entity Framework
+            try
             {
-                using (SqlConnection conn = new SqlConnection(chuoiKetNoi))
+                using (var db = new CuaHangDbContext())
                 {
-                    conn.Open();
-                    SqlTransaction transaction = conn.BeginTransaction(); // Bật chế độ giao dịch an toàn
-
-                    try
+                    // A. Đảm bảo nhân viên NV01 luôn tồn tại
+                    var nv = db.NhanViens.Find("NV01");
+                    if (nv == null)
                     {
-                        string maNhanVienChuan = "NV01";
-                        using (SqlCommand cmdNV = new SqlCommand("IF NOT EXISTS (SELECT 1 FROM NhanVien WHERE MaNhanVien = 'NV01') INSERT INTO NhanVien (MaNhanVien, HoTen) VALUES ('NV01', N'Admin')", conn, transaction))
-                            cmdNV.ExecuteNonQuery();
+                        db.NhanViens.Add(new NhanVien { MaNhanVien = "NV01", HoTen = "Nhân Viên" });
+                    }
 
-                        using (SqlCommand cmdKH = new SqlCommand("IF NOT EXISTS (SELECT 1 FROM KhachHang WHERE MaKhachHang = @MaKH) INSERT INTO KhachHang (MaKhachHang, HoTen, SDT, DiaChi, Email) VALUES (@MaKH, @TenKH, @SDT, @DiaChi, @Email)", conn, transaction))
+                    // B. Kiểm tra hoặc thêm mới thông tin khách hàng vào CSDL
+                    var khCheck = db.KhachHangs.Find(maKhachHangHienTai);
+                    if (khCheck == null)
+                    {
+                        var khMoi = new KhachHang
                         {
-                            cmdKH.Parameters.AddWithValue("@MaKH", maKhachHangHienTai);
-                            cmdKH.Parameters.AddWithValue("@TenKH", txtTenKhachHang.Text != "" ? txtTenKhachHang.Text : "Khách vãng lai");
-                            cmdKH.Parameters.AddWithValue("@SDT", txtSoDienThoai.Text != "" ? txtSoDienThoai.Text : "Không có");
-                            cmdKH.Parameters.AddWithValue("@DiaChi", string.IsNullOrEmpty(txtDiaChi.Text) ? "Tại quầy" : txtDiaChi.Text);
-                            cmdKH.Parameters.AddWithValue("@Email", string.IsNullOrEmpty(txtEmail.Text) ? "Không có" : txtEmail.Text);
-                            cmdKH.ExecuteNonQuery();
-                        }
+                            MaKhachHang = maKhachHangHienTai,
+                            HoTen = tenKhachIn,
+                            SDT = sdtIn,
+                            DiaChi = txtDiaChi != null && !string.IsNullOrEmpty(txtDiaChi.Text) ? txtDiaChi.Text : "Tại quầy",
+                            Email = string.IsNullOrEmpty(emailIn) ? "Không có" : emailIn
+                        };
+                        db.KhachHangs.Add(khMoi);
+                    }
 
-                        using (SqlCommand cmdHD = new SqlCommand("INSERT INTO HoaDon (MaHoaDon, MaKhachHang, MaNhanVien, NgayLap, TongTien) VALUES (@MaHD, @MaKH, @MaNV, @NgayLap, @TongTien)", conn, transaction))
-                        {
-                            cmdHD.Parameters.AddWithValue("@MaHD", maDonHang);
-                            cmdHD.Parameters.AddWithValue("@MaKH", maKhachHangHienTai);
-                            cmdHD.Parameters.AddWithValue("@MaNV", maNhanVienChuan);
-                            cmdHD.Parameters.AddWithValue("@NgayLap", DateTime.Now);
-                            cmdHD.Parameters.AddWithValue("@TongTien", tongTien);
-                            cmdHD.ExecuteNonQuery();
-                        }
+                    // C. Tạo và lưu Hóa Đơn mới
+                    var hoaDonMoi = new HoaDon
+                    {
+                        MaHoaDon = maDonHang,
+                        MaKhachHang = maKhachHangHienTai,
+                        MaNhanVien = "NV01",
+                        NgayLap = DateTime.Now,
+                        TongTien = (decimal)tongTien
+                    };
+                    db.HoaDons.Add(hoaDonMoi);
 
+                    // D. Lưu Chi Tiết Hóa Đơn và Trừ Tồn Kho Sản Phẩm
+                    if (dtSanPham != null && dtSanPham.Rows.Count > 0)
+                    {
                         foreach (DataRow row in dtSanPham.Rows)
                         {
                             int sl = Convert.ToInt32(row["Số Lượng"]);
@@ -189,57 +242,62 @@ namespace qlnhanvien
                             // Đưa mặt hàng vào phiếu in
                             bill.AppendLine("- " + tenSP + " (x" + sl + "): " + tien.ToString("N0") + " đ");
 
-                            using (SqlCommand cmdCT = new SqlCommand("INSERT INTO ChiTietHoaDon (MaHoaDon, MaSanPham, SoLuong, DonGia, ThanhTien) VALUES (@MaHD, @MaSP, @SL, @Gia, @Tien)", conn, transaction))
+                            // Thêm chi tiết hóa đơn
+                            var chiTiet = new ChiTietHoaDon
                             {
-                                cmdCT.Parameters.AddWithValue("@MaHD", maDonHang);
-                                cmdCT.Parameters.AddWithValue("@MaSP", maSP);
-                                cmdCT.Parameters.AddWithValue("@SL", sl);
-                                cmdCT.Parameters.AddWithValue("@Gia", gia);
-                                cmdCT.Parameters.AddWithValue("@Tien", tien);
-                                cmdCT.ExecuteNonQuery();
-                            }
+                                MaHoaDon = maDonHang,
+                                MaSanPham = maSP,
+                                SoLuong = sl,
+                                DonGia = (decimal)gia,
+                                ThanhTien = (decimal)tien
+                            };
+                            db.ChiTietHoaDons.Add(chiTiet);
 
-                            using (SqlCommand cmdKho = new SqlCommand("UPDATE SanPham SET SoLuongTon = SoLuongTon - @SL WHERE MaSanPham = @MaSP", conn, transaction))
+                            // Trừ tồn kho sản phẩm tương ứng
+                            var sanPham = db.SanPhams.Find(maSP);
+                            if (sanPham != null)
                             {
-                                cmdKho.Parameters.AddWithValue("@SL", sl);
-                                cmdKho.Parameters.AddWithValue("@MaSP", maSP);
-                                cmdKho.ExecuteNonQuery();
+                                sanPham.SoLuongTon -= sl;
                             }
                         }
+                    }
 
-                        transaction.Commit();
-                    }
-                    catch (Exception ex)
-                    {
-                        transaction.Rollback();
-                        MessageBox.Show("Lỗi lưu hóa đơn vào cơ sở dữ liệu: " + ex.Message, "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
+                    // Lưu toàn bộ thay đổi xuống cơ sở dữ liệu qua EF
+                    db.SaveChanges();
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi lưu hóa đơn bằng Entity Framework: " + ex.Message, "Lỗi EF", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-            // 3. TỔNG KẾT VÀ IN HÓA ĐƠN LÊN MÀN HÌNH
+            // 3. Tổng kết và hiển thị biên lai thành công
             bill.AppendLine("--------------------------------------------------------------");
             bill.AppendLine("Tạm tính:     " + tamTinh.ToString("N0") + " đ");
             bill.AppendLine("Thuế VAT:     " + thueVAT.ToString("N0") + " đ");
             bill.AppendLine("TỔNG TIỀN:    " + tongTien.ToString("N0") + " VNĐ");
             bill.AppendLine("\nĐã in thành công hóa đơn và lưu Lịch sử bán hàng!");
 
-            // Bật bảng in hóa đơn như cũ
             MessageBox.Show(bill.ToString(), "Biên Lai Giao Dịch", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             KhoLichSu.VuaThanhToanXong = true;
 
-            frmMain mainForm = this.TopLevelControl as frmMain;
-            if (mainForm != null) mainForm.OpenChildForm(new frmBanHang(), null);
+            Form mainForm = this.TopLevelControl as Form;
+            if (mainForm != null && mainForm.Name == "frmMain")
+            {
+                ((qlcuahangdcht.frmMain)mainForm).OpenChildForm(new qlcuahangdcht.frmBanHang(), null);
+            }
             else this.Close();
         }
 
-        private void tblCanGiua_Paint(object sender, PaintEventArgs e) { }
         private void btnQuayLai_Click(object sender, EventArgs e)
         {
-            frmMain mainForm = this.TopLevelControl as frmMain;
-            if (mainForm != null) mainForm.OpenChildForm(new frmThanhToan(dtSanPham, tamTinh, thueVAT, tongTien), null);
+            Form mainForm = this.TopLevelControl as Form;
+            if (mainForm != null && mainForm.Name == "frmMain")
+            {
+                ((qlcuahangdcht.frmMain)mainForm).OpenChildForm(new qlcuahangdcht.frmThanhToan(dtSanPham, tamTinh, thueVAT, tongTien), null);
+            }
             else this.Close();
         }
     }
