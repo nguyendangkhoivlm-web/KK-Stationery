@@ -129,6 +129,8 @@
       <DependentUpon>frmThongTinDeIn1.cs</DependentUpon>
     </Compile>
     <Compile Include="KhoLichSu.cs" />
+    <Compile Include="Models\KhachHang.cs" />
+    <Compile Include="Models\NhanVien.cs" />
     <Compile Include="PhienDangNhap.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
