@@ -40,6 +40,7 @@
             this.btnLichSuDaBan = new System.Windows.Forms.Button();
             this.btnKhachHang = new System.Windows.Forms.Button();
             this.btnBanHang = new System.Windows.Forms.Button();
+            this.btnDangXuat = new System.Windows.Forms.Button();
             this.panelDesktop.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panelSidebar.SuspendLayout();
@@ -128,13 +129,15 @@
             // 
             // panelSidebar
             // 
+            this.panelSidebar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.panelSidebar.BackColor = System.Drawing.Color.RoyalBlue;
+            this.panelSidebar.Controls.Add(this.btnDangXuat);
             this.panelSidebar.Controls.Add(this.btnLienHe);
             this.panelSidebar.Controls.Add(this.btnCaiDatCaNhan);
             this.panelSidebar.Controls.Add(this.btnLichSuDaBan);
             this.panelSidebar.Controls.Add(this.btnKhachHang);
             this.panelSidebar.Controls.Add(this.btnBanHang);
-            this.panelSidebar.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelSidebar.Location = new System.Drawing.Point(0, 0);
             this.panelSidebar.Name = "panelSidebar";
             this.panelSidebar.Padding = new System.Windows.Forms.Padding(12, 25, 12, 20);
@@ -226,6 +229,23 @@
             this.btnBanHang.UseVisualStyleBackColor = true;
             this.btnBanHang.Click += new System.EventHandler(this.btnBanHang_Click);
             // 
+            // btnDangXuat
+            // 
+            this.btnDangXuat.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnDangXuat.FlatAppearance.BorderSize = 0;
+            this.btnDangXuat.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDangXuat.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.btnDangXuat.ForeColor = System.Drawing.Color.White;
+            this.btnDangXuat.Location = new System.Drawing.Point(12, 567);
+            this.btnDangXuat.Name = "btnDangXuat";
+            this.btnDangXuat.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
+            this.btnDangXuat.Size = new System.Drawing.Size(196, 47);
+            this.btnDangXuat.TabIndex = 7;
+            this.btnDangXuat.Text = "Đăng Xuất";
+            this.btnDangXuat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDangXuat.UseVisualStyleBackColor = true;
+            this.btnDangXuat.Click += new System.EventHandler(this.btnDangXuat_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -256,5 +276,6 @@
         private System.Windows.Forms.Button btnKhachHang;
         private System.Windows.Forms.Button btnBanHang;
         private System.Windows.Forms.Button btnLienHe;
+        private System.Windows.Forms.Button btnDangXuat;
     }
 }

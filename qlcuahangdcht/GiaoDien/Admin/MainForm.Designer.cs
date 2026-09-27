@@ -41,6 +41,7 @@
             this.pnlContainer = new System.Windows.Forms.Panel();
             this.pnlHeader = new System.Windows.Forms.Panel();
             this.btnDangXuat = new System.Windows.Forms.Button();
+            this.btnQuanLyTaiKhoan = new System.Windows.Forms.Button();
             this.pnlSidebar.SuspendLayout();
             this.pnlRightContent.SuspendLayout();
             this.pnlHeader.SuspendLayout();
@@ -49,6 +50,7 @@
             // pnlSidebar
             // 
             this.pnlSidebar.BackColor = System.Drawing.Color.SteelBlue;
+            this.pnlSidebar.Controls.Add(this.btnQuanLyTaiKhoan);
             this.pnlSidebar.Controls.Add(this.btnCaiDat);
             this.pnlSidebar.Controls.Add(this.label1);
             this.pnlSidebar.Controls.Add(this.btnPhieuNhap);
@@ -138,7 +140,7 @@
             this.btnBaoCao.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBaoCao.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBaoCao.ForeColor = System.Drawing.Color.White;
-            this.btnBaoCao.Location = new System.Drawing.Point(15, 444);
+            this.btnBaoCao.Location = new System.Drawing.Point(15, 448);
             this.btnBaoCao.Name = "btnBaoCao";
             this.btnBaoCao.Size = new System.Drawing.Size(223, 41);
             this.btnBaoCao.TabIndex = 4;
@@ -244,6 +246,24 @@
             this.btnDangXuat.UseVisualStyleBackColor = false;
             this.btnDangXuat.Click += new System.EventHandler(this.btnDangXuat_Click);
             // 
+            // btnQuanLyTaiKhoan
+            // 
+            this.btnQuanLyTaiKhoan.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnQuanLyTaiKhoan.FlatAppearance.BorderSize = 0;
+            this.btnQuanLyTaiKhoan.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnQuanLyTaiKhoan.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnQuanLyTaiKhoan.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnQuanLyTaiKhoan.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnQuanLyTaiKhoan.ForeColor = System.Drawing.Color.White;
+            this.btnQuanLyTaiKhoan.Location = new System.Drawing.Point(15, 516);
+            this.btnQuanLyTaiKhoan.Name = "btnQuanLyTaiKhoan";
+            this.btnQuanLyTaiKhoan.Size = new System.Drawing.Size(223, 41);
+            this.btnQuanLyTaiKhoan.TabIndex = 8;
+            this.btnQuanLyTaiKhoan.Text = "🔑 Tài khoản";
+            this.btnQuanLyTaiKhoan.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnQuanLyTaiKhoan.UseVisualStyleBackColor = true;
+            this.btnQuanLyTaiKhoan.Click += new System.EventHandler(this.btnQuanLyTaiKhoan_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -280,5 +300,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnCaiDat;
         private System.Windows.Forms.Button btnDangXuat;
+        private System.Windows.Forms.Button btnQuanLyTaiKhoan;
     }
 }

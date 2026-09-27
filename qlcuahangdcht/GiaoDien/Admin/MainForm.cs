@@ -59,6 +59,9 @@ namespace qlcuahangdcht
             btnCaiDat.BackColor = normalColor;
             btnCaiDat.ForeColor = Color.White;
 
+            btnQuanLyTaiKhoan.BackColor = normalColor;
+            btnQuanLyTaiKhoan.ForeColor = Color.White;
+
             // Nút đang được chọn chuyển sang nổi bật
             if (activeBtn != null)
             {
@@ -96,12 +99,6 @@ namespace qlcuahangdcht
             AddUserControl(uc);
         }
 
-        // --- SỰ KIỆN FORM LOAD ---
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            // Vừa mở phần mềm lên là tự động load trang Tổng quan đầu tiên
-            btnTongQuan.PerformClick();
-        }
 
         private void btnNhaCungCap_Click(object sender, EventArgs e)
         {
@@ -147,6 +144,22 @@ namespace qlcuahangdcht
 
                 this.Close(); // Sau khi chu trình form đăng nhập kết thúc thì giải phóng luôn form chính
             }
+        }
+
+        private void btnQuanLyTaiKhoan_Click(object sender, EventArgs e)
+        {
+            HighlightButton(btnQuanLyTaiKhoan); // Đổi màu nút đang click cho nổi bật lên
+            UC_QuanLyTaiKhoan uc = new UC_QuanLyTaiKhoan(); // Khởi tạo màn hình Quản lý tài khoản
+            AddUserControl(uc); // Đổ màn hình đó vào Panel chính giữa form
+        }
+
+
+
+        // --- SỰ KIỆN FORM LOAD ---
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            // Vừa mở phần mềm lên là tự động load trang Tổng quan đầu tiên
+            btnTongQuan.PerformClick();
         }
     }
 }                                                                                          

@@ -119,5 +119,25 @@ namespace qlcuahangdcht
             // Mở đúng trang Liên hệ
             OpenChildForm(new frmLienHe(), btnLienHe);
         }
+
+        private void btnDangXuat_Click(object sender, EventArgs e)
+        {
+            // 1. Hiện hộp thoại hỏi xác nhận (Có/Không)
+            DialogResult xacNhan = MessageBox.Show("Bạn có chắc chắn muốn đăng xuất khỏi hệ thống?",
+                                                   "Xác nhận đăng xuất",
+                                                   MessageBoxButtons.YesNo,
+                                                   MessageBoxIcon.Question);
+
+            // 2. Xử lý luồng quay về
+            if (xacNhan == DialogResult.Yes)
+            {
+                this.Hide(); // Ẩn giao diện chính đi
+
+                LoginForm frmLogin = new LoginForm();
+                frmLogin.ShowDialog(); // Chặn màn hình lại, bắt đăng nhập
+
+                this.Close(); // Sau khi chu trình form đăng nhập kết thúc thì giải phóng luôn form chính
+            }
+        }
     }
 }
