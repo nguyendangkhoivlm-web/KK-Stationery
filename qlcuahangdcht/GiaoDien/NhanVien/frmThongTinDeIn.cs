@@ -2,6 +2,7 @@
 using qlcuahangdcht; // Gọi các form bên namespace chính
 using System;
 using System.Data;
+using System.Data.Entity.Validation; // Thêm thư viện dò lỗi EF
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -149,6 +150,18 @@ namespace qlnhanvien // Đã sửa lại namespace khớp chính xác với file
                     lblTrangThaiTimKiem.ForeColor = Color.LimeGreen;
                 }
             }
+            catch (DbEntityValidationException ex)
+            {
+                string errorDetails = "";
+                foreach (var entityValidationErrors in ex.EntityValidationErrors)
+                {
+                    foreach (var validationError in entityValidationErrors.ValidationErrors)
+                    {
+                        errorDetails += $"Cột bị lỗi: {validationError.PropertyName}\nNguyên nhân: {validationError.ErrorMessage}\n\n";
+                    }
+                }
+                MessageBox.Show("Chi tiết lỗi Đăng Ký KH từ CSDL:\n\n" + errorDetails, "Bắt Được Lỗi EF", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             catch (Exception ex)
             {
                 MessageBox.Show("Lỗi khi đăng ký khách hàng mới bằng EF: " + ex.Message, "Lỗi EF", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -266,6 +279,19 @@ namespace qlnhanvien // Đã sửa lại namespace khớp chính xác với file
                     db.SaveChanges();
                 }
             }
+            catch (DbEntityValidationException ex) // <-- Bẫy lỗi EF ở đây
+            {
+                string errorDetails = "";
+                foreach (var entityValidationErrors in ex.EntityValidationErrors)
+                {
+                    foreach (var validationError in entityValidationErrors.ValidationErrors)
+                    {
+                        errorDetails += $"Cột bị lỗi: {validationError.PropertyName}\nNguyên nhân: {validationError.ErrorMessage}\n\n";
+                    }
+                }
+                MessageBox.Show("Chi tiết lỗi In Hóa Đơn từ CSDL:\n\n" + errorDetails, "Bắt Được Lỗi EF", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return; // Dừng lại không in bill
+            }
             catch (Exception ex)
             {
                 MessageBox.Show("Lỗi lưu hóa đơn bằng Entity Framework: " + ex.Message, "Lỗi EF", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -274,8 +300,8 @@ namespace qlnhanvien // Đã sửa lại namespace khớp chính xác với file
 
             // 3. Tổng kết và hiển thị biên lai thành công
             bill.AppendLine("--------------------------------------------------------------");
-            bill.AppendLine("Tạm tính:     " + tamTinh.ToString("N0") + " đ");
-            bill.AppendLine("Thuế VAT:     " + thueVAT.ToString("N0") + " đ");
+            bill.AppendLine("Tạm tính:      " + tamTinh.ToString("N0") + " đ");
+            bill.AppendLine("Thuế VAT:      " + thueVAT.ToString("N0") + " đ");
             bill.AppendLine("TỔNG TIỀN:    " + tongTien.ToString("N0") + " VNĐ");
             bill.AppendLine("\nĐã in thành công hóa đơn và lưu Lịch sử bán hàng!");
 

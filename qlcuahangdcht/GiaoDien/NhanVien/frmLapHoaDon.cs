@@ -71,8 +71,10 @@ namespace qlcuahangdcht
             // Tính tiền và hiển thị thông tin
             TinhTongTien();
 
-            // Lấy tên nhân viên (hiển thị mặc định hoặc từ phiên đăng nhập)
-            string tenNV = "Trần Vũ Tuấn Kiệt";
+            // Lấy tên nhân viên từ phiên đăng nhập
+            string tenNV = PhienDangNhap.HoVaTen;
+            if (string.IsNullOrEmpty(tenNV)) tenNV = "Trần Vũ Tuấn Kiệt"; // Dự phòng khi chạy test trực tiếp
+
             if (lblNhanVien != null) lblNhanVien.Text = "Nhân viên: " + tenNV;
             if (lblNgayLap != null) lblNgayLap.Text = "Ngày Lập: " + DateTime.Now.ToString("dd/MM/yyyy");
         }
