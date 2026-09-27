@@ -50,21 +50,36 @@ namespace qlcuahangdcht
             }
 
             // ==============================================================
-            // LOGIC LOAD HÌNH ẢNH TỪ THƯ MỤC "Resources" CỦA BẠN
+            // LOGIC LOAD HÌNH ẢNH (Ưu tiên ảnh Admin đã cấu hình)
             // ==============================================================
             try
             {
-                if (!string.IsNullOrEmpty(duongDanAnh) && File.Exists(duongDanAnh))
+                // Thư mục mặc định chứa ảnh của hệ thống
+                string thuMucAnh = Path.Combine(Application.StartupPath, "Resources");
+                if (!Directory.Exists(thuMucAnh)) Directory.CreateDirectory(thuMucAnh);
+
+                // 1. Kiểm tra nếu Admin đã lưu đường dẫn ảnh hợp lệ (Biến duongDanAnh từ CSDL)
+                if (!string.IsNullOrEmpty(duongDanAnh))
                 {
-                    picHinhAnh.Image = Image.FromFile(duongDanAnh);
-                    picHinhAnh.SizeMode = PictureBoxSizeMode.Zoom;
-                    return;
+                    // Trường hợp 1: Admin lưu đường dẫn tuyệt đối (VD: D:\HinhAnh\SP01.jpg)
+                    if (File.Exists(duongDanAnh))
+                    {
+                        picHinhAnh.Image = Image.FromFile(duongDanAnh);
+                        picHinhAnh.SizeMode = PictureBoxSizeMode.Zoom;
+                        return; // Load thành công thì dừng luôn
+                    }
+
+                    // Trường hợp 2: Admin chỉ lưu tên file (VD: "butbi.jpg"), ta tìm nó trong thư mục Resources
+                    string duongDanTuongDoi = Path.Combine(thuMucAnh, Path.GetFileName(duongDanAnh));
+                    if (File.Exists(duongDanTuongDoi))
+                    {
+                        picHinhAnh.Image = Image.FromFile(duongDanTuongDoi);
+                        picHinhAnh.SizeMode = PictureBoxSizeMode.Zoom;
+                        return; // Load thành công thì dừng luôn
+                    }
                 }
 
-                // Chỏ đường dẫn vào thư mục Resources mà bạn đã tạo
-                string thuMucAnh = Path.Combine(Application.StartupPath, "Resources");
-
-                // Tự động tìm tên ảnh trùng với Mã Sản Phẩm
+                // 2. Dự phòng: Nếu Admin CHƯA lưu ảnh, tự động tìm ảnh có tên trùng với Mã SP (VD: SP01.jpg)
                 string fileAnhJPG = Path.Combine(thuMucAnh, ma + ".jpg");
                 string fileAnhPNG = Path.Combine(thuMucAnh, ma + ".png");
 
@@ -80,11 +95,13 @@ namespace qlcuahangdcht
                 }
                 else
                 {
+                    // 3. Nếu không tìm thấy bất kỳ ảnh nào, để trống hoặc bạn có thể gán ảnh mặc định ở đây
                     picHinhAnh.Image = null;
                 }
             }
             catch
             {
+                // Bẫy lỗi an toàn: Bị lỗi file ảnh (file hỏng, đang bị khóa...) thì bỏ qua, không làm văng app
                 picHinhAnh.Image = null;
             }
         }
