@@ -1,6 +1,6 @@
 ﻿namespace qlcuahangdcht.GiaoDien.Admin
 {
-    partial class frmThemNhanVien
+    partial class frmSuaNhanVien
     {
         /// <summary>
         /// Required designer variable.
@@ -28,9 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
             this.pnlNen = new System.Windows.Forms.Panel();
-            this.btnThem = new System.Windows.Forms.Button();
+            this.btnLuu = new System.Windows.Forms.Button();
             this.btnHuy = new System.Windows.Forms.Button();
             this.txtMaNV = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -43,47 +42,37 @@
             this.txtHoTen = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.pnlNen.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(198, 29);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Thêm nhân viên";
-            // 
             // pnlNen
             // 
             this.pnlNen.BackColor = System.Drawing.Color.White;
-            this.pnlNen.Controls.Add(this.btnThem);
+            this.pnlNen.Controls.Add(this.btnLuu);
             this.pnlNen.Controls.Add(this.btnHuy);
             this.pnlNen.Controls.Add(this.txtMaNV);
             this.pnlNen.Controls.Add(this.groupBox3);
             this.pnlNen.Controls.Add(this.label8);
-            this.pnlNen.Location = new System.Drawing.Point(5, 44);
+            this.pnlNen.Location = new System.Drawing.Point(5, 43);
             this.pnlNen.Name = "pnlNen";
             this.pnlNen.Size = new System.Drawing.Size(413, 478);
-            this.pnlNen.TabIndex = 13;
+            this.pnlNen.TabIndex = 15;
             // 
-            // btnThem
+            // btnLuu
             // 
-            this.btnThem.BackColor = System.Drawing.Color.DarkGreen;
-            this.btnThem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnThem.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnThem.ForeColor = System.Drawing.Color.White;
-            this.btnThem.Location = new System.Drawing.Point(167, 428);
-            this.btnThem.Name = "btnThem";
-            this.btnThem.Size = new System.Drawing.Size(104, 40);
-            this.btnThem.TabIndex = 12;
-            this.btnThem.Text = "Thêm";
-            this.btnThem.UseVisualStyleBackColor = false;
-            this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
+            this.btnLuu.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnLuu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLuu.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLuu.ForeColor = System.Drawing.Color.White;
+            this.btnLuu.Location = new System.Drawing.Point(167, 428);
+            this.btnLuu.Name = "btnLuu";
+            this.btnLuu.Size = new System.Drawing.Size(104, 40);
+            this.btnLuu.TabIndex = 12;
+            this.btnLuu.Text = "Lưu";
+            this.btnLuu.UseVisualStyleBackColor = false;
+            this.btnLuu.Click += new System.EventHandler(this.btnLuu_Click);
             // 
             // btnHuy
             // 
@@ -220,7 +209,18 @@
             this.label8.TabIndex = 0;
             this.label8.Text = "Mã Nhân Viên:";
             // 
-            // frmThemNhanVien
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(12, 8);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(283, 29);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "Sửa thông tin nhân viên";
+            // 
+            // frmSuaNhanVien
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -228,11 +228,9 @@
             this.ClientSize = new System.Drawing.Size(422, 528);
             this.Controls.Add(this.pnlNen);
             this.Controls.Add(this.label1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Name = "frmThemNhanVien";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "frmThemNhanVien";
-            this.Load += new System.EventHandler(this.frmThemNhanVien_Load);
+            this.Name = "frmSuaNhanVien";
+            this.Text = "frmSuaNhanVien";
+            this.Load += new System.EventHandler(this.frmSuaNhanVien_Load);
             this.pnlNen.ResumeLayout(false);
             this.pnlNen.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -244,8 +242,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel pnlNen;
+        private System.Windows.Forms.Button btnLuu;
         private System.Windows.Forms.Button btnHuy;
         private System.Windows.Forms.TextBox txtMaNV;
         private System.Windows.Forms.GroupBox groupBox3;
@@ -258,6 +256,6 @@
         private System.Windows.Forms.TextBox txtHoTen;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Button btnThem;
+        private System.Windows.Forms.Label label1;
     }
 }

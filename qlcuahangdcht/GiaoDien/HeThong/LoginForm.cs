@@ -20,7 +20,7 @@ namespace qlcuahangdcht
 
         private void btnDangNhap_Click(object sender, EventArgs e)
         {
-            // 1. Chặn người dùng chưa nhập gì mà đã bấm
+            // 1. Chặn người dùng chưa nhập gì mà đã bấm (Giữ nguyên của ông)
             if (string.IsNullOrWhiteSpace(txtTenDangNhap.Text) ||
                 string.IsNullOrWhiteSpace(txtMatKhau.Text))
             {
@@ -31,25 +31,47 @@ namespace qlcuahangdcht
             // 2. Chui vào Database kiểm tra
             using (var context = new CuaHangDbContext())
             {
-                // Lục tìm tài khoản khớp cả tên lẫn mật khẩu
-                var tk = context.TaiKhoans.FirstOrDefault(t =>
-                    t.TenDangNhap == txtTenDangNhap.Text &&
-                    t.MatKhau == txtMatKhau.Text);
+                // THAY ĐỔI 1: Dùng LINQ JOIN 2 bảng để lấy được Họ Tên thật của nhân viên
+                var tk = (from t in context.TaiKhoans
+                          join n in context.NhanViens on t.MaNhanVien equals n.MaNhanVien
+                          where t.TenDangNhap == txtTenDangNhap.Text && t.MatKhau == txtMatKhau.Text
+                          select new
+                          {
+                              t.TenDangNhap,
+                              t.VaiTro,
+                              t.MaNhanVien,
+                              n.HoTen
+                          }).FirstOrDefault();
 
                 if (tk != null) // Nếu tìm thấy tài khoản hợp lệ
                 {
-                    MessageBox.Show("Đăng nhập thành công! Chào mừng " + tk.TenDangNhap, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // THAY ĐỔI 2: Cấp thẻ đeo ngực (Lưu phiên đăng nhập)
+                    PhienDangNhap.MaNhanVien = tk.MaNhanVien;
+                    PhienDangNhap.HoVaTen = tk.HoTen; // Dùng đúng biến HoVaTen của bạn ông
+                    PhienDangNhap.VaiTro = tk.VaiTro;
 
-                    // Khởi tạo Form chính (MainForm)
-                    MainForm frmMain = new MainForm();
+                    MessageBox.Show($"Đăng nhập thành công! Chào mừng {tk.VaiTro}: {tk.HoTen}", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     this.Hide(); // Giấu form đăng nhập đi
-                    frmMain.ShowDialog(); // Hiển thị form chính lên
 
-                    // Sau khi người dùng tắt form chính (nghỉ xài phần mềm) thì tắt luôn form đăng nhập ngầm để giải phóng bộ nhớ
+                    // THAY ĐỔI 3: Điều hướng Form theo Vai trò
+                    if (tk.VaiTro == "Admin")
+                    {
+                        // Nếu là Admin thì mở MainForm như cũ
+                        MainForm frmAdmin = new MainForm();
+                        frmAdmin.ShowDialog();
+                    }
+                    else
+                    {
+                        // Nếu là Nhân viên thì mở Form Bán Hàng (Tui thấy ông có sẵn frmBanHang.cs bên cây Solution Explorer)
+                        frmMain frmNV = new frmMain();
+                        frmNV.ShowDialog();
+                    }
+
+                    // Sau khi tắt form chính thì tắt luôn chương trình ngầm
                     this.Close();
                 }
-                else // Nếu không tìm thấy (nhập sai)
+                else // Nếu không tìm thấy
                 {
                     MessageBox.Show("Tên đăng nhập hoặc mật khẩu không chính xác!", "Từ chối", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }

@@ -549,7 +549,6 @@
             this.Controls.Add(this.lblTieuDeForm);
             this.Controls.Add(this.tblLayoutChinh);
             this.Name = "frmCaiDatCaNhan";
-            this.Text = "frmCaiDatCaNhan";
             this.pnlMatKhau.ResumeLayout(false);
             this.pnlMatKhau.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPhienDangNhap)).EndInit();

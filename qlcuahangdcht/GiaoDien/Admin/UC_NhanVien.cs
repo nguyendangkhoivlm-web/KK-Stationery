@@ -168,5 +168,25 @@ namespace qlcuahangdcht
                 txtTimKiemNV.Font = new Font(txtTimKiemNV.Font, FontStyle.Italic);
             }
         }
+
+        private void btnSuaNhanVien_Click(object sender, EventArgs e)
+        {
+            // Kiểm tra xem đã chọn nhân viên nào trên DataGridView chưa
+            if (dgvDanhSachNv.CurrentRow == null || dgvDanhSachNv.CurrentRow.IsNewRow)
+            {
+                MessageBox.Show("Vui lòng chọn một nhân viên để sửa thông tin!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Lấy mã nhân viên từ cột MaNV của dòng đang được chọn (Nhớ đổi tên cột cho đúng)
+            string maNV = dgvDanhSachNv.CurrentRow.Cells["MaNV"].Value.ToString();
+
+            // Mở form Sửa và truyền mã NV qua
+            frmSuaNhanVien frmSua = new frmSuaNhanVien(maNV);
+            frmSua.ShowDialog();
+
+            // Dòng này rất quan trọng: Sau khi form Sửa tắt đi, gọi lại hàm Load dữ liệu để làm mới DataGridView
+            // LoadDuLieuNhanVien();
+        }
     }
 }
