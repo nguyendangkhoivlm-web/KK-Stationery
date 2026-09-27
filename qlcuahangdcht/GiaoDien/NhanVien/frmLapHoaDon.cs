@@ -41,7 +41,6 @@ namespace qlcuahangdcht
             if (btnThemSanPham != null) btnThemSanPham.Click += btnThemSanPham_Click;
             if (btnXoaSanPham != null) btnXoaSanPham.Click += btnXoaSanPham_Click;
             if (btnCapNhatHoaDon != null) btnCapNhatHoaDon.Click += btnCapNhatHoaDon_Click;
-            if (btnLuuNhap != null) btnLuuNhap.Click += btnLuuNhap_Click;
             if (btnTroLaiTrangTruoc != null) btnTroLaiTrangTruoc.Click += btnTroLaiTrangTruoc_Click;
 
             if (txtTimKiemSanPham != null)
