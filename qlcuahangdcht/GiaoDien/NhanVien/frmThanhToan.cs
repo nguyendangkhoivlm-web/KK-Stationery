@@ -184,6 +184,7 @@ namespace qlcuahangdcht
                     // 4. Lưu Chi Tiết Hóa Đơn & Trừ Tồn Kho Sản Phẩm
                     if (dtSanPham != null)
                     {
+                        int stt = 1; // Biến đếm tạo mã CTHD
                         foreach (DataRow row in dtSanPham.Rows)
                         {
                             string maSP = row["Mã Sản Phẩm"].ToString();
@@ -191,9 +192,10 @@ namespace qlcuahangdcht
                             decimal gia = Convert.ToDecimal(row["Đơn Giá"]);
                             decimal tien = Convert.ToDecimal(row["Thành Tiền"]);
 
-                            // Thêm chi tiết hóa đơn
+                            // Thêm chi tiết hóa đơn đã bổ sung MaCTHD
                             var chiTiet = new ChiTietHoaDon
                             {
+                                MaCTHD = maDonHang + "_" + stt.ToString(),
                                 MaHoaDon = maDonHang,
                                 MaSanPham = maSP,
                                 SoLuong = soLuong,
@@ -208,6 +210,7 @@ namespace qlcuahangdcht
                             {
                                 sanPham.SoLuongTon -= soLuong;
                             }
+                            stt++; // Tăng số thứ tự lên
                         }
                     }
 
@@ -216,7 +219,7 @@ namespace qlcuahangdcht
                     KhoLichSu.VuaThanhToanXong = true;
                 }
             }
-            catch (DbEntityValidationException ex) // <-- Đoạn bẫy lỗi EF chi tiết nằm ở đây
+            catch (DbEntityValidationException ex)
             {
                 string errorDetails = "";
                 foreach (var entityValidationErrors in ex.EntityValidationErrors)

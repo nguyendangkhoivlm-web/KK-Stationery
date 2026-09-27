@@ -121,6 +121,7 @@ namespace qlcuahangdcht
                     // 4. Lưu Chi Tiết Hóa Đơn & Trừ Tồn Kho Sản Phẩm
                     if (dtSanPham != null)
                     {
+                        int stt = 1; // Thêm biến đếm số thứ tự
                         foreach (DataRow row in dtSanPham.Rows)
                         {
                             string maSP = row["Mã Sản Phẩm"].ToString();
@@ -128,9 +129,10 @@ namespace qlcuahangdcht
                             decimal gia = Convert.ToDecimal(row["Đơn Giá"]);
                             decimal tien = Convert.ToDecimal(row["Thành Tiền"]);
 
-                            // Thêm chi tiết hóa đơn
+                            // Thêm chi tiết hóa đơn (Đã vá lỗi MaCTHD)
                             var chiTiet = new ChiTietHoaDon
                             {
+                                MaCTHD = maDonHang + "_" + stt.ToString(), // <-- FIX TẠI ĐÂY
                                 MaHoaDon = maDonHang,
                                 MaSanPham = maSP,
                                 SoLuong = soLuong,
@@ -145,6 +147,7 @@ namespace qlcuahangdcht
                             {
                                 sanPham.SoLuongTon -= soLuong;
                             }
+                            stt++; // Tăng STT lên cho dòng tiếp theo
                         }
                     }
 

@@ -244,6 +244,7 @@ namespace qlnhanvien // Đã sửa lại namespace khớp chính xác với file
                     // D. Lưu Chi Tiết Hóa Đơn và Trừ Tồn Kho Sản Phẩm
                     if (dtSanPham != null && dtSanPham.Rows.Count > 0)
                     {
+                        int stt = 1; // Thêm biến đếm số thứ tự
                         foreach (DataRow row in dtSanPham.Rows)
                         {
                             int sl = Convert.ToInt32(row["Số Lượng"]);
@@ -255,9 +256,10 @@ namespace qlnhanvien // Đã sửa lại namespace khớp chính xác với file
                             // Đưa mặt hàng vào phiếu in
                             bill.AppendLine("- " + tenSP + " (x" + sl + "): " + tien.ToString("N0") + " đ");
 
-                            // Thêm chi tiết hóa đơn
+                            // Thêm chi tiết hóa đơn (ĐÃ FIX LỖI MACTHD TẠI ĐÂY)
                             var chiTiet = new ChiTietHoaDon
                             {
+                                MaCTHD = maDonHang + "_" + stt.ToString(), // <--- Vá lỗi ở đây
                                 MaHoaDon = maDonHang,
                                 MaSanPham = maSP,
                                 SoLuong = sl,
@@ -272,6 +274,7 @@ namespace qlnhanvien // Đã sửa lại namespace khớp chính xác với file
                             {
                                 sanPham.SoLuongTon -= sl;
                             }
+                            stt++; // Tăng số đếm
                         }
                     }
 

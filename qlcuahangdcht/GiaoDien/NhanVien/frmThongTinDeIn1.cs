@@ -1,6 +1,6 @@
 ﻿using qlcuahangdcht.Models;
 using System;
-using System.Data.Entity.Validation; // Thêm thư viện để dò lỗi EF
+using System.Data.Entity.Validation; // Thư viện dò lỗi EF
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -98,8 +98,8 @@ namespace qlcuahangdcht
             {
                 using (var db = new CuaHangDbContext())
                 {
-                    // Tự động sinh mã khách hàng (ví dụ: KH_3520)
-                    string maKHMoi = "KH_" + DateTime.Now.ToString("mmss");
+                    // Đã sửa lại cách sinh mã cho an toàn (Ví dụ KH1234) để không bị lỗi vượt quá độ dài cột MaKhachHang
+                    string maKHMoi = "KH" + DateTime.Now.ToString("mmss");
 
                     var khMoi = new KhachHang
                     {
@@ -119,7 +119,7 @@ namespace qlcuahangdcht
                 // Lưu xong thì quay lại bảng Khách Hàng
                 QuayVeTrangKhachHang();
             }
-            catch (DbEntityValidationException ex) // <-- Bẫy lỗi chi tiết EF
+            catch (DbEntityValidationException ex) // Bẫy lỗi chi tiết EF
             {
                 string errorDetails = "";
                 foreach (var entityValidationErrors in ex.EntityValidationErrors)
