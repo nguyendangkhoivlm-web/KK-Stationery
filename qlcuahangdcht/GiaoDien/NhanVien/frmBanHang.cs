@@ -15,38 +15,33 @@ namespace qlcuahangdcht
         public frmBanHang()
         {
             InitializeComponent();
-
-            // Kích hoạt nối dây tự động cho TẤT CẢ các nút bấm trên form
             NoiDaySuKienToanBo();
 
-            this.Load += FrmBanHang_Load;
-            this.VisibleChanged += FrmBanHang_VisibleChanged;
+            this.Load -= FrmBanHang_Load; this.Load += FrmBanHang_Load;
+            this.VisibleChanged -= FrmBanHang_VisibleChanged; this.VisibleChanged += FrmBanHang_VisibleChanged;
         }
 
         // =========================================================================
-        // HÀM ÉP NỐI DÂY SỰ KIỆN: ĐẢM BẢO 100% CÁC NÚT ĐỀU HOẠT ĐỘNG
+        // HÀM ÉP NỐI DÂY SỰ KIỆN CHỐNG TRÙNG LẶP (THÊM -= ĐỂ TRÁNH CHẠY 2 LẦN)
         // =========================================================================
         private void NoiDaySuKienToanBo()
         {
-            // 1. Nối dây ô tìm kiếm
             if (this.txtTimKiem != null)
             {
-                this.txtTimKiem.TextChanged += txtTimKiem_TextChanged;
-                this.txtTimKiem.Enter += txtTimKiem_Enter;
-                this.txtTimKiem.Leave += txtTimKiem_Leave;
+                this.txtTimKiem.TextChanged -= txtTimKiem_TextChanged; this.txtTimKiem.TextChanged += txtTimKiem_TextChanged;
+                this.txtTimKiem.Enter -= txtTimKiem_Enter; this.txtTimKiem.Enter += txtTimKiem_Enter;
+                this.txtTimKiem.Leave -= txtTimKiem_Leave; this.txtTimKiem.Leave += txtTimKiem_Leave;
             }
 
-            // 2. Nối dây các nút thao tác đơn hàng
-            if (this.btnHuyDon != null) this.btnHuyDon.Click += btnHuyDon_Click;
-            if (this.btnThanhToan != null) this.btnThanhToan.Click += btnThanhToan_Click;
+            if (this.btnHuyDon != null) { this.btnHuyDon.Click -= btnHuyDon_Click; this.btnHuyDon.Click += btnHuyDon_Click; }
+            if (this.btnThanhToan != null) { this.btnThanhToan.Click -= btnThanhToan_Click; this.btnThanhToan.Click += btnThanhToan_Click; }
 
-            // 3. Nối dây các nút lọc Danh Mục
-            if (this.btnDanhMucTatCa != null) this.btnDanhMucTatCa.Click += btnDanhMucTatCa_Click;
-            if (this.btnDanhMucBanChay != null) this.btnDanhMucBanChay.Click += btnDanhMucBanChay_Click;
-            if (this.btnDanhMucButChi != null) this.btnDanhMucButChi.Click += btnDanhMucButChi_Click;
-            if (this.btnDanhMucThuocTay != null) this.btnDanhMucThuocTay.Click += btnDanhMucThuocTay_Click;
-            if (this.btnDanhMucCompaMau != null) this.btnDanhMucCompaMau.Click += btnDanhMucCompaMau_Click;
-            if (this.btnDanhMucTapHocSinh != null) this.btnDanhMucTapHocSinh.Click += btnDanhMucTapHocSinh_Click;
+            if (this.btnDanhMucTatCa != null) { this.btnDanhMucTatCa.Click -= btnDanhMucTatCa_Click; this.btnDanhMucTatCa.Click += btnDanhMucTatCa_Click; }
+            if (this.btnDanhMucBanChay != null) { this.btnDanhMucBanChay.Click -= btnDanhMucBanChay_Click; this.btnDanhMucBanChay.Click += btnDanhMucBanChay_Click; }
+            if (this.btnDanhMucButChi != null) { this.btnDanhMucButChi.Click -= btnDanhMucButChi_Click; this.btnDanhMucButChi.Click += btnDanhMucButChi_Click; }
+            if (this.btnDanhMucThuocTay != null) { this.btnDanhMucThuocTay.Click -= btnDanhMucThuocTay_Click; this.btnDanhMucThuocTay.Click += btnDanhMucThuocTay_Click; }
+            if (this.btnDanhMucCompaMau != null) { this.btnDanhMucCompaMau.Click -= btnDanhMucCompaMau_Click; this.btnDanhMucCompaMau.Click += btnDanhMucCompaMau_Click; }
+            if (this.btnDanhMucTapHocSinh != null) { this.btnDanhMucTapHocSinh.Click -= btnDanhMucTapHocSinh_Click; this.btnDanhMucTapHocSinh.Click += btnDanhMucTapHocSinh_Click; }
         }
 
         private void FrmBanHang_Load(object sender, EventArgs e)
@@ -54,11 +49,9 @@ namespace qlcuahangdcht
             DoiMauNutDanhMuc(btnDanhMucTatCa);
             KhoiTaoBangGioHang();
 
-            // Lấy dữ liệu sản phẩm bằng Entity Framework
             TaoDanhSachSanPhamTuEF();
             LoadDanhSachSanPham("Tất cả sản phẩm", "");
 
-            // Cài đặt chữ mờ (placeholder) cho ô tìm kiếm
             if (txtTimKiem != null)
             {
                 txtTimKiem.Text = "Tìm kiếm sản phẩm theo tên hoặc mã...";
@@ -100,7 +93,6 @@ namespace qlcuahangdcht
             {
                 using (var db = new CuaHangDbContext())
                 {
-                    // Dùng LINQ kết hợp bảng SanPham và DanhMuc qua Entity Framework
                     var query = from sp in db.SanPhams
                                 join dm in db.DanhMucs on sp.MaDanhMuc equals dm.MaDanhMuc into dmGroup
                                 from dm in dmGroup.DefaultIfEmpty()

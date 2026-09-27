@@ -2,6 +2,7 @@
 using qlnhanvien;
 using System;
 using System.Data;
+using System.Data.Entity.Validation; // Đã thêm thư viện này để dò lỗi EF
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -215,9 +216,22 @@ namespace qlcuahangdcht
                     KhoLichSu.VuaThanhToanXong = true;
                 }
             }
+            catch (DbEntityValidationException ex) // <-- Đoạn bẫy lỗi EF chi tiết nằm ở đây
+            {
+                string errorDetails = "";
+                foreach (var entityValidationErrors in ex.EntityValidationErrors)
+                {
+                    foreach (var validationError in entityValidationErrors.ValidationErrors)
+                    {
+                        errorDetails += $"Cột bị lỗi: {validationError.PropertyName}\nNguyên nhân: {validationError.ErrorMessage}\n\n";
+                    }
+                }
+                MessageBox.Show("Chi tiết lỗi từ CSDL:\n\n" + errorDetails, "Bắt Được Lỗi EF", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return; // Dừng lại không in bill
+            }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi lưu hóa đơn bằng Entity Framework: " + ex.Message, "Lỗi EF", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi hệ thống khác: " + ex.Message, "Lỗi EF", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
