@@ -179,7 +179,7 @@ namespace qlcuahangdcht
             }
 
             // Lấy mã nhân viên từ cột MaNV của dòng đang được chọn (Nhớ đổi tên cột cho đúng)
-            string maNV = dgvDanhSachNv.CurrentRow.Cells["MaNV"].Value.ToString();
+            string maNV = dgvDanhSachNv.CurrentRow.Cells["MaNhanVien"].Value.ToString();
 
             // Mở form Sửa và truyền mã NV qua
             frmSuaNhanVien frmSua = new frmSuaNhanVien(maNV);

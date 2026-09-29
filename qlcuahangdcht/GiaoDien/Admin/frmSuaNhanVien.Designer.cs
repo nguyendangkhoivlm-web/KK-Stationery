@@ -229,6 +229,7 @@
             this.Controls.Add(this.pnlNen);
             this.Controls.Add(this.label1);
             this.Name = "frmSuaNhanVien";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmSuaNhanVien";
             this.Load += new System.EventHandler(this.frmSuaNhanVien_Load);
             this.pnlNen.ResumeLayout(false);

@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.panel5 = new System.Windows.Forms.Panel();
@@ -56,10 +56,6 @@
             this.label15 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
             this.dgvChiTietKPI = new System.Windows.Forms.DataGridView();
-            this.colNgayBan = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSoLuongBanRa = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTongThu = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTienLoi = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label13 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnXuatExcel = new System.Windows.Forms.Button();
@@ -71,6 +67,10 @@
             this.dtpDenNgay = new System.Windows.Forms.DateTimePicker();
             this.dtpTuNgay = new System.Windows.Forms.DateTimePicker();
             this.panel12 = new System.Windows.Forms.Panel();
+            this.colNgayBan = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSoLuongBanRa = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTongThu = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTienLoi = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -343,17 +343,20 @@
             // 
             // chartDanhMuc
             // 
-            chartArea5.Name = "ChartArea1";
-            this.chartDanhMuc.ChartAreas.Add(chartArea5);
-            legend5.Name = "Legend1";
-            this.chartDanhMuc.Legends.Add(legend5);
+            this.chartDanhMuc.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea1.Name = "ChartArea1";
+            this.chartDanhMuc.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chartDanhMuc.Legends.Add(legend1);
             this.chartDanhMuc.Location = new System.Drawing.Point(4, 53);
             this.chartDanhMuc.Name = "chartDanhMuc";
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
-            series5.Legend = "Legend1";
-            series5.Name = "Series1";
-            this.chartDanhMuc.Series.Add(series5);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chartDanhMuc.Series.Add(series1);
             this.chartDanhMuc.Size = new System.Drawing.Size(329, 325);
             this.chartDanhMuc.TabIndex = 1;
             this.chartDanhMuc.Text = "chart1";
@@ -386,14 +389,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvChiTietKPI.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvChiTietKPI.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.WhiteSmoke;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvChiTietKPI.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvChiTietKPI.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvChiTietKPI.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvChiTietKPI.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colNgayBan,
@@ -408,30 +411,6 @@
             this.dgvChiTietKPI.RowTemplate.Height = 24;
             this.dgvChiTietKPI.Size = new System.Drawing.Size(781, 312);
             this.dgvChiTietKPI.TabIndex = 1;
-            // 
-            // colNgayBan
-            // 
-            this.colNgayBan.HeaderText = "Ngày bán";
-            this.colNgayBan.MinimumWidth = 6;
-            this.colNgayBan.Name = "colNgayBan";
-            // 
-            // colSoLuongBanRa
-            // 
-            this.colSoLuongBanRa.HeaderText = "Số lượng bán ra";
-            this.colSoLuongBanRa.MinimumWidth = 6;
-            this.colSoLuongBanRa.Name = "colSoLuongBanRa";
-            // 
-            // colTongThu
-            // 
-            this.colTongThu.HeaderText = "Tổng thu (đ)";
-            this.colTongThu.MinimumWidth = 6;
-            this.colTongThu.Name = "colTongThu";
-            // 
-            // colTienLoi
-            // 
-            this.colTienLoi.HeaderText = "Tiền lời (đ)";
-            this.colTienLoi.MinimumWidth = 6;
-            this.colTienLoi.Name = "colTienLoi";
             // 
             // label13
             // 
@@ -554,6 +533,34 @@
             this.panel12.Size = new System.Drawing.Size(299, 126);
             this.panel12.TabIndex = 32;
             // 
+            // colNgayBan
+            // 
+            this.colNgayBan.DataPropertyName = "Ngày_Bán";
+            this.colNgayBan.HeaderText = "Ngày bán";
+            this.colNgayBan.MinimumWidth = 6;
+            this.colNgayBan.Name = "colNgayBan";
+            // 
+            // colSoLuongBanRa
+            // 
+            this.colSoLuongBanRa.DataPropertyName = "Số_Lượng_Bán";
+            this.colSoLuongBanRa.HeaderText = "Số lượng bán ra";
+            this.colSoLuongBanRa.MinimumWidth = 6;
+            this.colSoLuongBanRa.Name = "colSoLuongBanRa";
+            // 
+            // colTongThu
+            // 
+            this.colTongThu.DataPropertyName = "Tổng_Thu";
+            this.colTongThu.HeaderText = "Tổng thu (đ)";
+            this.colTongThu.MinimumWidth = 6;
+            this.colTongThu.Name = "colTongThu";
+            // 
+            // colTienLoi
+            // 
+            this.colTienLoi.DataPropertyName = "Tổng_Thu";
+            this.colTienLoi.HeaderText = "Tiền lời (đ)";
+            this.colTienLoi.MinimumWidth = 6;
+            this.colTienLoi.Name = "colTienLoi";
+            // 
             // UC_BaoCao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -614,10 +621,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.DataGridView dgvChiTietKPI;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colNgayBan;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colSoLuongBanRa;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colTongThu;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colTienLoi;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Label label15;
@@ -627,5 +630,9 @@
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartDanhMuc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNgayBan;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSoLuongBanRa;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTongThu;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTienLoi;
     }
 }

@@ -26,17 +26,21 @@ namespace qlcuahangdcht
                 // Khóa tính năng tự động sinh thêm cột rác
                 dgvDanhSachSP.AutoGenerateColumns = false;
 
-                var danhSach = db.SanPhams.Select(sp => new
-                {
-                    MaSanPham = sp.MaSanPham,
-                    TenSanPham = sp.TenSanPham,
-                    DonGia = sp.DonGia,
-                    SoLuongTon = sp.SoLuongTon,
-                    DanhMuc = sp.MaDanhMuc,
-                    TrangThai = (sp.SoLuongTon > 0) ? "Đang kinh doanh" : "Hết hàng"
-                }).ToList();
+                // JOIN bảng Sản Phẩm với bảng Danh Mục để lấy tên thực tế
+                var danhSach = (from sp in db.SanPhams
+                                join dm in db.DanhMucs on sp.MaDanhMuc equals dm.MaDanhMuc
+                                select new
+                                {
+                                    MaSanPham = sp.MaSanPham,
+                                    TenSanPham = sp.TenSanPham,
+                                    DonGia = sp.DonGia,
+                                    SoLuongTon = sp.SoLuongTon,
+                                    // Đặt tên biến chính xác là TenDanhMuc để khớp với DataPropertyName trên lưới
+                                    TenDanhMuc = dm.TenDanhMuc,
+                                    TrangThai = (sp.SoLuongTon > 0) ? "Đang kinh doanh" : "Hết hàng"
+                                }).ToList();
 
-                // Đổ dữ liệu vào đúng các cột đã thiết lập DataPropertyName
+                // Đổ dữ liệu vào đúng các cột đã thiết lập
                 dgvDanhSachSP.DataSource = danhSach;
             }
         }
@@ -153,5 +157,40 @@ namespace qlcuahangdcht
             LoadData();
         }
 
+        private void txtTimKiemSp_TextChanged(object sender, EventArgs e)
+        {
+            string keyword = txtTimKiemSp.Text.Trim().ToLower(); // Đã sửa thành p thường
+
+            using (var db = new CuaHangDbContext())
+            {
+                var query = db.SanPhams.AsQueryable();
+
+                if (!string.IsNullOrEmpty(keyword))
+                {
+                    query = query.Where(sp => sp.MaSanPham.ToLower().Contains(keyword) ||
+                                              sp.TenSanPham.ToLower().Contains(keyword));
+                }
+
+                var danhSachTimKiem = query.Select(sp => new
+                {
+                    MaSP = sp.MaSanPham,
+                    TenSanPham = sp.TenSanPham,
+                    DanhMuc = sp.DanhMuc.TenDanhMuc,
+                    DonGia = sp.DonGia,
+                    SoLuongTon = sp.SoLuongTon
+                    // Đã xóa dòng TrangThai vì CSDL không có cột này
+                }).ToList();
+           
+               
+                dgvDanhSachSP.DataSource = danhSachTimKiem;
+            }
+
+            /*
+            if (danhSachTimKiem.Count == 0)
+            {
+                MessageBox.Show("Không tìm thấy sản phẩm nào phù hợp!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            */
+        }
+        }
     }
-}

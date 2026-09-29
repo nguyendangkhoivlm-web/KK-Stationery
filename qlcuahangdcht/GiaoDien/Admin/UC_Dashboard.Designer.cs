@@ -28,14 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pnlTonKho = new System.Windows.Forms.Panel();
-            this.lblSoLuongTon = new System.Windows.Forms.Label();
+            this.lblTonKho = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
             this.lblTieuDeTonKho = new System.Windows.Forms.Label();
             this.pnlSpBanChay = new System.Windows.Forms.Panel();
@@ -47,25 +47,25 @@
             this.panel6 = new System.Windows.Forms.Panel();
             this.lblTieuDeDonHang = new System.Windows.Forms.Label();
             this.pnlDoanhThu = new System.Windows.Forms.Panel();
-            this.lblTongDoanhThu = new System.Windows.Forms.Label();
+            this.lblDoanhThu = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.lblTieuDeDoanhThu = new System.Windows.Forms.Label();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.pnlTopProducts = new System.Windows.Forms.Panel();
             this.panel11 = new System.Windows.Forms.Panel();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
+            this.lblGiaTop3 = new System.Windows.Forms.Label();
+            this.lblTenTop3 = new System.Windows.Forms.Label();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.panel10 = new System.Windows.Forms.Panel();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
+            this.lblGiaTop2 = new System.Windows.Forms.Label();
+            this.lblTenTop2 = new System.Windows.Forms.Label();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.panel9 = new System.Windows.Forms.Panel();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
+            this.lblGiaTop1 = new System.Windows.Forms.Label();
+            this.lblTenTop1 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label10 = new System.Windows.Forms.Label();
             this.pnlOrderList = new System.Windows.Forms.Panel();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tableLayoutPanel1.SuspendLayout();
             this.pnlTonKho.SuspendLayout();
@@ -79,12 +79,12 @@
             this.tableLayoutPanel2.SuspendLayout();
             this.pnlTopProducts.SuspendLayout();
             this.panel11.SuspendLayout();
-            this.panel10.SuspendLayout();
-            this.panel9.SuspendLayout();
-            this.pnlOrderList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            this.panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.panel9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.pnlOrderList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -112,7 +112,7 @@
             // 
             this.pnlTonKho.BackColor = System.Drawing.Color.White;
             this.pnlTonKho.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlTonKho.Controls.Add(this.lblSoLuongTon);
+            this.pnlTonKho.Controls.Add(this.lblTonKho);
             this.pnlTonKho.Controls.Add(this.panel8);
             this.pnlTonKho.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlTonKho.Location = new System.Drawing.Point(904, 10);
@@ -121,18 +121,18 @@
             this.pnlTonKho.Size = new System.Drawing.Size(278, 163);
             this.pnlTonKho.TabIndex = 10;
             // 
-            // lblSoLuongTon
+            // lblTonKho
             // 
-            this.lblSoLuongTon.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lblTonKho.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblSoLuongTon.AutoSize = true;
-            this.lblSoLuongTon.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSoLuongTon.Location = new System.Drawing.Point(121, 95);
-            this.lblSoLuongTon.Name = "lblSoLuongTon";
-            this.lblSoLuongTon.Size = new System.Drawing.Size(36, 25);
-            this.lblSoLuongTon.TabIndex = 2;
-            this.lblSoLuongTon.Text = "36";
+            this.lblTonKho.AutoSize = true;
+            this.lblTonKho.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTonKho.Location = new System.Drawing.Point(121, 95);
+            this.lblTonKho.Name = "lblTonKho";
+            this.lblTonKho.Size = new System.Drawing.Size(36, 25);
+            this.lblTonKho.TabIndex = 2;
+            this.lblTonKho.Text = "36";
             // 
             // panel8
             // 
@@ -259,7 +259,7 @@
             // 
             this.pnlDoanhThu.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.pnlDoanhThu.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlDoanhThu.Controls.Add(this.lblTongDoanhThu);
+            this.pnlDoanhThu.Controls.Add(this.lblDoanhThu);
             this.pnlDoanhThu.Controls.Add(this.panel5);
             this.pnlDoanhThu.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlDoanhThu.Location = new System.Drawing.Point(10, 10);
@@ -268,19 +268,19 @@
             this.pnlDoanhThu.Size = new System.Drawing.Size(278, 163);
             this.pnlDoanhThu.TabIndex = 7;
             // 
-            // lblTongDoanhThu
+            // lblDoanhThu
             // 
-            this.lblTongDoanhThu.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lblDoanhThu.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblTongDoanhThu.AutoSize = true;
-            this.lblTongDoanhThu.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTongDoanhThu.ForeColor = System.Drawing.Color.White;
-            this.lblTongDoanhThu.Location = new System.Drawing.Point(56, 96);
-            this.lblTongDoanhThu.Name = "lblTongDoanhThu";
-            this.lblTongDoanhThu.Size = new System.Drawing.Size(168, 25);
-            this.lblTongDoanhThu.TabIndex = 1;
-            this.lblTongDoanhThu.Text = "4.500.000.000 đ";
+            this.lblDoanhThu.AutoSize = true;
+            this.lblDoanhThu.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDoanhThu.ForeColor = System.Drawing.Color.White;
+            this.lblDoanhThu.Location = new System.Drawing.Point(56, 96);
+            this.lblDoanhThu.Name = "lblDoanhThu";
+            this.lblDoanhThu.Size = new System.Drawing.Size(168, 25);
+            this.lblDoanhThu.TabIndex = 1;
+            this.lblDoanhThu.Text = "4.500.000.000 đ";
             // 
             // panel5
             // 
@@ -340,33 +340,43 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel11.BackColor = System.Drawing.Color.White;
-            this.panel11.Controls.Add(this.label15);
-            this.panel11.Controls.Add(this.label16);
+            this.panel11.Controls.Add(this.lblGiaTop3);
+            this.panel11.Controls.Add(this.lblTenTop3);
             this.panel11.Controls.Add(this.pictureBox3);
             this.panel11.Location = new System.Drawing.Point(29, 341);
             this.panel11.Name = "panel11";
             this.panel11.Size = new System.Drawing.Size(277, 113);
             this.panel11.TabIndex = 4;
             // 
-            // label15
+            // lblGiaTop3
             // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(108, 62);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(81, 20);
-            this.label15.TabIndex = 3;
-            this.label15.Text = "450.000 đ";
+            this.lblGiaTop3.AutoSize = true;
+            this.lblGiaTop3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGiaTop3.Location = new System.Drawing.Point(108, 62);
+            this.lblGiaTop3.Name = "lblGiaTop3";
+            this.lblGiaTop3.Size = new System.Drawing.Size(81, 20);
+            this.lblGiaTop3.TabIndex = 3;
+            this.lblGiaTop3.Text = "450.000 đ";
             // 
-            // label16
+            // lblTenTop3
             // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(104, 34);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(158, 20);
-            this.label16.TabIndex = 2;
-            this.label16.Text = "Bút bi Thiên Long";
+            this.lblTenTop3.AutoSize = true;
+            this.lblTenTop3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTenTop3.Location = new System.Drawing.Point(104, 34);
+            this.lblTenTop3.Name = "lblTenTop3";
+            this.lblTenTop3.Size = new System.Drawing.Size(158, 20);
+            this.lblTenTop3.TabIndex = 2;
+            this.lblTenTop3.Text = "Bút bi Thiên Long";
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = global::qlcuahangdcht.Properties.Resources.butbixanh;
+            this.pictureBox3.Location = new System.Drawing.Point(13, 15);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(85, 85);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox3.TabIndex = 1;
+            this.pictureBox3.TabStop = false;
             // 
             // panel10
             // 
@@ -374,33 +384,43 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel10.BackColor = System.Drawing.Color.White;
-            this.panel10.Controls.Add(this.label13);
-            this.panel10.Controls.Add(this.label14);
+            this.panel10.Controls.Add(this.lblGiaTop2);
+            this.panel10.Controls.Add(this.lblTenTop2);
             this.panel10.Controls.Add(this.pictureBox2);
             this.panel10.Location = new System.Drawing.Point(29, 202);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(277, 113);
             this.panel10.TabIndex = 3;
             // 
-            // label13
+            // lblGiaTop2
             // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(108, 59);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(81, 20);
-            this.label13.TabIndex = 3;
-            this.label13.Text = "450.000 đ";
+            this.lblGiaTop2.AutoSize = true;
+            this.lblGiaTop2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGiaTop2.Location = new System.Drawing.Point(108, 59);
+            this.lblGiaTop2.Name = "lblGiaTop2";
+            this.lblGiaTop2.Size = new System.Drawing.Size(81, 20);
+            this.lblGiaTop2.TabIndex = 3;
+            this.lblGiaTop2.Text = "450.000 đ";
             // 
-            // label14
+            // lblTenTop2
             // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(104, 31);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(158, 20);
-            this.label14.TabIndex = 2;
-            this.label14.Text = "Bút bi Thiên Long";
+            this.lblTenTop2.AutoSize = true;
+            this.lblTenTop2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTenTop2.Location = new System.Drawing.Point(104, 31);
+            this.lblTenTop2.Name = "lblTenTop2";
+            this.lblTenTop2.Size = new System.Drawing.Size(158, 20);
+            this.lblTenTop2.TabIndex = 2;
+            this.lblTenTop2.Text = "Bút bi Thiên Long";
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::qlcuahangdcht.Properties.Resources.butbixanh;
+            this.pictureBox2.Location = new System.Drawing.Point(13, 12);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(85, 85);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 1;
+            this.pictureBox2.TabStop = false;
             // 
             // panel9
             // 
@@ -408,33 +428,43 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel9.BackColor = System.Drawing.Color.White;
-            this.panel9.Controls.Add(this.label12);
-            this.panel9.Controls.Add(this.label11);
+            this.panel9.Controls.Add(this.lblGiaTop1);
+            this.panel9.Controls.Add(this.lblTenTop1);
             this.panel9.Controls.Add(this.pictureBox1);
             this.panel9.Location = new System.Drawing.Point(29, 65);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(277, 113);
             this.panel9.TabIndex = 2;
             // 
-            // label12
+            // lblGiaTop1
             // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(108, 59);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(81, 20);
-            this.label12.TabIndex = 3;
-            this.label12.Text = "450.000 đ";
+            this.lblGiaTop1.AutoSize = true;
+            this.lblGiaTop1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGiaTop1.Location = new System.Drawing.Point(108, 59);
+            this.lblGiaTop1.Name = "lblGiaTop1";
+            this.lblGiaTop1.Size = new System.Drawing.Size(81, 20);
+            this.lblGiaTop1.TabIndex = 3;
+            this.lblGiaTop1.Text = "450.000 đ";
             // 
-            // label11
+            // lblTenTop1
             // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(104, 31);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(158, 20);
-            this.label11.TabIndex = 2;
-            this.label11.Text = "Bút bi Thiên Long";
+            this.lblTenTop1.AutoSize = true;
+            this.lblTenTop1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTenTop1.Location = new System.Drawing.Point(104, 31);
+            this.lblTenTop1.Name = "lblTenTop1";
+            this.lblTenTop1.Size = new System.Drawing.Size(158, 20);
+            this.lblTenTop1.TabIndex = 2;
+            this.lblTenTop1.Text = "Bút bi Thiên Long";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::qlcuahangdcht.Properties.Resources.butbixanh;
+            this.pictureBox1.Location = new System.Drawing.Point(13, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(85, 85);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
             // 
             // label10
             // 
@@ -458,73 +488,43 @@
             this.pnlOrderList.Size = new System.Drawing.Size(814, 532);
             this.pnlOrderList.TabIndex = 11;
             // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Image = global::qlcuahangdcht.Properties.Resources.butbixanh;
-            this.pictureBox3.Location = new System.Drawing.Point(13, 15);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(85, 85);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox3.TabIndex = 1;
-            this.pictureBox3.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::qlcuahangdcht.Properties.Resources.butbixanh;
-            this.pictureBox2.Location = new System.Drawing.Point(13, 12);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(85, 85);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 1;
-            this.pictureBox2.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::qlcuahangdcht.Properties.Resources.butbixanh;
-            this.pictureBox1.Location = new System.Drawing.Point(13, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(85, 85);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
-            // 
             // chart1
             // 
             this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea2.AxisX.Interval = 1D;
-            chartArea2.AxisX.IsMarginVisible = false;
-            chartArea2.AxisX.Minimum = 1D;
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            chartArea1.AxisX.Interval = 1D;
+            chartArea1.AxisX.IsMarginVisible = false;
+            chartArea1.AxisX.Minimum = 1D;
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(14, 18);
             this.chart1.Name = "chart1";
-            series3.BorderColor = System.Drawing.Color.SteelBlue;
-            series3.BorderWidth = 2;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.SplineArea;
-            series3.Color = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(65)))), ((int)(((byte)(140)))), ((int)(((byte)(240)))));
-            series3.Legend = "Legend1";
-            series3.Name = "Doanh thu";
-            series4.BorderColor = System.Drawing.Color.DodgerBlue;
-            series4.BorderWidth = 2;
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.SplineArea;
-            series4.Color = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(130)))), ((int)(((byte)(190)))), ((int)(((byte)(255)))));
-            series4.Legend = "Legend1";
-            series4.Name = "Lợi nhuận";
-            this.chart1.Series.Add(series3);
-            this.chart1.Series.Add(series4);
+            series1.BorderColor = System.Drawing.Color.SteelBlue;
+            series1.BorderWidth = 2;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.SplineArea;
+            series1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(65)))), ((int)(((byte)(140)))), ((int)(((byte)(240)))));
+            series1.Legend = "Legend1";
+            series1.Name = "Doanh thu";
+            series2.BorderColor = System.Drawing.Color.DodgerBlue;
+            series2.BorderWidth = 2;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.SplineArea;
+            series2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(130)))), ((int)(((byte)(190)))), ((int)(((byte)(255)))));
+            series2.Legend = "Legend1";
+            series2.Name = "Lợi nhuận";
+            this.chart1.Series.Add(series1);
+            this.chart1.Series.Add(series2);
             this.chart1.Size = new System.Drawing.Size(786, 497);
             this.chart1.TabIndex = 1;
             this.chart1.Text = "chart1";
-            title2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            title2.Name = "Title1";
-            title2.Text = "Biến động doanh thu 7 ngày gần đây";
-            this.chart1.Titles.Add(title2);
+            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title1.Name = "Title1";
+            title1.Text = "Biến động doanh thu 7 ngày gần đây";
+            this.chart1.Titles.Add(title1);
             // 
             // UC_Dashboard
             // 
@@ -558,14 +558,14 @@
             this.pnlTopProducts.PerformLayout();
             this.panel11.ResumeLayout(false);
             this.panel11.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.panel10.ResumeLayout(false);
             this.panel10.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
-            this.pnlOrderList.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.pnlOrderList.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
 
@@ -575,7 +575,7 @@
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel pnlDoanhThu;
-        private System.Windows.Forms.Label lblTongDoanhThu;
+        private System.Windows.Forms.Label lblDoanhThu;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label lblTieuDeDoanhThu;
         private System.Windows.Forms.Panel pnlDonHang;
@@ -587,23 +587,23 @@
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Label lblTieuDeSpBanChay;
         private System.Windows.Forms.Panel pnlTonKho;
-        private System.Windows.Forms.Label lblSoLuongTon;
+        private System.Windows.Forms.Label lblTonKho;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Label lblTieuDeTonKho;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Panel pnlOrderList;
         private System.Windows.Forms.Panel pnlTopProducts;
         private System.Windows.Forms.Panel panel11;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label lblGiaTop3;
+        private System.Windows.Forms.Label lblTenTop3;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Panel panel10;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label lblGiaTop2;
+        private System.Windows.Forms.Label lblTenTop2;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Panel panel9;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label lblGiaTop1;
+        private System.Windows.Forms.Label lblTenTop1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;

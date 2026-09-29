@@ -26,6 +26,9 @@ namespace qlcuahangdcht
 
         private void UC_BaoCao_Load(object sender, EventArgs e)
         {
+
+            dgvChiTietKPI.AutoGenerateColumns = false;
+
             // Set ngày mặc định: Từ đầu tháng đến ngày hiện tại
             dtpTuNgay.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             dtpDenNgay.Value = DateTime.Now;

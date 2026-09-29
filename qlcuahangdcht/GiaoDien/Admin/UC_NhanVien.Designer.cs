@@ -30,6 +30,7 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnSuaNhanVien = new System.Windows.Forms.Button();
             this.btnCapTaiKhoan = new System.Windows.Forms.Button();
             this.btnThemNv = new System.Windows.Forms.Button();
             this.btnXoaNv = new System.Windows.Forms.Button();
@@ -48,7 +49,6 @@
             this.cboLocChucVu = new System.Windows.Forms.ComboBox();
             this.txtTimKiemNV = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.btnSuaNhanVien = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDanhSachNv)).BeginInit();
@@ -67,6 +67,23 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(764, 115);
             this.panel2.TabIndex = 2;
+            // 
+            // btnSuaNhanVien
+            // 
+            this.btnSuaNhanVien.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSuaNhanVien.AutoSize = true;
+            this.btnSuaNhanVien.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnSuaNhanVien.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSuaNhanVien.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSuaNhanVien.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSuaNhanVien.ForeColor = System.Drawing.Color.White;
+            this.btnSuaNhanVien.Location = new System.Drawing.Point(207, 79);
+            this.btnSuaNhanVien.Name = "btnSuaNhanVien";
+            this.btnSuaNhanVien.Size = new System.Drawing.Size(187, 34);
+            this.btnSuaNhanVien.TabIndex = 12;
+            this.btnSuaNhanVien.Text = "Sửa In4 NV";
+            this.btnSuaNhanVien.UseVisualStyleBackColor = false;
+            this.btnSuaNhanVien.Click += new System.EventHandler(this.btnSuaNhanVien_Click);
             // 
             // btnCapTaiKhoan
             // 
@@ -276,23 +293,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1192, 135);
             this.tableLayoutPanel1.TabIndex = 10;
-            // 
-            // btnSuaNhanVien
-            // 
-            this.btnSuaNhanVien.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSuaNhanVien.AutoSize = true;
-            this.btnSuaNhanVien.BackColor = System.Drawing.Color.SteelBlue;
-            this.btnSuaNhanVien.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSuaNhanVien.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSuaNhanVien.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSuaNhanVien.ForeColor = System.Drawing.Color.White;
-            this.btnSuaNhanVien.Location = new System.Drawing.Point(207, 79);
-            this.btnSuaNhanVien.Name = "btnSuaNhanVien";
-            this.btnSuaNhanVien.Size = new System.Drawing.Size(187, 34);
-            this.btnSuaNhanVien.TabIndex = 12;
-            this.btnSuaNhanVien.Text = "+ Thêm nhân viên";
-            this.btnSuaNhanVien.UseVisualStyleBackColor = false;
-            this.btnSuaNhanVien.Click += new System.EventHandler(this.btnSuaNhanVien_Click);
             // 
             // UC_NhanVien
             // 

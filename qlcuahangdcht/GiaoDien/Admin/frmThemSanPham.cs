@@ -117,5 +117,35 @@ namespace qlcuahangdcht.GiaoDien.Admin
                 }
             }
         }
+
+
+        // Ông khai báo thêm 1 biến toàn cục ở đầu Form để lưu đường dẫn ảnh
+        // Lát nữa ở nút "Lưu", ông sẽ gọi biến này ra để lưu tên file ảnh xuống Database
+        private string duongDanAnh = "";
+        private void btnChonAnh_Click(object sender, EventArgs e)
+        {
+            // Tạo hộp thoại chọn file
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                // Lọc ra, chỉ cho phép người dùng chọn các file hình ảnh
+                ofd.Filter = "Hình ảnh (*.jpg, *.jpeg, *.png, *.bmp)|*.jpg;*.jpeg;*.png;*.bmp";
+                ofd.Title = "Chọn hình ảnh cho sản phẩm";
+
+                // Mở hộp thoại lên, nếu người dùng chọn file và bấm OK thì xử lý tiếp
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    // Lấy đường dẫn file vừa chọn gán vào biến
+                    duongDanAnh = ofd.FileName;
+
+                    // Hiển thị hình ảnh lên PictureBox 
+                    // (LƯU Ý: Tui đang giả sử cái khung hình trống của ông tên là picHinhAnh, 
+                    // nếu ông đặt tên khác thì sửa lại chỗ này nha)
+                    picHinhAnh.Image = Image.FromFile(duongDanAnh);
+
+                    // Căn chỉnh cho hình ảnh thu/phóng tự động vừa khít cái khung vuông mà không bị méo
+                    picHinhAnh.SizeMode = PictureBoxSizeMode.Zoom;
+                }
+            }
+        }
     }
 }

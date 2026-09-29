@@ -99,6 +99,7 @@
             this.txtTimKiemSp.Size = new System.Drawing.Size(285, 28);
             this.txtTimKiemSp.TabIndex = 3;
             this.txtTimKiemSp.Text = "Tìm kiếm sản phẩm...";
+            this.txtTimKiemSp.TextChanged += new System.EventHandler(this.txtTimKiemSp_TextChanged);
             this.txtTimKiemSp.Enter += new System.EventHandler(this.txtTimKiemSp_Enter);
             this.txtTimKiemSp.Leave += new System.EventHandler(this.txtTimKiemSp_Leave);
             // 
@@ -149,6 +150,7 @@
             // 
             // MaSanPham
             // 
+            this.MaSanPham.DataPropertyName = "MaSanPham";
             this.MaSanPham.FillWeight = 80F;
             this.MaSanPham.HeaderText = "Mã SP";
             this.MaSanPham.MinimumWidth = 6;
@@ -156,12 +158,14 @@
             // 
             // TenSanPham
             // 
+            this.TenSanPham.DataPropertyName = "TenSanPham";
             this.TenSanPham.HeaderText = "Tên sản phẩm";
             this.TenSanPham.MinimumWidth = 6;
             this.TenSanPham.Name = "TenSanPham";
             // 
             // TenDanhMuc
             // 
+            this.TenDanhMuc.DataPropertyName = "TenDanhMuc";
             this.TenDanhMuc.FillWeight = 85F;
             this.TenDanhMuc.HeaderText = "Danh mục";
             this.TenDanhMuc.MinimumWidth = 6;
@@ -169,12 +173,14 @@
             // 
             // DongGia
             // 
+            this.DongGia.DataPropertyName = "DonGia";
             this.DongGia.HeaderText = "Đơn giá";
             this.DongGia.MinimumWidth = 6;
             this.DongGia.Name = "DongGia";
             // 
             // SoLuongTon
             // 
+            this.SoLuongTon.DataPropertyName = "SoLuongTon";
             this.SoLuongTon.FillWeight = 70F;
             this.SoLuongTon.HeaderText = "Số lượng tồn";
             this.SoLuongTon.MinimumWidth = 6;
@@ -182,6 +188,7 @@
             // 
             // TrangThai
             // 
+            this.TrangThai.DataPropertyName = "TrangThai";
             this.TrangThai.FillWeight = 80F;
             this.TrangThai.HeaderText = "Trạng thái";
             this.TrangThai.MinimumWidth = 6;
@@ -275,15 +282,15 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.DataGridView dgvDanhSachSP;
+        private System.Windows.Forms.Button btnCapNhatSP;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button btnThemSP;
         private System.Windows.Forms.DataGridViewTextBoxColumn MaSanPham;
         private System.Windows.Forms.DataGridViewTextBoxColumn TenSanPham;
         private System.Windows.Forms.DataGridViewTextBoxColumn TenDanhMuc;
         private System.Windows.Forms.DataGridViewTextBoxColumn DongGia;
         private System.Windows.Forms.DataGridViewTextBoxColumn SoLuongTon;
         private System.Windows.Forms.DataGridViewTextBoxColumn TrangThai;
-        private System.Windows.Forms.Button btnCapNhatSP;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button btnThemSP;
     }
 }

@@ -148,5 +148,41 @@ namespace qlcuahangdcht.GiaoDien.Admin
             txtHoTenAdmin.Clear();
             txtMatKhauAdmin.Clear();
         }
+
+        private void UC_CaiDat_Load(object sender, EventArgs e)
+        {
+            // Giả sử class PhienDangNhap của ông có lưu MaNhanVien lúc login thành công
+            string maNVDangNhap = PhienDangNhap.MaNhanVien;
+
+            // Nếu có người đang đăng nhập thì mới load dữ liệu
+            if (!string.IsNullOrEmpty(maNVDangNhap))
+            {
+                using (var db = new CuaHangDbContext())
+                {
+                    // Tìm nhân viên trong Database theo Mã nhân viên đang lưu ở phiên đăng nhập
+                    var nhanVien = db.NhanViens.Find(maNVDangNhap);
+
+                    if (nhanVien != null)
+                    {
+                        // Đổ dữ liệu từ Database lên giao diện
+                        txtHoTen.Text = nhanVien.HoTen;
+
+                        // Nếu bảng NhanVien của ông có mấy cột này thì gọi ra, 
+                        // không có thì ông phải vào class NhanVien.cs thêm thuộc tính vào nhé
+                        txtSDT.Text = nhanVien.SDT;
+                        txtEmail.Text = nhanVien.Email;
+                        txtDiaChi.Text = nhanVien.DiaChi;
+                    }
+
+
+                    var taiKhoan = db.TaiKhoans.FirstOrDefault(tk => tk.MaNhanVien == maNVDangNhap);
+                    if (taiKhoan != null)
+                    {
+                        // Giả sử ông đặt tên TextBox mật khẩu cũ là txtMatKhauCu
+                        txtMatKhauCu.Text = taiKhoan.MatKhau;
+                    }
+                }
+            }
+        }
     }
 }

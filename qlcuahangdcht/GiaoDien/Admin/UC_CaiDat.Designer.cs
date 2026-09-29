@@ -487,6 +487,7 @@
             this.Controls.Add(this.pnlBackground);
             this.Name = "UC_CaiDat";
             this.Size = new System.Drawing.Size(1192, 735);
+            this.Load += new System.EventHandler(this.UC_CaiDat_Load);
             this.pnlBackground.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.grpTaoAdmin.ResumeLayout(false);
