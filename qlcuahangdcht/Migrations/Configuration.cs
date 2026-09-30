@@ -39,7 +39,7 @@
             context.NhanViens.AddOrUpdate(
                 n => n.MaNhanVien,
                 new NhanVien { MaNhanVien = "NV01", HoTen = "Nguyễn Đăng Khôi" }, // Dành cho Admin
-                new NhanVien { MaNhanVien = "NV02", HoTen = "Nguyễn viên Lộc" }     // Dành cho Nhân viên bán hàng
+                new NhanVien { MaNhanVien = "NV02", HoTen = "Nguyễn Văn Lộc" }     // Dành cho Nhân viên bán hàng
             );
 
             // 4. Gieo dữ liệu BẢNG TÀI KHOẢN (Liên kết với Mã nhân viên ở trên)
