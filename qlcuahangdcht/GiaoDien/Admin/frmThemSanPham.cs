@@ -138,8 +138,6 @@ namespace qlcuahangdcht.GiaoDien.Admin
                     duongDanAnh = ofd.FileName;
 
                     // Hiển thị hình ảnh lên PictureBox 
-                    // (LƯU Ý: Tui đang giả sử cái khung hình trống của ông tên là picHinhAnh, 
-                    // nếu ông đặt tên khác thì sửa lại chỗ này nha)
                     picHinhAnh.Image = Image.FromFile(duongDanAnh);
 
                     // Căn chỉnh cho hình ảnh thu/phóng tự động vừa khít cái khung vuông mà không bị méo

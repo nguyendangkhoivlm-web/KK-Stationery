@@ -18,7 +18,8 @@ namespace qlcuahangdcht
         {
             InitializeComponent();
 
-            btnThem.Click += (s, e) => {
+            btnThem.Click += (s, e) =>
+            {
                 if (ThemClick != null)
                 {
                     ThemClick(this, EventArgs.Empty);
@@ -28,15 +29,18 @@ namespace qlcuahangdcht
 
         public void HienThi(string ma, string ten, decimal gia, int ton, string duongDanAnh)
         {
+            // 1. Gán dữ liệu vào Properties
             MaSP = ma;
             TenSP = ten;
             DonGia = gia;
             SoLuongTon = ton;
 
+            // 2. Hiển thị lên Label
             lblTenSanPham.Text = ten;
             lblGiaTien.Text = gia.ToString("N0") + " đ";
             lblTonKho.Text = "Kho: " + ton;
 
+            // 3. Xử lý hiển thị trạng thái nút Thêm và Tồn kho
             if (ton <= 0)
             {
                 lblTonKho.Text = "Hết hàng";
@@ -45,63 +49,70 @@ namespace qlcuahangdcht
             }
             else
             {
-                lblTonKho.ForeColor = Color.FromArgb(100, 116, 139);
+                lblTonKho.ForeColor = Color.FromArgb(100, 116, 139); // Màu xám nhẹ
                 btnThem.Enabled = true;
             }
 
             // ==============================================================
-            // LOGIC LOAD HÌNH ẢNH (Ưu tiên ảnh Admin đã cấu hình)
+            // 4. LOGIC LOAD HÌNH ẢNH "BẤT TỬ" (Quét đa luồng)
             // ==============================================================
             try
             {
-                // Thư mục mặc định chứa ảnh của hệ thống
-                string thuMucAnh = Path.Combine(Application.StartupPath, "Resources");
-                if (!Directory.Exists(thuMucAnh)) Directory.CreateDirectory(thuMucAnh);
+                string thuMucDebug = Path.Combine(Application.StartupPath, "Resources");
+                string thuMucGoc = Path.Combine(Application.StartupPath, @"..\..\Resources");
 
-                // 1. Kiểm tra nếu Admin đã lưu đường dẫn ảnh hợp lệ (Biến duongDanAnh từ CSDL)
-                if (!string.IsNullOrEmpty(duongDanAnh))
+                string fileAnh = "";
+                string tenFilePng = ma + ".png"; // VD: SP001.png
+                string tenFileJpg = ma + ".jpg"; // VD: SP001.jpg
+
+                // Ưu tiên 1: Tên file lấy từ cơ sở dữ liệu (nếu có)
+                string tenFileTuDB = "";
+                if (!string.IsNullOrWhiteSpace(duongDanAnh))
                 {
-                    // Trường hợp 1: Admin lưu đường dẫn tuyệt đối (VD: D:\HinhAnh\SP01.jpg)
-                    if (File.Exists(duongDanAnh))
-                    {
-                        picHinhAnh.Image = Image.FromFile(duongDanAnh);
-                        picHinhAnh.SizeMode = PictureBoxSizeMode.Zoom;
-                        return; // Load thành công thì dừng luôn
-                    }
-
-                    // Trường hợp 2: Admin chỉ lưu tên file (VD: "butbi.jpg"), ta tìm nó trong thư mục Resources
-                    string duongDanTuongDoi = Path.Combine(thuMucAnh, Path.GetFileName(duongDanAnh));
-                    if (File.Exists(duongDanTuongDoi))
-                    {
-                        picHinhAnh.Image = Image.FromFile(duongDanTuongDoi);
-                        picHinhAnh.SizeMode = PictureBoxSizeMode.Zoom;
-                        return; // Load thành công thì dừng luôn
-                    }
+                    tenFileTuDB = Path.GetFileName(duongDanAnh.Trim());
                 }
 
-                // 2. Dự phòng: Nếu Admin CHƯA lưu ảnh, tự động tìm ảnh có tên trùng với Mã SP (VD: SP01.jpg)
-                string fileAnhJPG = Path.Combine(thuMucAnh, ma + ".jpg");
-                string fileAnhPNG = Path.Combine(thuMucAnh, ma + ".png");
-
-                if (File.Exists(fileAnhJPG))
+                // HÀM CỤC BỘ: Giúp kiểm tra nhanh đường dẫn tồn tại
+                string KiemTraTonTai(string thuMuc, string tenFile)
                 {
-                    picHinhAnh.Image = Image.FromFile(fileAnhJPG);
-                    picHinhAnh.SizeMode = PictureBoxSizeMode.Zoom;
+                    string duongDanFull = Path.Combine(thuMuc, tenFile);
+                    return File.Exists(duongDanFull) ? duongDanFull : "";
                 }
-                else if (File.Exists(fileAnhPNG))
+
+                // Bắt đầu quét tìm ảnh
+                if (!string.IsNullOrEmpty(tenFileTuDB))
                 {
-                    picHinhAnh.Image = Image.FromFile(fileAnhPNG);
+                    // Quét tên file từ DB trong cả 2 thư mục
+                    fileAnh = KiemTraTonTai(thuMucDebug, tenFileTuDB);
+                    if (string.IsNullOrEmpty(fileAnh)) fileAnh = KiemTraTonTai(thuMucGoc, tenFileTuDB);
+                }
+
+                // Nếu vẫn chưa tìm thấy, quét theo mã sản phẩm (Dự phòng)
+                if (string.IsNullOrEmpty(fileAnh))
+                {
+                    fileAnh = KiemTraTonTai(thuMucDebug, tenFilePng);
+                    if (string.IsNullOrEmpty(fileAnh)) fileAnh = KiemTraTonTai(thuMucDebug, tenFileJpg);
+                    if (string.IsNullOrEmpty(fileAnh)) fileAnh = KiemTraTonTai(thuMucGoc, tenFilePng);
+                    if (string.IsNullOrEmpty(fileAnh)) fileAnh = KiemTraTonTai(thuMucGoc, tenFileJpg);
+                }
+
+                // 5. Gắn ảnh lên PictureBox nếu tìm thấy
+                if (!string.IsNullOrEmpty(fileAnh))
+                {
+                    using (FileStream fs = new FileStream(fileAnh, FileMode.Open, FileAccess.Read))
+                    {
+                        picHinhAnh.Image = Image.FromStream(fs);
+                    }
                     picHinhAnh.SizeMode = PictureBoxSizeMode.Zoom;
                 }
                 else
                 {
-                    // 3. Nếu không tìm thấy bất kỳ ảnh nào, để trống hoặc bạn có thể gán ảnh mặc định ở đây
-                    picHinhAnh.Image = null;
+                    picHinhAnh.Image = null; // Trống nếu không có ảnh
                 }
             }
             catch
             {
-                // Bẫy lỗi an toàn: Bị lỗi file ảnh (file hỏng, đang bị khóa...) thì bỏ qua, không làm văng app
+                // Bắt lỗi âm thầm để không crash ứng dụng nếu file bị lỗi
                 picHinhAnh.Image = null;
             }
         }
